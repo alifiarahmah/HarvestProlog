@@ -1,0 +1,29 @@
+FAKTA
+- job -> fisherman/farmer/rancher
+- exp fisher
+- exp farmer
+- exp rancher
+- exp total
+- gold
+
+mekanisme:
+kapasitas max ditambah, lv 1 300 lv 2 450. current exp jadi 0. growth rate tetap.
+
+- bikin 2 map
+
+
+sebenernya ga beda jauh.
+
+- koordinat tiap tempat
+- marketplace(1, 2).
+- 1 map dulu
+
+- fakta item2 misal taneman, ikan, hasil ternak. 
+iteminventory(namaitem, quant, level)
+produk(namaitem, price)
+
+- quest, ambil quest pake randomin angka.
+
+RULES
+
+throw away
