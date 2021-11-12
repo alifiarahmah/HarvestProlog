@@ -1,0 +1,53 @@
+/* tools */
+
+items(shovel, 200).
+items(fishing_rod, 200).
+items(handcarts, 200).
+
+/* seeds */
+
+items(tomato, ).
+items(corn, ).
+items(eggplant, ).
+items(chilli, ).
+items(apple, ).
+items(pineapple, ).
+items(grape, ).
+items(turnip, ).
+items(pomegranate, ).
+items(strawberry, ).
+
+/* fish */
+
+items(tuna, ).
+items(salmon, ).
+items(catfish, ).
+items(musky, ).
+items(bass, ).
+items(bluegill, ).
+items(trout, ).
+items(carp, ).
+items(cod, ).
+items(pufferfish, ).
+
+/* lifestock */
+
+items(chicken, ).
+items(cow, ).
+items(sheep, ).
+items(goat, ).
+items(duck, ).
+items(horse, ).
+items(angora_rabbit, ).
+items(buffalo, ).
+
+/* product */
+
+items(chicken_egg, ).
+items(cow_milk, ).
+items(sheep_wool, ).
+items(goat_milk, ).
+items(duck_egg, ).
+items(horse_milk, ).
+items(angora_wool, ).
+items(buffalo_milk, ).
