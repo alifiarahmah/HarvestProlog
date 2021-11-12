@@ -27,3 +27,33 @@ produk(namaitem, price)
 RULES
 
 throw away
+
+
+===============================================================
+
+{Setiap command sesuatu jam + 0.5}
+{1 hari 24 jam}
+{warning tidur jam 10 malam, bangun jam 6 pagi}
+{1 tahun 60 hari}
+
+fakta
+
+1 orang
+- speciality
+- lvl, exp
+- growthrate
+- money
+- date
+- inventory (A,B,C) -> A nama, B quantity, C level (-1 if nontools)
+
+2 orang
+- item (seeds, fish, yield) (A,B) -> A name, B price
+
+rule
+
+1 orang
+- tool sesuai speciality
+- throw away
+
+
+
