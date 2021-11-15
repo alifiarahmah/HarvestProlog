@@ -1,0 +1,6 @@
+/*throwaway inventory*/
+throwAway(X,Y) :- write("What do you want to throw?"), nl, read(X), nl, inventory(X,B,C), write("You have ",B," ",X,". How many do you want to throw?"), nl, read(Y), eraseInv(X,Y).
+/*mengurangi item*/
+eraseInventory(X,Y) :- inventory(X,B,C), B >= Y, B1 is B-Y, inventory(X,B1,C), write("you threw away ",Y," ",X,"."), nl.
+eraseInventory(X,Y) : inventory(X,B,C), B<Y, write("You don't have enough ",X,". Cancelling..."), nl.
+

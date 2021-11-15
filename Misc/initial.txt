@@ -1,0 +1,68 @@
+/*Speciality*/
+speciality(farmer).
+speciality(fisherman).
+speciality(rancher).
+
+/*Level, EXP, and GrowthRate*/
+level(0).
+exp(0).
+growthrate(?).  /*growthrate masih didiskusikan namun growthrate tetap*/
+
+/*Money*/
+gold(0).
+
+/*Date*/
+date(0, 0). /*date(J, D) J sebagai jam (0 <= J <= 24) dan D sebagai hari (0 <= D <= 60)
+
+/*Inventory*/
+/*inventory (A,B,C) -> A nama, B quantity, C level (-1 if nontools) */
+
+/* tools */
+inventory(shovel, 0, Level). /*Tools memiliki beberapa tingkatan */
+inventory(fishing_rod, 0, Level).
+inventory(handcarts, 0, Level).
+
+/* seeds */
+inventory(tomato, 0, -1).
+inventory(corn, 0, -1).
+inventory(eggplant, 0, -1).
+inventory(chilli, 0, -1).
+inventory(apple, 0, -1).
+inventory(pineapple, 0, -1).
+inventory(grape, 0, -1).
+inventory(turnip, 0, -1).
+inventory(pomegranate, 0, -1).
+inventory(strawberry, 0, -1).
+
+/* fish */
+inventory(tuna, 0, -1).
+inventory(salmon, 0, -1).
+inventory(catfish, 0, -1).
+inventory(musky, 0, -1).
+inventory(bass, 0, -1).
+inventory(bluegill, 0, -1).
+inventory(trout, 0, -1).
+inventory(carp, 0, -1).
+inventory(cod, 0, -1).
+inventory(pufferfish, 0, -1).
+
+/* lifestock */
+inventory(chicken, 0, -1).
+inventory(cow, 0, -1).
+inventory(sheep, 0, -1).
+inventory(goat, 0, -1).
+inventory(duck, 0, -1).
+inventory(horse, 0, -1).
+inventory(angora_rabbit, 0, -1).
+inventory(buffalo, 0, -1).
+
+/* product */
+inventory(chicken_egg, 0, -1).
+inventory(cow_milk, 0, -1).
+inventory(sheep_wool, 0, -1).
+inventory(goat_milk, 0, -1).
+inventory(duck_egg, 0, -1).
+inventory(horse_milk, 0, -1).
+inventory(angora_wool, 0, -1).
+inventory(buffalo_milk, 0, -1).
+
