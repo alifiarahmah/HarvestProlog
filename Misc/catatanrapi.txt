@@ -1,0 +1,57 @@
+== Player ==
+Fakta-fakta:
+- job -> fisherman/farmer/rancher
+- exp fisher
+- exp farmer
+- exp rancher
+- exp total
+- gold
+
+mekanisme naik level:
+kapasitas max ditambah, lv 1 300 lv 2 450. current exp jadi 0. growth rate tetap.
+
+== Map ==
+- bikin 2 map (masih ongoing)
+- koordinat tiap tempat
+- fakta: marketplace(1, 2).
+- 1 map dulu
+
+== Inventory & Items ==
+- fakta: item2 misal taneman, ikan, hasil ternak. 
+- rules: throw away
+iteminventory(namaitem, quant, level)
+produk(namaitem, price)
+
+== Quest ==
+- untuk ambil quest, angka dan jenis item dirandom.
+
+== Waktu ==
+
+- Setiap command sesuatu jam + 0.5
+- 1 hari 24 jam
+- warning tidur jam 10 malam, bangun jam 6 pagi
+- 1 tahun 60 hari
+
+*****
+
+Pembagian tugas:
+
+1 orang
+- speciality
+- lvl, exp
+- growthrate
+- money
+- date
+- inventory (A,B,C) -> A nama, B quantity, C level (-1 if nontools)
+
+2 orang
+- item (seeds, fish, yield) (A,B) -> A name, B price
+
+rule
+
+1 orang
+- tool sesuai speciality
+- throw away
+
+
+
