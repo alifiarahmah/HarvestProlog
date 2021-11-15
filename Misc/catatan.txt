@@ -56,4 +56,29 @@ rule
 - throw away
 
 
+=======================================================================
+Stuktur file
+
+main.pl
+	time, move
+player.pl
+	speciality, level, exp point, growth rate
+items.pl
+	items.txt
+inventory.pl
+	inventory.txt
+map.pl - 16x16
+	map 
+quest.pl
+	rule quest, reward
+farming.pl
+fishing.pl
+ranching.pl
+
+1. main + map + quest
+2. player + ranching
+3. farming + inventory
+4. fishing + items
+
+
 
