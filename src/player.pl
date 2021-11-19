@@ -43,3 +43,23 @@ status :-
 	write('           EXP  : '), expFisher(ExpFish), write(ExpFish), nl,
 	write('RANCHING   Level: '), lvlRancher(LvlRanch), write(LvlRanch), nl,
 	write('           EXP  : '), expRancher(ExpRanch), write(ExpRanch), nl.
+
+
+/* addGold: Menambah Gold player sebanyak A */
+addGold(A) :- gold(G), G1 is G + A, retract(gold(G)), asserta(gold(G1)).
+
+/* msgAddGold: Menambah Gold player sebanyak A dan menuliskan di layar */
+msgAddGold(A) :- 
+	addGold(A), 
+	write('You got '), write(A), write(' G.'), nl,
+	write('Total Money: '), gold(G), write(G), write(' G'), nl.
+
+
+/* substractGold: Mengurang Gold sebanyak A */
+substractGold(A) :- gold(G), G1 is G - A, retract(gold(G)), asserta(gold(G1)).
+
+/* msgAddGold: Mengurang Gold player sebanyak A  dan menuliskan di layar */
+msgSubstractGold(A) :- 
+	substractGold(A), 
+	write('You lose '), write(A), write(' G.'), nl,
+	write('Total Money: '), gold(G), write(G), write(' G'), nl.
