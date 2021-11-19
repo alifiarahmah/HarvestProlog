@@ -15,7 +15,7 @@ Anggota kelompok:
 Requirements: GNU Prolog 1.5.0
 
 ```sh
-git clone https://github.com/alifiarahmah/$ HarvestProlog.git
+git clone https://github.com/alifiarahmah/HarvestProlog.git
 cd HarvestProlog
 gprolog --consult-file src/main.pl
 ```
