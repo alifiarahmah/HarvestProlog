@@ -10,6 +10,32 @@ writeTitle :-
 	write('                                                     |___/'), nl,
 	write('================================================================'), nl.
 
+writeTitleV2 :-
+	write('======================================================================'), nl,
+	write('  _    _                           _   _____           _             '), nl,
+	write(' | |  | |                         | | |  __ \\         | |            '), nl,
+	write(' | |__| | __ _ _ ____   _____  ___| |_| |__) | __ ___ | | ___   __ _ '), nl,
+	write(' |  __  |/ _` |  __\\ \\ / / _ \\/ __| __|  ___/  __/ _ \\| |/ _ \\ / _` |'), nl,
+	write(' | |  | | (_| | |   \\ V /  __/\\__ \\ |_| |   | | | (_) | | (_) | (_| |'), nl,
+	write(' |_|  |_|\\__,_|_|    \\_/ \\___||___/\\__|_|   |_|  \\___/|_|\\___/ \\__, |'), nl,
+	write('                                                                __/ |'), nl,
+	write('                                                               |___/ '), nl,
+	write('======================================================================'), nl.
+
+writeCommandList :-
+	write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'), nl,
+	write('%                                ~Harvest Star~                                %'), nl,
+	write('% 1. start   : untuk memulai petualanganmu                                     %'), nl,
+	write('% 2. map     : menampilkan peta                                                %'), nl,
+	write('% 3. status  : menampilkan kondisimu terkini                                   %'), nl,
+	write('% 4. w       : gerak ke utara 1 langkah                                        %'), nl,
+	write('% 5. s       : gerak ke selatan 1 langkah                                      %'), nl,
+	write('% 6. d       : gerak ke ke timur 1 langkah                                     %'), nl,
+	write('% 7. a       : gerak ke barat 1 langkah                                        %'), nl,
+	write('% 8. help    : menampilkan segala bantuan                                      %'), nl,
+	write('% 9. Status  : menampilkan status pemain                                       %'), nl,
+	write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'), nl.
+
 quit :-
 	write('      ___________'), nl,
 	write('     /  __   __  \\'), nl,
