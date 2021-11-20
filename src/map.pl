@@ -63,14 +63,19 @@ isAtRanch(X,Y) :-
 	Y =:= YR.
 
 isAtHouse(X,Y) :-
-	ranch(XH, YH),
+	house(XH, YH),
 	X =:= XH,
 	Y =:= YH.
 
 isAtQuest(X,Y) :-
-	ranch(XQ, YQ),
+	quest(XQ, YQ),
 	X =:= XQ,
 	Y =:= YQ.
+
+isAtAir(X,Y) :-
+	air(XA, YA),
+	X =:= XA,
+	Y =:= YA.
 
 isNearAir(X,Y) :-
 	air(XA, YA),
@@ -80,6 +85,36 @@ isNearAir(X,Y) :-
 	(X =:= XA, Y+1 =:= YA)),
 	!.
 
+isSide(X,Y) :- 
+	panjang(P),
+	lebar(L),
+	P1 is P + 1,
+	L1 is L + 1,
+	(X =:= 0; X =:= P1; Y =:= 0; Y =:= L1).
+
+isBlank(X,Y) :-
+	\+isAtMarketplace(X,Y), \+isAtRanch(X,Y), \+isAtHouse(X,Y), \+isAtQuest(X,Y), \+isAtAir(X,Y), \+isSide(X,Y).
+
+writeS(X,Y) :- isAtMarketplace(X,Y), write('M'), !.
+writeS(X,Y) :- isAtRanch(X,Y), write('R'), !.
+writeS(X,Y) :- isAtHouse(X,Y), write('H'), !.
+writeS(X,Y) :- isAtQuest(X,Y), write('Q'), !.
+writeS(X,Y) :- isAtAir(X,Y), write('o'), !.
+writeS(X,Y) :- isSide(X,Y), panjang(P), X =\= P + 1, write('#'), !.
+writeS(X,Y) :- isSide(X,Y), panjang(P), X =:= P + 1, write('#'), nl, !.
+writeS(X,Y) :- isBlank(X,Y), write('-'), !.
+
+displayMap(K) :- panjang(P), lebar(L), P2 is (P + 2), L2 is (L + 2), K =:= (P2*L2), nl, !.
+
+displayMap(K) :-
+	panjang(P),
+	P2 is (P + 2),
+	X1 is (K mod P2),
+	Y1 is (K // P2),
+	writeS(X1,Y1),
+	K1 is K + 1,
+	displayMap(K1).
+
 output :- 
 	marketplace(IM,JM),ranch(IR,JR),house(IH,JH),quest(IQ,JQ),air(IA,JA),
 	write(IM), write(','), write(JM), nl,
@@ -87,4 +122,3 @@ output :-
 	write(IH), write(','), write(JH), nl,
 	write(IQ), write(','), write(JQ), nl,
 	write(IA), write(','), write(JA), nl.
-

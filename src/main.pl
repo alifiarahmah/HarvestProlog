@@ -1,3 +1,6 @@
+/* DYNAMIC FACTS */
+:- dynamic(started/1).
+
 /* PROGRAM UTAMA */
 
 /* External files */
@@ -6,14 +9,21 @@
 :- include('map.pl').
 
 /* startGame: Menu awal game */
+started(0).
 startGame :-
-	writeTitleV2, nl.
+	started(X),
+	X =:= 0,
+	retractall(started(_)),
+	asserta(started(1)),
+	writeTitleV2, nl,
 	write('Harvest Star!!!'), nl, nl,
-	write('Let's play and pay our debts together!'), nl, nl,
+	write('Let\'s play and pay our debts together!'), nl, nl,
 	writeCommandList, nl.
 
 /* start: Mulai game baru dan inisialisasi gold, exp, level */
 start :- 
+	started(X),
+	X =:= 1,
 	write('Welcome to HarvestProlog! Choose your job.'), nl,
 	write('1. Fisherman'), nl,
 	write('2. Farmer'), nl,
@@ -22,4 +32,11 @@ start :-
 	chooseJob(X, Y), asserta(job(Y)),
 	write('You choose '), write(Y), write('. Let\'s start.'), nl,
 	initPlayer, prepareJob(Y).
+
+/* map: Menampilkan map */
+map :- 
+	started(X),
+	X =:= 1,
+	createRandomMap,
+	displayMap(0).
 
