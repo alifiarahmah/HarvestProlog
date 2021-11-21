@@ -92,16 +92,20 @@ isSide(X,Y) :-
 	L1 is L + 1,
 	(X =:= 0; X =:= P1; Y =:= 0; Y =:= L1).
 
-isBlank(X,Y) :-
-	\+isAtMarketplace(X,Y), \+isAtRanch(X,Y), \+isAtHouse(X,Y), \+isAtQuest(X,Y), \+isAtAir(X,Y), \+isSide(X,Y).
+isPlayer(X,Y):-
+	position(X,Y).
 
-writeS(X,Y) :- isAtMarketplace(X,Y), write('M'), !.
-writeS(X,Y) :- isAtRanch(X,Y), write('R'), !.
-writeS(X,Y) :- isAtHouse(X,Y), write('H'), !.
-writeS(X,Y) :- isAtQuest(X,Y), write('Q'), !.
-writeS(X,Y) :- isAtAir(X,Y), write('o'), !.
-writeS(X,Y) :- isSide(X,Y), panjang(P), X =\= P + 1, write('#'), !.
-writeS(X,Y) :- isSide(X,Y), panjang(P), X =:= P + 1, write('#'), nl, !.
+isBlank(X,Y) :-
+	\+isAtMarketplace(X,Y), \+isAtRanch(X,Y), \+isAtHouse(X,Y), \+isAtQuest(X,Y), \+isAtAir(X,Y), \+isSide(X,Y), \+isPlayer(X,Y).
+
+writeS(X,Y) :- \+isPlayer(X,Y), isAtMarketplace(X,Y), write('M'), !.
+writeS(X,Y) :- \+isPlayer(X,Y), isAtRanch(X,Y), write('R'), !.
+writeS(X,Y) :- \+isPlayer(X,Y), isAtHouse(X,Y), write('H'), !.
+writeS(X,Y) :- \+isPlayer(X,Y), isAtQuest(X,Y), write('Q'), !.
+writeS(X,Y) :- \+isPlayer(X,Y), isAtAir(X,Y), write('o'), !.
+writeS(X,Y) :- \+isPlayer(X,Y), isSide(X,Y), panjang(P), X =\= P + 1, write('#'), !.
+writeS(X,Y) :- \+isPlayer(X,Y), isSide(X,Y), panjang(P), X =:= P + 1, write('#'), nl, !.
+writeS(X,Y) :- isPlayer(X,Y), write('P'), !.
 writeS(X,Y) :- isBlank(X,Y), write('-'), !.
 
 displayMap(K) :- panjang(P), lebar(L), P2 is (P + 2), L2 is (L + 2), K =:= (P2*L2), nl, !.
