@@ -31,7 +31,7 @@ quest :-
     write('You need to collect:'), nl,
     write('- '), write(H), write(' harvest item'), nl,
     write('- '), write(F), write(' fish'), nl,
-    write('- '), write(E), write(' eggs'), nl,
+    write('- '), write(E), write(' ranch item'), nl,
     retractall(activeQ(_)),
     retractall(ongoingQ(_,_,_)),
     asserta(activeQ(1)),
