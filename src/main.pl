@@ -13,6 +13,7 @@
 :- include('quest.pl').
 :- include('inventory.pl').
 :- include('farming.pl').
+:- include('ranching.pl').
 
 /* startGame: Menu awal game */
 started(0).
