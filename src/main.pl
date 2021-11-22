@@ -11,6 +11,8 @@
 :- include('map.pl').
 :- include('move.pl').
 :- include('quest.pl').
+:- include('inventory.pl').
+:- include('farming.pl').
 
 /* startGame: Menu awal game */
 started(0).

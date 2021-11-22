@@ -101,6 +101,34 @@ addItem(Name, Amount, Level) :-
     asserta(sumItem(CurrenSum)),
     asserta(invenItem(Name, Amount, Level)).
 
+delItem(Name, Amount, Level) :-
+    nameItem(List),
+    srcItem(List, Name, Flag),
+    Flag =:= 1,
+    invenItem(Name, PrevAmount, Level),
+    sumItem(Sum),
+    CurrenAmount is PrevAmount - Amount,
+    CurrenSum is Sum - Amount,
+    retract(sumItem(Sum)),
+    retract(invenItem(Name, PrevAmount, Level)),
+    asserta(sumItem(CurrenSum)),
+    asserta(invenItem(Name, CurrenAmount, Level)).
+
+delItem(Name, Amount, Level) :-
+    nameItem(List),
+    srcItem(List, Name, Flag),
+    Flag =:= 0,
+    retract(nameItem(List)),
+    insertFirst(List, Name, Result),
+    asserta(nameItem(Result)),
+    invenItem(Name, PrevAmount, Level),
+    sumItem(Sum),
+    CurrenSum is Sum - Amount,
+    retract(sumItem(Sum)),
+    retract(invenItem(Name, PrevAmount, Level)),
+    asserta(sumItem(CurrenSum)),
+    asserta(invenItem(Name, Amount, Level)).
+
 
 /*Kalau menggunakan shovel1, bermasalah nanti saat print ke layar*/
 inventory([]):- !.
