@@ -133,6 +133,10 @@ delItem(Name, Amount, Level) :-
 /*Kalau menggunakan shovel1, bermasalah nanti saat print ke layar*/
 inventory([]):- !.
 inventory([Head|Tail]):-
+    invenItem(Head, Amount, _),
+    Amount =:= 0,
+    inventory(Tail).
+inventory([Head|Tail]):-
     invenItem(Head, Amount, Level),
     Amount > 0,
     Level > 0,
