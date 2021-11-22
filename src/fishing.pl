@@ -28,7 +28,7 @@ rarity(pufferfish,0.05).
 rarity(none,0.05).
 
 /*memancing*/
-fish(A) :- 
+fish :- 
 	position(X,Y),
 	isNearAir(X,Y),
 	random_member(Item,nameFish),
@@ -41,7 +41,7 @@ gotFish(Item) :-
 	write('You gained '), write(Exp), write(' fishing exp.').
 gotFish(Item) :-
 	exp(Item,Exp),
-	write("You got "), write(Item), write("!"), nl,
+	write('You got '), write(Item), write('!'), nl,
 	write('You gained '), write(Exp), write(' fishing exp.').
 
 

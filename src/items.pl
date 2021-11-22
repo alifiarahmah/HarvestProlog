@@ -1,3 +1,5 @@
+/*dynamic items*/
+:- dynamic(items/2).
 /* tools */
 
 items(shovel, 200).
