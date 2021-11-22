@@ -20,13 +20,15 @@ chooseJob(3, 'Rancher').
 
 /* initPlayer: Menyiapkan status awal player sebelum mulai bermain */
 initPlayer :- 
-	asserta(gold(0)),
+	asserta(gold(1000)),
 	asserta(totalexp(0)), asserta(expCapacity(300)),
 	asserta(lvlTotal(1)), asserta(lvlFisher(1)), asserta(lvlFarmer(1)), asserta(lvlRancher(1)),
-	asserta(expTotal(0)), asserta(expFisher(0)), asserta(expFarmer(0)), asserta(expRancher(0)).
+	asserta(expTotal(0)), asserta(expFisher(0)), asserta(expFarmer(0)), asserta(expRancher(0)),
+	initRanch.
 
 /* prepareJob: Menyiapkan inventory sesuai job (WIP) */
-prepareJob(X) :- write('Anda mendapat alat-alat untuk '), write(X), nl.
+prepareJob(X) :- 
+	write('Anda mendapat alat-alat untuk '), write(X), nl.
 
 /* status: Menulis stats player: job, level & exp total dan masing2 job */
 status :- 
@@ -66,7 +68,6 @@ writeSubstractGold(A) :-
 
 /* addExpTotal: Menambah EXP Total ke player sebanyak X */
 addExpTotal(X) :- expTotal(E), E1 is E + X, retract(expTotal(E)), asserta(expTotal(E1)).
-
 
 /* addExpFisher: Menambah EXP Fisher ke player sebanyak X */
 addExpFisher(X) :- expFisher(E), E1 is E + X, retract(expFisher(E)), asserta(expFisher(E1)).
