@@ -1,20 +1,32 @@
 /* Deklarasi dynamic angka */
 :- dynamic(chicken/1).
-:- dynamic(chicken_egg/1).
 :- dynamic(cow/1).
-:- dynamic(cow_milk/1).
 :- dynamic(sheep/1).
-:- dynamic(sheep_wool/1).
 :- dynamic(goat/1).
-:- dynamic(goat_milk/1).
 :- dynamic(duck/1).
-:- dynamic(duck_egg/1).
 :- dynamic(horse/1).
-:- dynamic(horse_milk/1).
 :- dynamic(angora_rabbit/1).
-:- dynamic(angora_wool/1).
 :- dynamic(buffalo/1).
+
+/* Deklarasi dynamic hasil ternak */
+:- dynamic(chicken_egg/1).
+:- dynamic(cow_milk/1).
+:- dynamic(sheep_wool/1).
+:- dynamic(goat_milk/1).
+:- dynamic(duck_egg/1).
+:- dynamic(horse_milk/1).
+:- dynamic(angora_wool/1).
 :- dynamic(buffalo_milk/1).
+
+/* Deklarasi fakta multiplier EXP hasil panen */
+exp_chicken(3).
+exp_cow(10).
+exp_sheep(10).
+exp_goat(15).
+exp_duck(5).
+exp_horse(10).
+exp_angora(15).
+exp_buffalo(15).
 
 /* initRanch: inisialisasi banyak hewan ternak */
 initRanch :- 
@@ -47,6 +59,9 @@ initRanch :-
 	asserta(angora_rabbit(0)),
 	asserta(buffalo(0)).
 
+/* addExp: tambah exp */
+addExp(X, Y) :- 
+
 /* checkInRanch: cek apakah posisi pemain di tile ranch */
 checkInRanch :- position(X, Y), ranch(A, B), X = A, Y = B.
 
@@ -68,6 +83,12 @@ ranch :-
 
 chicken :- 
 	checkInRanch,
+	chicken(X), X = 0,
+	write('You don\'t have any chicken!'), nl.
+
+chicken :- 
+	checkInRanch,
+	chicken(X), X > 0,
 	chicken_egg(Y), Y = 0, 
 	write('Your chicken hasn\'t lay any eggs.'), nl,
 	write('Please check again later.'), nl.
@@ -79,6 +100,31 @@ chicken :-
 	addItem(chicken_egg, Y, -1),
 	retract(chicken_egg(Y)), asserta(chicken_egg(0)),
 	write('You got '), write(Y), write('eggs!'),
-	ExpRanch is Y * 3, /* TODO: tambah data exp tiap dapet telor di player */
-	addExpRancher(ExpRanch),
+	exp_chicken(X), ExpRanch is Y * X, addExpRancher(ExpRanch),
 	write('You gained '), write(ExpRanch), (' ranching EXP!'), nl.
+
+/* sheep: cek domba */
+
+sheep :- 
+	checkInRanch,
+	sheep(X), X = 0,
+	write('You don\'t have any sheeps!'), nl.
+
+sheep :- 
+	checkInRanch,
+	sheep(X), X > 0,
+	sheep_wool(Y), Y = 0, 
+	write('Your sheep hasn\'t produced any wool.'), nl,
+	write('Please check again later.'), nl.
+
+sheep :- 
+	checkInRanch,
+	sheep_wool(Y), Y > 0, 
+	write('Your chicken lays '), write(Y), write(' eggs.'), nl,
+	addItem(sheep_wool, Y, -1),
+	retract(sheep_wool(Y)), asserta(sheep_wool(0)),
+	write('You got '), write(Y), write('eggs!'),
+	exp_chicken(X), ExpRanch is Y * X, addExpRancher(ExpRanch),
+	write('You gained '), write(ExpRanch), (' ranching EXP!'), nl.
+
+/* TODO: Tambah untuk goat, duck, horse, angora, bufaloo  */
