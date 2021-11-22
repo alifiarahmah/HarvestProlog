@@ -42,4 +42,4 @@ quit :-
 	write(' __/  /___| |___\\  \\__    See you later in the next adventure.'), nl,
 	write('|     __       __     |'), nl,
 	write('|____/  \\_____/  \\____|'), nl,
-	write('     \\__/     \\__/'), nl, halt.
+	write('     \\__/     \\__/'), nl, nl, halt.
