@@ -59,9 +59,6 @@ initRanch :-
 	asserta(angora_rabbit(0)),
 	asserta(buffalo(0)).
 
-/* addExp: tambah exp */
-addExp(X, Y) :- 
-
 /* checkInRanch: cek apakah posisi pemain di tile ranch */
 checkInRanch :- position(X, Y), ranch(A, B), X = A, Y = B.
 
@@ -128,3 +125,4 @@ sheep :-
 	write('You gained '), write(ExpRanch), (' ranching EXP!'), nl.
 
 /* TODO: Tambah untuk goat, duck, horse, angora, bufaloo  */
+/* */
