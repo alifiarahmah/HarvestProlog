@@ -48,8 +48,8 @@ status :-
 /* addGold: Menambah Gold player sebanyak A */
 addGold(A) :- gold(G), G1 is G + A, retract(gold(G)), asserta(gold(G1)).
 
-/* msgAddGold: Menambah Gold player sebanyak A dan menuliskan di layar */
-msgAddGold(A) :- 
+/* writeAddGold: Menambah Gold player sebanyak A dan menuliskan di layar */
+writeAddGold(A) :- 
 	addGold(A), 
 	write('You got '), write(A), write(' G.'), nl,
 	write('Total Money: '), gold(G), write(G), write(' G'), nl.
@@ -58,8 +58,21 @@ msgAddGold(A) :-
 /* substractGold: Mengurang Gold sebanyak A */
 substractGold(A) :- gold(G), G1 is G - A, retract(gold(G)), asserta(gold(G1)).
 
-/* msgAddGold: Mengurang Gold player sebanyak A  dan menuliskan di layar */
-msgSubstractGold(A) :- 
+/* writeAddGold: Mengurang Gold player sebanyak A  dan menuliskan di layar */
+writeSubstractGold(A) :- 
 	substractGold(A), 
 	write('You lose '), write(A), write(' G.'), nl,
 	write('Total Money: '), gold(G), write(G), write(' G'), nl.
+
+/* addExpTotal: Menambah EXP Total ke player sebanyak X */
+addExpTotal(X) :- expTotal(E), E1 is E + X, retract(expTotal(E)), asserta(expTotal(E1)).
+
+
+/* addExpFisher: Menambah EXP Fisher ke player sebanyak X */
+addExpFisher(X) :- expFisher(E), E1 is E + X, retract(expFisher(E)), asserta(expFisher(E1)).
+
+/* addExpFarmer: Menambah EXP Farmer ke player sebanyak X */
+addExpFarmer(X) :- expFarmer(E), E1 is E + X, retract(expFarmer(E)), asserta(expFarmer(E1)).
+
+/* addExpRancher: Menambah EXP Rancher ke player sebanyak X */
+addExpRancher(X) :- expRancher(E), E1 is E + X, retract(expRancher(E)), asserta(expRancher(E1)).
