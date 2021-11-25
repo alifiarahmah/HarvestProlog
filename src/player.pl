@@ -12,26 +12,35 @@
 :- dynamic(lvlFisher/1).
 :- dynamic(lvlFarmer/1).
 :- dynamic(lvlRancher/1).
+:- dynamic(initiated/1).
 
 chooseJob(1, 'Fisherman').
 chooseJob(2, 'Farmer').
 chooseJob(3, 'Rancher').
 
+initiated(0).
 
 /* initPlayer: Menyiapkan status awal player sebelum mulai bermain */
 initPlayer :- 
 	asserta(gold(1000)),
 	asserta(totalexp(0)), asserta(expCapacity(300)),
 	asserta(lvlTotal(1)), asserta(lvlFisher(1)), asserta(lvlFarmer(1)), asserta(lvlRancher(1)),
-	asserta(expTotal(0)), asserta(expFisher(0)), asserta(expFarmer(0)), asserta(expRancher(0)),
-	initRanch.
+	asserta(expTotal(0)), asserta(expFisher(0)), asserta(expFarmer(0)), asserta(expRancher(0)).
+	/*initRanch.*/
 
 /* prepareJob: Menyiapkan inventory sesuai job (WIP) */
 prepareJob(X) :- 
 	write('Anda mendapat alat-alat untuk '), write(X), nl.
 
 /* status: Menulis stats player: job, level & exp total dan masing2 job */
+status :-
+	initiated(X),
+	X =:= 0,
+	write('There isn\'t any status yet. Start to create your character !'),
+	!.
 status :- 
+	initiated(X),
+	X =:= 1,
 	write('=================='), nl,
 	write('      STATUS'), nl,
 	write('=================='), nl, nl,
@@ -44,7 +53,8 @@ status :-
 	write('FISHING    Level: '), lvlFisher(LvlFish), write(LvlFish), nl,
 	write('           EXP  : '), expFisher(ExpFish), write(ExpFish), nl,
 	write('RANCHING   Level: '), lvlRancher(LvlRanch), write(LvlRanch), nl,
-	write('           EXP  : '), expRancher(ExpRanch), write(ExpRanch), nl.
+	write('           EXP  : '), expRancher(ExpRanch), write(ExpRanch), nl,
+	!.
 
 
 /* addGold: Menambah Gold player sebanyak A */
