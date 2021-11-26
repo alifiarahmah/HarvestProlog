@@ -14,10 +14,30 @@ timeSeed(turnip, 8).
 timeSeed(pomegranate, 9).
 timeSeed(strawberry, 8).
 
+/*farmExp(A,B) => A nama seed B EXP*/
+farmExp(tomato, 2).
+farmExp(corn, 1).
+farmExp(eggplant, 3).
+farmExp(chilli, 5).
+farmExp(apple, 8).
+farmExp(pineapple, 7).
+farmExp(grape, 8).
+farmExp(turnip, 6).
+farmExp(pomegranate, 7).
+farmExp(strawberry, 6).
+
 
 nameSeed([tomato, corn, eggplant, chilli, apple, pineapple, grape, turnip, pomegranate, strawberry]).
 dig :-
     position(X,Y),
+    Y =:= 1,
+    asserta(atDig(X,Y)),
+    s,
+    write('You digged the tile.'),nl.
+
+dig :-
+    position(X,Y),
+    Y > 1,
     asserta(atDig(X,Y)),
     w,
     write('You digged the tile.'),nl.
@@ -108,7 +128,12 @@ harvest:-
     CTime > Ttotal,
     X1 =:= Xseed,
     retract(atPlant(Xseed, Yseed)),
-    addItem(Name, 1, -1),
+    random(1, 15, Am),
+    addItem(Name, Am, -1),
+    farmExp(Name, FEXP),
+    SumEXP is FEXP * Am,
+    addExpFarmer(SumEXP),
+    retract(seed(Name, T1, T, Xseed, Yseed)),
     write('You Haversted '), write(Name), nl.
 harvest:-
     position(X, _Y),
@@ -119,7 +144,12 @@ harvest:-
     CTime > Ttotal,
     X1 =:= Xseed,
     retract(atPlant(Xseed, Yseed)),
-    addItem(Name, 1, -1),
+    random(1, 15, Am),
+    addItem(Name, Am, -1),
+    farmExp(Name, FEXP),
+    SumEXP is FEXP * Am,
+    addExpFarmer(SumEXP),
+    retract(seed(Name, T1, T, Xseed, Yseed)),
     write('You Haversted '), write(Name), nl.
 harvest:-
     position(_X, Y),
@@ -130,7 +160,12 @@ harvest:-
     CTime > Ttotal,
     Y1 =:= Yseed,
     retract(atPlant(Xseed, Yseed)),
-    addItem(Name, 1, -1),
+    random(1, 15, Am),
+    addItem(Name, Am, -1),
+    farmExp(Name, FEXP),
+    SumEXP is FEXP * Am,
+    addExpFarmer(SumEXP),
+    retract(seed(Name, T1, T, Xseed, Yseed)),
     write('You Haversted '), write(Name), nl.
 harvest:-
     position(_X, Y),
@@ -141,7 +176,12 @@ harvest:-
     CTime > Ttotal,
     Y1 =:= Yseed,
     retract(atPlant(Xseed, Yseed)),
-    addItem(Name, 1, -1),
+    random(1, 15, Am),
+    addItem(Name, Am, -1),
+    farmExp(Name, FEXP),
+    SumEXP is FEXP * Am,
+    addExpFarmer(SumEXP),
+    retract(seed(Name, T1, T, Xseed, Yseed)),
     write('You Haversted '), write(Name), nl.
 
 /*Sistem Exp dan item yang bertambah ke inventory*/
