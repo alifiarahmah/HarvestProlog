@@ -18,7 +18,7 @@
 :- dynamic(angora_wool/1).
 :- dynamic(buffalo_milk/1).
 
-/* Deklarasi fakta multiplier EXP hasil panen */
+/* Deklarasi fakta EXP yang didapat per hasil ternak */
 exp_chicken(3).
 exp_cow(10).
 exp_sheep(10).
@@ -49,7 +49,7 @@ initRanch :-
 	asserta(buffalo_milk(0)).
 
 initRanch :- 
-	job(X), X = rancher,
+	job(X), X =:= rancher,
 	asserta(chicken(2)),
 	asserta(cow(1)),
 	asserta(sheep(1)),
@@ -60,7 +60,7 @@ initRanch :-
 	asserta(buffalo(0)).
 
 /* checkInRanch: cek apakah posisi pemain di tile ranch */
-checkInRanch :- position(X, Y), ranch(A, B), X = A, Y = B.
+checkInRanch :- position(X, Y), isAtRanch(X,Y).
 
 /* ranch: antarmuka jumlah hewan ternak */
 ranch :-
@@ -83,13 +83,13 @@ ranch :-
 
 chicken :- 
 	checkInRanch,
-	chicken(X), X = 0,
+	chicken(X), X =:= 0,
 	write('You don\'t have any chicken!'), nl.
 
 chicken :- 
 	checkInRanch,
 	chicken(X), X > 0,
-	chicken_egg(Y), Y = 0, 
+	chicken_egg(Y), Y =:= 0, 
 	write('Your chicken hasn\'t lay any eggs.'), nl,
 	write('Please check again later.'), nl.
 
@@ -107,13 +107,13 @@ chicken :-
 
 cow :- 
 	checkInRanch,
-	sheep(X), X = 0,
+	sheep(X), X =:= 0,
 	write('You don\'t have any cows!'), nl.
 
 cow :- 
 	checkInRanch,
 	cow(X), X > 0,
-	cow_milk(Y), Y = 0, 
+	cow_milk(Y), Y =:= 0, 
 	write('Your cow hasn\'t produced any milk.'), nl,
 	write('Please check again later.'), nl.
 
@@ -131,13 +131,13 @@ cow :-
 
 sheep :- 
 	checkInRanch,
-	sheep(X), X = 0,
+	sheep(X), X =:= 0,
 	write('You don\'t have any sheeps!'), nl.
 
 sheep :- 
 	checkInRanch,
 	sheep(X), X > 0,
-	sheep_wool(Y), Y = 0, 
+	sheep_wool(Y), Y =:= 0, 
 	write('Your sheep hasn\'t produced any wool.'), nl,
 	write('Please check again later.'), nl.
 
