@@ -51,13 +51,21 @@ initRanch :-
 initRanch :- 
 	job(X), X =:= rancher,
 	asserta(chicken(2)),
+	asserta(chicken_egg(0)),
 	asserta(cow(1)),
+	asserta(cow_milk(0)),
 	asserta(sheep(1)),
+	asserta(sheep_wool(0)),
 	asserta(goat(0)),
+	asserta(goat_milk(0)),
 	asserta(duck(0)),
+	asserta(duck_egg(0)),
 	asserta(horse(0)),
+	asserta(horse_milk(0)),
 	asserta(angora_rabbit(0)),
-	asserta(buffalo(0)).
+	asserta(angora_wool(0)),
+	asserta(buffalo(0)),
+	asserta(buffalo_milk(0)).
 
 /* checkInRanch: cek apakah posisi pemain di tile ranch */
 checkInRanch :- position(X, Y), isAtRanch(X,Y).
