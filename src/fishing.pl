@@ -1,126 +1,198 @@
-/*daftar ikan*/
-/*nameFish = [tuna,salmon,catfish,musky,bass,bluegill,trout,carp,cod,pufferfish,none].*/
-/*jumlah dan rarity ikan, berdasarkan harga*/
-
-/*
-none : 10 -> 0.2
-catfish : 12 -> 0.24  
-tuna : 4 -> 0.08
-salmon : 4 -> 0.08
-musky : 4 -> 0.08
-bluegill : 4 -> 0.8
-carp : 4 -> 0.08
-bass : 2 -> 0.04
-trout : 2 -> 0.04
-cod : 2 -> 0.04
-pufferfish : 2 -> 0.04
+/*Fishing.pl*/
+/*Fungsi yang bisa digunakan:
+- fishing
 */
-/*total ikan ada 50 (termasuk none)*/
+/*(jumlah,rarity) tiap 2 level, berdasarkan harga*/
+/*
+fishing lvl-> lvl 1-2		lvl 3-4			lvl 5-6		   lvl 7-8		   lvl >=9
+none 		: (5, 20%) 	-> (5, 12.8%) 	-> (5, 9.4%) 	-> (5, 7.5%)	-> (5, 6.2%) 
+catfish 	: (6, 24%) 	-> (6, 15.4%) 	-> (6, 11.3%) 	-> (6, 9%) 		-> (6, 7.5%)
+tuna 		: (2, 8%) 	-> (4, 10.2%) 	-> (6, 11.3%) 	-> (8, 11.9%)	-> (10, 12.3%)
+salmon 		: (2, 8%) 	-> (4, 10.2%) 	-> (6, 11.3%) 	-> (8, 11.9%)	-> (10, 12.3%)
+musky 		: (2, 8%) 	-> (4, 10.2%) 	-> (6, 11.3%) 	-> (8, 11.9%)	-> (10, 12.3%)
+bluegill	: (2, 8%) 	-> (4, 10.2%) 	-> (6, 11.3%) 	-> (8, 11.9%)	-> (10, 12.3%)
+carp 		: (2, 8%) 	-> (4, 10.2%) 	-> (6, 11.3%) 	-> (8, 11.9%)	-> (10, 12.3%)
+bass 		: (1, 4%) 	-> (2, 5.2%) 	-> (3, 5.7%) 	-> (4, 6%)		-> (5, 6.2%)
+trout	 	: (1, 4%) 	-> (2, 5.2%) 	-> (3, 5.7%) 	-> (4, 6%)		-> (5, 6.2%)
+cod 		: (1, 4%) 	-> (2, 5.2%) 	-> (3, 5.7%) 	-> (4, 6%)		-> (5, 6.2%)
+pufferfish 	: (1, 4%) 	-> (2, 5.2%) 	-> (3, 5.7%) 	-> (4, 6%)		-> (5, 6.2%)
+total		: (25, 100%)-> (39, 100%)	-> (53, 100%)	-> (67, 100%)	-> (81, 100%)
+*/
+/*total ikan ada 81 (termasuk none)*/
+/*Level 1-2*/
 ikan(1,none).
 ikan(2,none).
 ikan(3,none).
 ikan(4,none).
 ikan(5,none).
-ikan(6,none).
-ikan(7,none).
-ikan(8,none).
-ikan(9,none).
-ikan(10,none).
+ikan(6,catfish).
+ikan(7,catfish).
+ikan(8,catfish).
+ikan(9,catfish).
+ikan(10,catfish).
 ikan(11,catfish).
-ikan(12,catfish).
-ikan(13,catfish).
-ikan(14,catfish).
-ikan(15,catfish).
-ikan(16,catfish).
-ikan(17,catfish).
-ikan(18,catfish).
-ikan(19,catfish).
-ikan(20,catfish).
-ikan(21,catfish).
-ikan(22,catfish).
-ikan(23,tuna).
-ikan(24,tuna).
-ikan(25,tuna).
+ikan(12,tuna).
+ikan(13,tuna).
+ikan(14,salmon).
+ikan(15,salmon).
+ikan(16,musky).
+ikan(17,musky).
+ikan(18,bluegill).
+ikan(19,bluegill).
+ikan(20,carp).
+ikan(21,carp).
+ikan(22,bass).
+ikan(23,trout).
+ikan(24,cod).
+ikan(25,pufferfish).
+/*Added fish for Level 3-4*/
 ikan(26,tuna).
-ikan(27,salmon).
+ikan(27,tuna).
 ikan(28,salmon).
 ikan(29,salmon).
-ikan(30,salmon).
+ikan(30,musky).
 ikan(31,musky).
-ikan(32,musky).
-ikan(33,musky).
-ikan(34,musky).
-ikan(35,bluegill).
-ikan(36,bluegill).
-ikan(37,bluegill).
-ikan(38,bluegill).
-ikan(39,carp).
-ikan(40,carp).
-ikan(41,carp).
-ikan(42,carp).
-ikan(43,bass).
-ikan(44,bass).
-ikan(45,trout).
-ikan(46,trout).
-ikan(47,cod).
-ikan(48,cod).
-ikan(49,pufferfish).
-ikan(50,pufferfish).
-/*Tambahan peluang mendapat ikan mahal ketika dia seorang fisher*/
-/*Memiliki peluang 40% lebih besar*/
-ikan(51,bass).
-ikan(52,trout).
-ikan(53,cod).
-ikan(54,pufferfish).
+ikan(32,bluegill).
+ikan(33,bluegill).
+ikan(34,carp).
+ikan(35,carp).
+ikan(36,bass).
+ikan(37,trout).
+ikan(38,cod).
+ikan(39,pufferfish).
+/*Added fish for Level 5-6*/
+ikan(40,tuna).
+ikan(41,tuna).
+ikan(42,salmon).
+ikan(43,salmon).
+ikan(44,musky).
+ikan(45,musky).
+ikan(46,bluegill).
+ikan(47,bluegill).
+ikan(48,carp).
+ikan(49,carp).
+ikan(50,bass).
+ikan(51,trout).
+ikan(52,cod).
+ikan(53,pufferfish).
+/*Added fish for Level 7-8*/
+ikan(54,tuna).
+ikan(55,tuna).
+ikan(56,salmon).
+ikan(57,salmon).
+ikan(58,musky).
+ikan(59,musky).
+ikan(60,bluegill).
+ikan(61,bluegill).
+ikan(62,carp).
+ikan(63,carp).
+ikan(64,bass).
+ikan(65,trout).
+ikan(66,cod).
+ikan(67,pufferfish).
+/*Added fish for Level >= 9*/
+ikan(68,tuna).
+ikan(69,tuna).
+ikan(70,salmon).
+ikan(71,salmon).
+ikan(72,musky).
+ikan(73,musky).
+ikan(74,bluegill).
+ikan(75,bluegill).
+ikan(76,carp).
+ikan(77,carp).
+ikan(78,bass).
+ikan(79,trout).
+ikan(80,cod).
+ikan(81,pufferfish).
 
+/*Fishing time for each fish*/
+timeFish(none,0.2).
+timeFish(catfish,0.4).
+timeFish(tuna,0.9).
+timeFish(salmon,0.9).
+timeFish(musky,0.9).
+timeFish(bluegill,0.9).
+timeFish(carp,0.9).
+timeFish(bass,1.5).
+timeFish(trout,1.5).
+timeFish(cod,1.5).
+timeFish(pufferfish,1.5).
 
-/*exp ikan, ditentukan dengan perbandingan harga ikan dan maksimal exp, yaitu 50*/
-exp(tuna,30).
-exp(salmon,30).
-exp(catfish,13).
-exp(musky,30).
-exp(bass,50).
-exp(bluegill,30).
-exp(trout,50).
-exp(carp,30).
-exp(cod,50).
-exp(pufferfish,50).
-exp(none,5).
+/*fish exp, depend on the time to get the fish*/
+exp(none,1).
+exp(catfish,2).
+exp(tuna,5).
+exp(salmon,5).
+exp(musky,5).
+exp(bluegill,5).
+exp(carp,5).
+exp(bass,8).
+exp(trout,8).
+exp(cod,8).
+exp(pufferfish,8).
 
 /*fishing*/
-/*if he is a fisherman, get 40% chance to get expensive fish*/
+/*For fishing level 1-2*/
 fishing :-
-	job(Job), (Job == fisherman),
 	position(X,Y), isNearAir(X,Y),
+	lvlFisher(Level), Level =< 2,
+	random(1,26,R), ikan(R,Fish),
+	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
+	gotFish(Fish,NewExp),
+	addItem(Fish,1,-1).
+/*For fishing level 3-4*/
+fishing :-
+	position(X,Y), isNearAir(X,Y),
+	lvlFisher(Level), Level >= 3, Level =< 4,
+	random(1,40,R), ikan(R,Fish),
+	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
+	gotFish(Fish,NewExp),
+	addItem(Fish,1,-1).
+/*For fishing level 5-6*/
+fishing :-
+	position(X,Y), isNearAir(X,Y),
+	lvlFisher(Level), Level >= 5, Level =< 6,
 	random(1,54,R), ikan(R,Fish),
-	gotFish(Fish),
-	exp(Fish,Exp), addExpTotal(Exp), addExpFisher(Exp),
-	addFishtoInv(Fish).
-
-/*fishing if he isn't a fisherman, don't get a privilege*/
+	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
+	gotFish(Fish,NewExp),
+	addItem(Fish,1,-1).
+/*For fishing level 7-8*/
 fishing :-
 	position(X,Y), isNearAir(X,Y),
-	random(1,50,R), ikan(R,Fish),
-	gotFish(Fish),
-	exp(Fish,Exp), addExpTotal(Exp), addExpFisher(Exp),
-	addFishtoInv(Fish).
+	lvlFisher(Level), Level >= 7, Level =< 8,
+	random(1,68,R), ikan(R,Fish),
+	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
+	gotFish(Fish,NewExp),
+	addItem(Fish,1,-1).
+/*For fishing level >= 9*/
+fishing :-
+	position(X,Y), isNearAir(X,Y),
+	lvlFisher(Level), Level >= 9,
+	random(1,82,R), ikan(R,Fish),
+	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
+	gotFish(Fish,NewExp),
+	addItem(Fish,1,-1).
 
 /*write what he get*/
 /*he get nothing*/
-gotFish(Item) :-
-	(Item == none),
-	exp(Item,Exp),
+gotFish(Item,Exp) :-
+	Item =:= none,
 	write('You didn\'t get anything!'), nl,
 	write('You gained '), write(Exp), write(' fishing exp.').
 /*he get a fish*/
-gotFish(Item) :-
-	exp(Item,Exp),
+gotFish(Item,Exp) :-
 	write('You got '), write(Item), write('!'), nl,
 	write('You gained '), write(Exp), write(' fishing exp.').
 
-/*Add fish to invetory*/
-addFishtoInv(Fish) :-
-	invenItem(Fish, Total, _),
-	Totalnew is Total+1,
-	retract(invenItem(Fish,Total,_)),
-	asserta(invenItem(Fish,Totalnew,-1)).
+/*Checking exp mechanism for fisher and non-fisher*/
+/*For fisher, got 20% exp addition*/
+newExp(Exp,NewExp) :-
+	job(Job), Job =:= 'Farmer',
+	AddExp is Exp*0.2,
+	NewExp1 is Exp+AddExp,
+	NewExp is round(NewExp1).
+/*For non-fisher, didn't get any addition*/
+newExp(Exp,NewExp) :-
+	job(Job), Job =/= 'Farmer',
+	NewExp is Exp.

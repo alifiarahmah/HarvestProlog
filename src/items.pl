@@ -29,17 +29,16 @@ items(pomegranate, 150).
 items(strawberry, 150).
 
 /* fish */
-
-items(tuna, 120).
-items(salmon, 120).
-items(catfish, 50).
-items(musky, 120).
-items(bass, 200).
-items(bluegill, 120).
-items(trout, 200).
-items(carp, 120).
-items(cod, 200).
-items(pufferfish, 200).
+items(catfish, 20).
+items(tuna, 50).
+items(salmon, 50).
+items(musky, 50).
+items(bluegill, 50).
+items(carp, 50).
+items(bass, 80).
+items(trout, 80).
+items(cod, 80).
+items(pufferfish, 80).
 
 /* lifestock */
 
