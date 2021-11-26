@@ -75,6 +75,9 @@ ranch :-
 	angora_rabbit(X), write(X), write(' angora rabbit'), nl,
 	buffalo(X), write(X), write(' buffalo'), nl, nl,
 	write('What do you want to do?'), nl.
+ranch :-
+	\+checkInRanch,
+	write('You are not in ranch!'), nl.
 
 /* chicken: cek ayam */
 
@@ -100,6 +103,30 @@ chicken :-
 	exp_chicken(X), ExpRanch is Y * X, addExpRancher(ExpRanch),
 	write('You gained '), write(ExpRanch), (' ranching EXP!'), nl.
 
+/* cow: cek sapi*/
+
+cow :- 
+	checkInRanch,
+	sheep(X), X = 0,
+	write('You don\'t have any cows!'), nl.
+
+cow :- 
+	checkInRanch,
+	cow(X), X > 0,
+	cow_milk(Y), Y = 0, 
+	write('Your cow hasn\'t produced any milk.'), nl,
+	write('Please check again later.'), nl.
+
+cow :- 
+	checkInRanch,
+	cow(Y), Y > 0, 
+	write('Your cow produced '), write(Y), write(' milks.'), nl,
+	addItem(cow_milk, Y, -1),
+	retract(cow_milk(Y)), asserta(cow_milk(0)),
+	write('You got '), write(Y), write('cow milks!'),
+	exp_cow(X), ExpRanch is Y * X, addExpRancher(ExpRanch),
+	write('You gained '), write(ExpRanch), (' ranching EXP!'), nl.
+
 /* sheep: cek domba */
 
 sheep :- 
@@ -117,12 +144,9 @@ sheep :-
 sheep :- 
 	checkInRanch,
 	sheep_wool(Y), Y > 0, 
-	write('Your chicken lays '), write(Y), write(' eggs.'), nl,
+	write('Your sheep produced '), write(Y), write(' wools.'), nl,
 	addItem(sheep_wool, Y, -1),
 	retract(sheep_wool(Y)), asserta(sheep_wool(0)),
-	write('You got '), write(Y), write('eggs!'),
-	exp_chicken(X), ExpRanch is Y * X, addExpRancher(ExpRanch),
+	write('You got '), write(Y), write('sheep wools!'),
+	exp_sheep(X), ExpRanch is Y * X, addExpRancher(ExpRanch),
 	write('You gained '), write(ExpRanch), (' ranching EXP!'), nl.
-
-/* TODO: Tambah untuk goat, duck, horse, angora, bufaloo  */
-/* */
