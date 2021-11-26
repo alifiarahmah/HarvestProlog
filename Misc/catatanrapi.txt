@@ -53,5 +53,20 @@ rule
 - tool sesuai speciality
 - throw away
 
+26 Nov 2021
+* expCapacity harus selalu dicek ketika nambah exp, pertumbuhan expCapacity 150
+* expCapacity harus dipisah untuk tiap expTotal, expFishing, expFarming, expRanching.
+* farming, fishing, ranching harus ada inisialisasinya di player.pl
+* di player.pl, addEXp harus menghandle level up.
+* untuk position(X,Y), X berlaku seperti kolom matrix, Y seperti baris matrix
+* waktu tiap fishing sesuaikan dengan ikan yang didapat, range waktu 0-2 jam, sesuaikan dengan farming
+* patokan untuk fishing, ranching, dan farming : tiap 1 jam , bisa dapat gold 45-55 gold,
+  exp 4-6 exp/jam.
+* invent item perlu dipisah dengan ranch item.
+* initRanch perlu diubah, bukan ngasih hewan ternaknya, tapi ngasih handcarts.
+* yang belum dikerjakan : marketplace, house, goal & fail state, laporan.
+* laporan : cover, penjelasan setiap comment, dll, bisa dibagi sesuai bagian masing-masing.
+* deadline : sabtu malam, sekaligus dengan laporan bagian masing-masing.
+
 
 
