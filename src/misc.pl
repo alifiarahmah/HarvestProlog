@@ -35,6 +35,19 @@ writeCommandList :-
 	write('% 8. help    : menampilkan segala bantuan                                      %'), nl,
 	write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'), nl.
 
+writeHelpList :-
+	write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'), nl,
+	write('%                                ~Harvest Star~                                   %'), nl,
+	write('% 1. status     : menampilkan kondisimu terkini                                   %'), nl,
+	write('% 2. map        : menampilkan peta                                                %'), nl,
+	write('% 3. inventory  : menampilkan isi barang yang disimpan                            %'), nl,
+	write('% 4. w          : gerak ke utara 1 langkah                                        %'), nl,
+	write('% 5. s          : gerak ke selatan 1 langkah                                      %'), nl,
+	write('% 6. d          : gerak ke ke timur 1 langkah                                     %'), nl,
+	write('% 7. a          : gerak ke barat 1 langkah                                        %'), nl,
+	write('% 8. help       : menampilkan segala bantuan                                      %'), nl,
+	write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'), nl.
+
 quit :-
 	write('      ___________'), nl,
 	write('     /  __   __  \\'), nl,

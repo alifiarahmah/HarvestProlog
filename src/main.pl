@@ -64,7 +64,7 @@ map :-
 	displayMap(0).
 
 /* help: Menampilkan command yang bisa dilakukan */
-help :- writeCommandList.
+help :- writeHelpList.
 
 	
 	

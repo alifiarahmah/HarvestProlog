@@ -1,6 +1,7 @@
 /*daftar ikan*/
 /*nameFish = [tuna,salmon,catfish,musky,bass,bluegill,trout,carp,cod,pufferfish,none].*/
 /*jumlah dan rarity ikan, berdasarkan harga*/
+
 /*
 none : 10 -> 0.2
 catfish : 12 -> 0.24  

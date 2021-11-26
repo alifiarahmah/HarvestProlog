@@ -1,5 +1,8 @@
 /* PLAYER */
 
+/* 1 jam -> 45 - 55 gold */
+/* 1 jam -> 4 - 6 exp */
+
 /* Dynamic facts */
 :- dynamic(job/1).
 :- dynamic(gold/1).
