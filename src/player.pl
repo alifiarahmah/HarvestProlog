@@ -4,10 +4,13 @@
 :- dynamic(job/1).
 :- dynamic(gold/1).
 :- dynamic(expTotal/1).
-:- dynamic(expCapacity/1).
+:- dynamic(expTotalCapacity/1).
 :- dynamic(expFisher/1).
+:- dynamic(expFisherCapacity/1).
 :- dynamic(expFarmer/1).
+:- dynamic(expFarmerCapacity/1).
 :- dynamic(expRancher/1).
+:- dynamic(expRancherCapacity/1).
 :- dynamic(lvlTotal/1).
 :- dynamic(lvlFisher/1).
 :- dynamic(lvlFarmer/1).
@@ -80,7 +83,8 @@ addExpTotal(X) :-
 	expTotal(E), 
 	E1 is E + X, 
 	retract(expTotal(E)), 
-	asserta(expTotal(E1)).
+	asserta(expTotal(E1)),
+	lvlUpTotal.
 
 /* addExpFisher: Menambah EXP Fisher ke player sebanyak X */
 addExpFisher(X) :- 
@@ -88,7 +92,8 @@ addExpFisher(X) :-
 	E1 is E + X, 
 	retract(expFisher(E)), 
 	asserta(expFisher(E1)),
-	addExpTotal(E1).
+	addExpTotal(E1),
+	lvlUpFisher.
 
 /* addExpFarmer: Menambah EXP Farmer ke player sebanyak X */
 addExpFarmer(X) :- 
@@ -96,7 +101,8 @@ addExpFarmer(X) :-
 	E1 is E + X, 
 	retract(expFarmer(E)), 
 	asserta(expFarmer(E1)),
-	addExpTotal(E1).
+	addExpTotal(E1),
+	lvlUpFarmer.
 
 /* addExpRancher: Menambah EXP Rancher ke player sebanyak X */
 addExpRancher(X) :- 
@@ -104,4 +110,66 @@ addExpRancher(X) :-
 	E1 is E + X, 
 	retract(expRancher(E)), 
 	asserta(expRancher(E1)).
-	addExpTotal(E1).
+	addExpTotal(E1),
+	lvlUpRancher.
+
+/* lvlUp: cek untuk level up, jika melebihi capacity naik level */
+lvlUpTotal :- 
+	expTotal(X), 
+	expTotalCapacity(Y),
+	X >= Y,
+	X1 is X mod Y,
+	Y1 is Y * 2,
+	lvlTotal(Z),
+	Z1 is Z + 1,
+	retract(expTotal(X)),
+	asserta(expTotal(X1)),
+	retract(expTotalCapacity(Y)),
+	asserta(expTotalCapacity(Y1)),
+	retract(lvlTotal(Z)),
+	asserta(lvlTotal(Z1)).
+
+lvlUpFisher :- 
+	expFisher(X), 
+	expFisherCapacity(Y),
+	X >= Y,
+	X1 is X mod Y,
+	Y1 is Y * 2, /* Tiap naik level, batas exp naik 2x */
+	lvlFisher(Z),
+	Z1 is Z + 1,
+	retract(expFisher(X)),
+	asserta(expFisher(X1)),
+	retract(expFisherCapacity(Y)),
+	asserta(expFisherCapacity(Y1)),
+	retract(lvlFisher(Z)),
+	asserta(lvlFisher(Z1)).
+
+lvlUpFarmer :- 
+	expFarmer(X), 
+	expFarmerCapacity(Y),
+	X >= Y,
+	X1 is X mod Y,
+	Y1 is Y * 2, /* Tiap naik level, batas exp naik 2x */
+	lvlFarmer(Z),
+	Z1 is Z + 1,
+	retract(expFarmer(X)),
+	asserta(expFarmer(X1)),
+	retract(expFarmerCapacity(Y)),
+	asserta(expFarmerCapacity(Y1)),
+	retract(lvlFarmer(Z)),
+	asserta(lvlFarmer(Z1)).
+
+lvlUpRancher :- 
+	expRancher(X), 
+	expRancherCapacity(Y),
+	X >= Y,
+	X1 is X mod Y,
+	Y1 is Y * 2, /* Tiap naik level, batas exp naik 2x */
+	lvlRancher(Z),
+	Z1 is Z + 1,
+	retract(expRancher(X)),
+	asserta(expRancher(X1)),
+	retract(expRancherCapacity(Y)),
+	asserta(expRancherCapacity(Y1)),
+	retract(lvlRancher(Z)),
+	asserta(lvlRancher(Z1)).
