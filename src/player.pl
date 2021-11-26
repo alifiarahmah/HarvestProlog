@@ -109,7 +109,7 @@ addExpRancher(X) :-
 	expRancher(E), 
 	E1 is E + X, 
 	retract(expRancher(E)), 
-	asserta(expRancher(E1)).
+	asserta(expRancher(E1)),
 	addExpTotal(E1),
 	lvlUpRancher.
 
