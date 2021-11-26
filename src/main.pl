@@ -9,6 +9,7 @@
 :- include('player.pl').
 :- include('misc.pl').
 :- include('map.pl').
+:- include('items.pl').
 :- include('move.pl').
 :- include('quest.pl').
 :- include('inventory.pl').
@@ -33,7 +34,7 @@ startGame :-
 /* initTime */
 initTime :- 
 	retractall(time(_)),
-	asserta(time(0.0)).
+	asserta(time(6)).
 
 /* initPosition */
 initPosition :- 

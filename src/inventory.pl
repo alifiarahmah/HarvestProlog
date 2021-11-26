@@ -1,19 +1,14 @@
 :- dynamic(invenItem/3).
+:- dynamic(equipment/3).
 :- dynamic(nameItem/1).
 :- dynamic(sumItem/1).
 
 /*invenItem(A,B,C) -> A nama, B quantity, C level (-1 if nontools) */
 /* tools */
 /*Dibuat angka dibelakang nama agar memudahkan pencatatan nama item di Inventory*/
-invenItem(shovel1, 0, 1).    
-invenItem(fishing_rod1, 0, 1).
-invenItem(handcarts1, 0, 1).
-invenItem(shovel2, 0, 2).
-invenItem(fishing_rod2, 0, 2).
-invenItem(handcarts2, 0, 2).
-invenItem(shovel3, 0, 3).
-invenItem(fishing_rod3, 0, 3).
-invenItem(handcarts3, 0, 3).
+equipment(shovel, 0, 1).    
+equipment(fishing_rod, 0, 1).
+equipment(handcarts, 0, 1).
 
 /* seeds */
 invenItem(tomato, 0, -1).
