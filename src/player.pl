@@ -56,7 +56,6 @@ writeAddGold(A) :-
 	write('You got '), write(A), write(' G.'), nl,
 	write('Total Money: '), gold(G), write(G), write(' G'), nl.
 
-
 /* substractGold: Mengurang Gold sebanyak A */
 substractGold(A) :- gold(G), G1 is G - A, retract(gold(G)), asserta(gold(G1)).
 
@@ -67,13 +66,32 @@ writeSubstractGold(A) :-
 	write('Total Money: '), gold(G), write(G), write(' G'), nl.
 
 /* addExpTotal: Menambah EXP Total ke player sebanyak X */
-addExpTotal(X) :- expTotal(E), E1 is E + X, retract(expTotal(E)), asserta(expTotal(E1)).
+addExpTotal(X) :- 
+	expTotal(E), 
+	E1 is E + X, 
+	retract(expTotal(E)), 
+	asserta(expTotal(E1)).
 
 /* addExpFisher: Menambah EXP Fisher ke player sebanyak X */
-addExpFisher(X) :- expFisher(E), E1 is E + X, retract(expFisher(E)), asserta(expFisher(E1)).
+addExpFisher(X) :- 
+	expFisher(E), 
+	E1 is E + X, 
+	retract(expFisher(E)), 
+	asserta(expFisher(E1)),
+	addExpTotal(E1).
 
 /* addExpFarmer: Menambah EXP Farmer ke player sebanyak X */
-addExpFarmer(X) :- expFarmer(E), E1 is E + X, retract(expFarmer(E)), asserta(expFarmer(E1)).
+addExpFarmer(X) :- 
+	expFarmer(E), 
+	E1 is E + X, 
+	retract(expFarmer(E)), 
+	asserta(expFarmer(E1)),
+	addExpTotal(E1).
 
 /* addExpRancher: Menambah EXP Rancher ke player sebanyak X */
-addExpRancher(X) :- expRancher(E), E1 is E + X, retract(expRancher(E)), asserta(expRancher(E1)).
+addExpRancher(X) :- 
+	expRancher(E), 
+	E1 is E + X, 
+	retract(expRancher(E)), 
+	asserta(expRancher(E1)).
+	addExpTotal(E1).
