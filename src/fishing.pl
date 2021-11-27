@@ -107,17 +107,17 @@ ikan(80,cod).
 ikan(81,pufferfish).
 
 /*Fishing time for each fish*/
-timeFish(none,0.2).
-timeFish(catfish,0.4).
-timeFish(tuna,0.9).
-timeFish(salmon,0.9).
-timeFish(musky,0.9).
-timeFish(bluegill,0.9).
-timeFish(carp,0.9).
-timeFish(bass,1.5).
-timeFish(trout,1.5).
-timeFish(cod,1.5).
-timeFish(pufferfish,1.5).
+timeFish(none,1).
+timeFish(catfish,1).
+timeFish(tuna,1).
+timeFish(salmon,1).
+timeFish(musky,1).
+timeFish(bluegill,1).
+timeFish(carp,1).
+timeFish(bass,2).
+timeFish(trout,2).
+timeFish(cod,2).
+timeFish(pufferfish,2).
 
 /*fish exp, depend on the time to get the fish*/
 exp(none,1).
@@ -133,6 +133,11 @@ exp(cod,8).
 exp(pufferfish,8).
 
 /*fishing*/
+/*If not in tail air area*/
+
+fishing :-
+	position(X,Y), \+ isNearAir(X,Y),
+	write('You\'re not in tail air area. So, you can\'t start fishing.').
 /*For fishing level 1-2*/
 fishing :-
 	position(X,Y), isNearAir(X,Y),
@@ -140,7 +145,8 @@ fishing :-
 	random(1,26,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addItem(Fish,1,-1).
+	addItem(Fish,1,-1),
+	addTimeFishing(Fish).
 /*For fishing level 3-4*/
 fishing :-
 	position(X,Y), isNearAir(X,Y),
@@ -148,7 +154,8 @@ fishing :-
 	random(1,40,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addItem(Fish,1,-1).
+	addItem(Fish,1,-1),
+	addTimeFishing(Fish).
 /*For fishing level 5-6*/
 fishing :-
 	position(X,Y), isNearAir(X,Y),
@@ -156,7 +163,8 @@ fishing :-
 	random(1,54,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addItem(Fish,1,-1).
+	addItem(Fish,1,-1),
+	addTimeFishing(Fish).
 /*For fishing level 7-8*/
 fishing :-
 	position(X,Y), isNearAir(X,Y),
@@ -164,7 +172,8 @@ fishing :-
 	random(1,68,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addItem(Fish,1,-1).
+	addItem(Fish,1,-1),
+	addTimeFishing(Fish).
 /*For fishing level >= 9*/
 fishing :-
 	position(X,Y), isNearAir(X,Y),
@@ -172,27 +181,41 @@ fishing :-
 	random(1,82,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addItem(Fish,1,-1).
+	addItem(Fish,1,-1),
+	addTimeFishing(Fish).
 
-/*write what he get*/
-/*he get nothing*/
+/*write what he get and update the quest*/
+/*he get nothing, no need to update the quest*/
 gotFish(Item,Exp) :-
 	Item == none,
 	write('You didn\'t get anything!'), nl,
 	write('You gained '), write(Exp), write(' fishing exp.').
-/*he get a fish*/
+/*he get a fish, and update the quest*/
 gotFish(Item,Exp) :-
 	write('You got '), write(Item), write('!'), nl,
-	write('You gained '), write(Exp), write(' fishing exp.').
+	write('You gained '), write(Exp), write(' fishing exp.'),
+	ongoingQ(X,Y,Z),
+	X1 is X,
+	Y1 is Y-1,
+	Z1 is Z,
+	retract(ongoingQ(_,_,_)),
+	asserta(ongoingQ(X1,Y1,Z1)).
 
 /*Checking exp mechanism for fisher and non-fisher*/
 /*For fisher, got 20% exp addition*/
 newExp(Exp,NewExp) :-
-	job(Job), Job == 'Farmer',
+	job(Job), Job == 'Fisherman',
 	AddExp is Exp*0.2,
 	NewExp1 is Exp+AddExp,
 	NewExp is round(NewExp1).
 /*For non-fisher, didn't get any addition*/
 newExp(Exp,NewExp) :-
-	job(Job), Job \== 'Farmer',
+	job(Job), Job \== 'Fisherman',
 	NewExp is Exp.
+
+/*Add time every get a fish*/
+addTimeFishing(Fish) :-
+	timeFish(Fish,T),
+	time(X), Tnew is X+T,
+	retract(time(_)),
+	asserta(time(Tnew)).
