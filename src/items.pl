@@ -74,7 +74,7 @@ items(horse_milk, 180).
 items(angora_wool, 180).
 items(buffalo_milk, 200).
 
-/* market */
+/* market : masuk ke dalam marketplace*/
 
 isShopping(0).
 
@@ -96,7 +96,7 @@ market :-
     write('You\'re not at the marketplace right now.'),
     !.
 
-/* buy */
+/* buy : membeli dari shop*/
 
 buy :-
     isShopping(1),
@@ -123,6 +123,7 @@ buy :-
         write('You are charged '), write(NeededMoney), write(' golds.')
     ).
 
+/* buyList : list barang yang bisa dibeli */
 buyList([], _) :- !.
 buyList([Head|Tail], I) :-
     items(Head, Price),
@@ -136,6 +137,7 @@ buyList([Head|Tail], I) :-
     I1 is I + 1,
     buyList(Tail, I1).
 
+/* buyThis : memilih barang yang dibeli */
 buyThis([_|Tail], Number, _, _, _) :- Tail = [], Number > 1, write('Please choose a valid number'), !, fail.
 buyThis([Head|_], 1, Name, Price, Level) :-
     items(Head, Price),
@@ -146,7 +148,7 @@ buyThis([_|Tail], Number, Name, Price, Level) :-
     Number1 is Number - 1,
     buyThis(Tail, Number1, Name, Price, Level).
 
-/* sell */
+/* sell : menjual barang di inventory */
 
 sell :-
     isShopping(1),
@@ -180,7 +182,7 @@ sell :-
         )
     ), !.
 
-/* upgrade */
+/* upgrade : melakukan upgrade equipment */
 
 upgrade :-
     upgradeAvailable,
@@ -210,6 +212,7 @@ upgrade :-
         )
     ), !.
 
+/* upgradeThis : memilih equipment yang diupgrade */
 upgradeThis([_|Tail], I, Name) :- Tail = [], I > 1, Name = invalidname, write('Please choose a valid number!'), !, fail.
 upgradeThis([Head|_], 1, Name) :-
     Name = Head.
@@ -218,7 +221,7 @@ upgradeThis([_|Tail], I, Name) :-
     I1 is I - 1,
     upgradeThis(Tail, I1, Name).
 
-
+/* upgradeList : daftar equipment yang bisa diupgrade */
 upgradeList([]).
 upgradeAvailable :-
     equipment(shovel, _, SL),
@@ -257,6 +260,7 @@ upgradeAvailable :-
         asserta(upgradeList(List6))
     ).
 
+/* writeUpgrade : menulis equipment yang ingin diupgrade */
 writeUpgrade([], 1, Flag) :- write('Tidak ada equipment yang bisa diupgrade'), Flag is 0, !.
 writeUpgrade([], I, Flag) :- I>1, Flag is 1, !.
 writeUpgrade([Head|Tail], I, Flag) :-
@@ -275,7 +279,7 @@ writeUpgrade([Head|Tail], I, Flag) :-
     writeUpgrade(Tail, I1, Flag).
     
 
-/* exitShop */
+/* exitShop : keluar dari marketplace */
 
 exitShop :- 
     retractall(isShopping(_)),
