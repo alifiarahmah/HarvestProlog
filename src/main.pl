@@ -53,7 +53,7 @@ start :-
 	write('> '), read_integer(X), nl,
 	chooseJob(X, Y), asserta(job(Y)),
 	write('You choose '), write(Y), write('. Let\'s start.'), nl,
-	initPlayer, prepareJob(Y),
+	initPlayer,
 	retractall(initiated(_)),
 	asserta(initiated(1)),
 	!.
