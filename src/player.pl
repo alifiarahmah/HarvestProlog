@@ -154,6 +154,9 @@ writeAddExpRancher(X) :-
 /* lvlUp: cek untuk level up, jika melebihi capacity naik level, sesuai job */
 lvlUpTotal :- 
 	expTotal(X, C), 
+	X < C, !.
+lvlUpTotal :- 
+	expTotal(X, C), 
 	X >= C, !,
 	lvlTotal(L),
 	L1 is L + 1,
@@ -167,6 +170,9 @@ lvlUpTotal :-
 
 lvlUpFisher :- 
 	expFisher(X, C), 
+	X < C, !.
+lvlUpFisher :- 
+	expFisher(X, C), 
 	X >= C, !,
 	lvlFisher(L),
 	L1 is L + 1,
@@ -178,6 +184,9 @@ lvlUpFisher :-
 	asserta(lvlFisher(L1)),
 	lvlUpFisher.
 
+lvlUpFarmer :- 
+	expFarmer(X, C), 
+	X < C, !.
 lvlUpFarmer :- 
 	expFarmer(X, C), 
 	X >= C, !,
