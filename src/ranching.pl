@@ -88,7 +88,12 @@ ranch :-
 	write(HorseAmount), write(' horse'), nl,
 	write(AngoraAmount), write(' angora rabbit'), nl,
 	write(BuffaloAmount), write(' buffalo'), nl, nl,
-	write('What do you want to do?'), nl.
+	write('What do you want to do?'), nl,
+	write('Commands:'), nl,
+	write('- chicken    - duck'), nl,
+	write('- cow        - horse'), nl,
+	write('- sheep      - angora_rabbit'), nl,
+	write('- goat       - buffalo'), nl.
 
 /* isRanchTime: Flag 1 kalau sudah dapat ambil hasil, Flag 0 kalau belum */
 isRanchTime(Livestock, Flag) :-
