@@ -151,13 +151,19 @@ buffalo :- checkLivestock(buffalo, buffalo_milk).
 
 /* checkLivestock */
 
+checkLivestock(_, _) :-
+	\+checkInRanch,
+	write('You\'re not in ranch!'), nl,
+	!, fail.
 checkLivestock(Livestock, _) :- % kasus tidak ada Livestock
+	checkInRanch,
 	invenItem(Livestock, Amount, -1),
 	Amount = 0,
 	strLivestock(Livestock, StrLivestock),
 	write('You don\'t have any '), write(StrLivestock), write('!'), nl, 
 	!.
 checkLivestock(Livestock, Product) :- % kasus ada livestock, tapi belum bisa ambil hasil
+	checkInRanch,
 	invenItem(Livestock, Amount, -1),
 	Amount > 0,
 	strLivestock(Livestock, StrLivestock),
@@ -168,6 +174,7 @@ checkLivestock(Livestock, Product) :- % kasus ada livestock, tapi belum bisa amb
 	write('Please check again later.'), nl, 
 	!.
 checkLivestock(Livestock, Product) :- % kasus ada livestock dan bisa ambil hasil
+	checkInRanch,
 	invenItem(Livestock, Amount, -1),
 	Amount > 0,
 	strLivestock(Livestock, StrLivestock),
