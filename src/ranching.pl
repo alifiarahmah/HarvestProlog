@@ -117,6 +117,14 @@ resetLivestockTimer(Livestock) :-
 	retractall(livestock(Livestock, _, CTime)),
 	asserta(livestock(Livestock, CTime, RanchTime)).
 
+/* fulfillQuest */
+fulfillRanchQuest(Amount) :-
+	ongoingQ(X, Y, QuestAmount),
+	QuestAmount >= Amount,
+	Amount1 is QuestAmount - Amount,
+	retract(ongoingQ(X, Y, QuestAmount)),
+	asserta(ongoingQ(X, Y, Amount1)).
+
 /* command tiap livestock */
 
 chicken :- checkLivestock(chicken, chicken_egg).
@@ -130,13 +138,13 @@ buffalo :- checkLivestock(buffalo, buffalo_milk).
 
 /* checkLivestock */
 
-checkLivestock(Livestock, _) :-
+checkLivestock(Livestock, _) :- % kasus tidak ada Livestock
 	invenItem(Livestock, Amount, -1),
 	Amount = 0,
 	strLivestock(Livestock, StrLivestock),
 	write('You don\'t have any'), write(StrLivestock), write('!'), nl, 
 	fail.
-checkLivestock(Livestock, Product) :-
+checkLivestock(Livestock, Product) :- % kasus ada livestock, tapi belum bisa ambil hasil
 	invenItem(Livestock, Amount, -1),
 	Amount > 0,
 	strLivestock(Livestock, StrLivestock),
@@ -145,7 +153,7 @@ checkLivestock(Livestock, Product) :-
 	Flag = 0,
 	write('Your '), write(StrLivestock), write(' hasn\'t produced any '), write(StrProduct), nl,
 	write('Please check again later.'), nl.
-checkLivestock(Livestock, Product) :-
+checkLivestock(Livestock, Product) :- % kasus ada livestock dan bisa ambil hasil
 	invenItem(Livestock, Amount, -1),
 	Amount > 0,
 	strLivestock(Livestock, StrLivestock),
@@ -155,6 +163,7 @@ checkLivestock(Livestock, Product) :-
 	write('Your '), write(StrLivestock), write(' produced '), write(Amount), write(' '), write(StrProduct), nl,
 	write('You got '), write(Amount), write(' '), write(StrProduct), write('!'), nl,
 	addItem(Product, Amount, -1),
+	fulfillRanchQuest(Amount),
 	ranchExp(Livestock, XP),
 	TotalXP is XP * Amount,
 	writeAddExpRancher(TotalXP),
