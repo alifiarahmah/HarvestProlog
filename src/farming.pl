@@ -168,26 +168,26 @@ farmExpSistem(Exp):-
     X == 'Farmer',
     Exp1 is 0.25*Exp,
     SumEXP is Exp + round(Exp1),
-    addExpFarmer(SumEXP).
+    writeAddExpFarmer(SumEXP).
 farmExpSistem(Exp):-
     job(X),
     X \== 'Farmer',
-    addExpFarmer(Exp).
+    writeAddExpFarmer(Exp).
 
 /*Jumlah panen berdasarkan level*/
 harvestHelper(AmountItem):-
     lvlFarmer(Level),
-    Level =< 3,
+    Level < 4,
     random(1, 3, Am),
     AmountItem is Am.
 harvestHelper(AmountItem):-
     lvlFarmer(Level),
-    Level >= 4, Level =< 7,
+    Level > 3, Level < 8,
     random(3, 5, Am),
     AmountItem is Am.
 harvestHelper(AmountItem):-
     lvlFarmer(Level),
-    Level >=8,
+    Level >7,
     random(5, 7, Am),
     AmountItem is Am.
 
