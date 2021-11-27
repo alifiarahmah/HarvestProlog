@@ -199,7 +199,7 @@ inventory:-
     nameEquipment(ListEquipment),
     inventoryEquipment(ListEquipment),
     nameItem(ListItem),
-    inventoryItem(ListItem).
+    inventoryItem(ListItem),!.
 
 /*Throw Item from Inventory*/
 throwItemHelper2(Throw, Amount, Item, _Level):-
