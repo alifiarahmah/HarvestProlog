@@ -15,6 +15,7 @@
 :- dynamic(lvlFarmer/1).
 :- dynamic(lvlRancher/1).
 :- dynamic(initiated/1).
+:- dynamic(isInsideHouse/1).
 
 chooseJob(1, 'Fisherman').
 chooseJob(2, 'Farmer').
@@ -195,3 +196,49 @@ lvlUpRancher :-
 	retract(lvlRancher(L)),
 	asserta(lvlRancher(L1)).
 	lvlUpRancher.
+
+isInsideHouse(0).
+house :-
+	position(X,Y),
+	\+isAtHouse(X,Y),
+	write('You are not at house right now'), nl, !.
+house :- 
+	position(X,Y),
+	isAtHouse(X,Y),
+	isInsideHouse(0),
+	retractall(isInsideHouse(_)),
+	asserta(isInsideHouse(1)),
+	write('What do you want to do?'), nl,
+	write('- sleep'), nl,
+	write('- exitHouse'), nl, !.
+
+sleep :-
+	isInsideHouse(1),
+	time(Time),
+	Date is (Time//24) + 1,
+	Hour is Time mod 24,
+	(	Hour < 6 ->
+		Hour1 is 6,
+		Date1 is Date,
+		Time1 is ((Date1 - 1) * 24) + Hour1,
+		retractall(time(_)),
+		asserta(time(Time1))
+	; 	Hour >= 6 ->
+		Hour2 is 6,
+		Date2 is Date + 1,
+		Time2 is ((Date2 - 1) * 24) + Hour2,
+		retractall(time(_)),
+		asserta(time(Time2))
+	),
+	retractall(isInsideHouse(_)),
+	asserta(isInsideHouse(0)),
+	time(CurTime),
+	CurDate is (CurTime//24) + 1,
+	CurHour is CurTime mod 24,
+	write('Day '), write(CurDate), nl,
+	write('Current Time: '), write(CurHour), nl.
+
+exitHouse :-
+	isInsideHouse(1),
+	retractall(isInsideHouse(_)),
+	asserta(isInsideHouse(0)).
