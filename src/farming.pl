@@ -40,6 +40,7 @@ farmExp(strawberry_seed, 6).
 
 
 nameSeed([tomato_seed, corn_seed, eggplant_seed, chilli_seed, apple_seed, pineapple_seed, grape_seed, turnip_seed, pomegranate_seed, strawberry_seed]).
+/*Melakukan Commad dig*/
 dig :-
     position(X,Y),
     Y =:= 1,
@@ -54,6 +55,7 @@ dig :-
     w,
     write('You digged the tile.'),nl.
 
+/*Menampilkan seed yang ada di Inventory*/
 displaySeed([]) :-!.
 displaySeed([Head|Tail]):-
     invenItem(Head, Amount,_),
@@ -65,14 +67,33 @@ displaySeed([Head|Tail]):-
     write('- '), write(Amount), write(' '), write(Head), nl,
     displaySeed(Tail).
 
+/*Mengetahui Jumlah Seed di Inventory*/
+seedInInventory([Head|Tail], SumSeed):-
+    Tail == [],
+    invenItem(Head, Amount,_),
+    SumSeed is Amount, !.
+seedInInventory([Head|Tail], SumSeed):-
+    invenItem(Head, Amount, _),
+    seedInInventory(Tail, SumSeed1),
+    SumSeed is Amount + SumSeed1.
+
 
 /*plant the seed*/
+/*Jika belum punya seed*/
 plant :-
+    nameSeed(ListSeed),
+    seedInInventory(ListSeed, SumSeed),
+    SumSeed =:= 0,
+    write('You Have\'t  any seed.').
+/*Jika sudah punya seed*/
+plant :-
+    nameSeed(ListSeed),
+    seedInInventory(ListSeed, SumSeed),
+    SumSeed > 0,
     position(X,Y),
     X1 is X + 1,
     atDig(X1, Y),
     write('You have : '), nl,
-    nameSeed(ListSeed),
     displaySeed(ListSeed),
     write('What do you want to plant?'), nl,
     read(NameSeed),
@@ -85,11 +106,13 @@ plant :-
     asserta(seed(NameSeed, T, Time, X1, Y)).
 
 plant :-
+    nameSeed(ListSeed),
+    seedInInventory(ListSeed, SumSeed),
+    SumSeed > 0,
     position(X,Y),
     X2 is X - 1,
     atDig(X2, Y),
     write('You have : '), nl,
-    nameSeed(ListSeed),
     displaySeed(ListSeed),
     write('What do you want to plant?'), nl,
     read(NameSeed),
@@ -102,11 +125,13 @@ plant :-
     asserta(seed(NameSeed, T, Time, X2, Y)).
 
 plant :-
+    nameSeed(ListSeed),
+    seedInInventory(ListSeed, SumSeed),
+    SumSeed > 0,
     position(X,Y),
     Y1 is Y+1,
     atDig(X, Y1),
     write('You have : '), nl,
-    nameSeed(ListSeed),
     displaySeed(ListSeed),
     write('What do you want to plant?'), nl,
     read(NameSeed),
@@ -119,11 +144,13 @@ plant :-
     asserta(seed(NameSeed, T, Time, X, Y1)).
 
 plant :-
+    nameSeed(ListSeed),
+    seedInInventory(ListSeed, SumSeed),
+    SumSeed > 0,
     position(X,Y),
     Y2 is Y-1,
     atDig(X, Y2),
     write('You have : '), nl,
-    nameSeed(ListSeed),
     displaySeed(ListSeed),
     write('What do you want to plant?'), nl,
     read(NameSeed),
@@ -147,7 +174,63 @@ farmExpSistem(Exp):-
     X \== 'Farmer',
     addExpFarmer(Exp).
 
+/*Jumlah panen berdasarkan level*/
+harvestHelper(AmountItem):-
+    lvlFarmer(Level),
+    Level =< 3,
+    random(1, 3, Am),
+    AmountItem is Am.
+harvestHelper(AmountItem):-
+    lvlFarmer(Level),
+    Level >= 4, Level =< 7,
+    random(3, 5, Am),
+    AmountItem is Am.
+harvestHelper(AmountItem):-
+    lvlFarmer(Level),
+    Level >=8,
+    random(5, 7, Am),
+    AmountItem is Am.
+
 /*Panen*/
+/*Belum dapat dipanen*/
+harvest:-
+    position(X, _Y),
+    X1 is X+1,
+    seed(_NameSeed, T1, T, Xseed, _Yseed),
+    time(CTime),
+    Ttotal is T1 + T,
+    CTime < Ttotal,
+    X1 =:= Xseed,
+    write('You Can\'t Harvest yet.').
+harvest:-
+    position(X, _Y),
+    X1 is X-1,
+    seed(_NameSeed, T1, T, Xseed, _Yseed),
+    time(CTime),
+    Ttotal is T1 + T,
+    CTime < Ttotal,
+    X1 =:= Xseed,
+    write('You Can\'t Harvest yet.').
+harvest:-
+    position(_X, Y),
+    Y1 is Y+1,
+    seed(_NameSeed, T1, T, _Xseed, Yseed),
+    time(CTime),
+    Ttotal is T1 + T,
+    CTime < Ttotal,
+    Y1 =:= Yseed,
+    write('You Can\'t Harvest yet.').
+harvest:-
+    position(_X, Y),
+    Y1 is Y-1,
+    seed(_NameSeed, T1, T, _Xseed, Yseed),
+    time(CTime),
+    Ttotal is T1 + T,
+    CTime < Ttotal,
+    Y1 =:= Yseed,
+    write('You Can\'t Harvest yet.').
+
+/*Sudah Dapat dipanen*/
 harvest:-
     position(X, _Y),
     X1 is X+1,
@@ -157,13 +240,13 @@ harvest:-
     CTime > Ttotal,
     X1 =:= Xseed,
     retract(atPlant(Xseed, Yseed,_)),
-    random(1, 5, Am),
+    harvestHelper(AmountItem),
     seedHelper(NameSeed, NameFruit,_),
-    addItem(NameFruit, Am, -1),
+    addItem(NameFruit, AmountItem, -1),
     retract(seed(NameSeed, T1, T, Xseed, Yseed)),
     write('You Haversted '), write(NameFruit), nl,
     farmExp(NameSeed, FEXP),
-    SumEXP is FEXP * Am,
+    SumEXP is FEXP * AmountItem,
     farmExpSistem(SumEXP).
 harvest:-
     position(X, _Y),
@@ -174,13 +257,13 @@ harvest:-
     CTime > Ttotal,
     X1 =:= Xseed,
     retract(atPlant(Xseed, Yseed,_)),
-    random(1, 5, Am),
+    harvestHelper(AmountItem),
     seedHelper(NameSeed, NameFruit,_),
-    addItem(NameFruit, Am, -1),
+    addItem(NameFruit, AmountItem, -1),
     retract(seed(NameSeed, T1, T, Xseed, Yseed)),
     write('You Haversted '), write(NameFruit), nl,
     farmExp(NameSeed, FEXP),
-    SumEXP is FEXP * Am,
+    SumEXP is FEXP * AmountItem,
     farmExpSistem(SumEXP).
 harvest:-
     position(_X, Y),
@@ -191,13 +274,13 @@ harvest:-
     CTime > Ttotal,
     Y1 =:= Yseed,
     retract(atPlant(Xseed, Yseed,_)),
-    random(1, 5, Am),
+    harvestHelper(AmountItem),
     seedHelper(NameSeed, NameFruit,_),
-    addItem(NameFruit, Am, -1),
+    addItem(NameFruit, AmountItem, -1),
     retract(seed(NameSeed, T1, T, Xseed, Yseed)),
     write('You Haversted '), write(NameFruit), nl,
     farmExp(NameSeed, FEXP),
-    SumEXP is FEXP * Am,
+    SumEXP is FEXP * AmountItem,
     farmExpSistem(SumEXP).
 harvest:-
     position(_X, Y),
@@ -208,13 +291,13 @@ harvest:-
     CTime > Ttotal,
     Y1 =:= Yseed,
     retract(atPlant(Xseed, Yseed,_)),
-    random(1, 5, Am),
+    harvestHelper(AmountItem),
     seedHelper(NameSeed, NameFruit,_),
-    addItem(NameFruit, Am, -1),
+    addItem(NameFruit, AmountItem, -1),
     retract(seed(NameSeed, T1, T, Xseed, Yseed)),
     write('You Haversted '), write(NameFruit), nl,
     farmExp(NameSeed, FEXP),
-    SumEXP is FEXP * Am,
+    SumEXP is FEXP * AmountItem,
     farmExpSistem(SumEXP).
 
 
