@@ -177,7 +177,7 @@ fishing :-
 /*write what he get*/
 /*he get nothing*/
 gotFish(Item,Exp) :-
-	Item =:= none,
+	Item == none,
 	write('You didn\'t get anything!'), nl,
 	write('You gained '), write(Exp), write(' fishing exp.').
 /*he get a fish*/
@@ -188,11 +188,11 @@ gotFish(Item,Exp) :-
 /*Checking exp mechanism for fisher and non-fisher*/
 /*For fisher, got 20% exp addition*/
 newExp(Exp,NewExp) :-
-	job(Job), Job =:= 'Farmer',
+	job(Job), Job == 'Farmer',
 	AddExp is Exp*0.2,
 	NewExp1 is Exp+AddExp,
 	NewExp is round(NewExp1).
 /*For non-fisher, didn't get any addition*/
 newExp(Exp,NewExp) :-
-	job(Job), Job =/= 'Farmer',
+	job(Job), Job \== 'Farmer',
 	NewExp is Exp.

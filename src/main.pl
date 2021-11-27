@@ -15,6 +15,7 @@
 :- include('inventory.pl').
 :- include('farming.pl').
 :- include('ranching.pl').
+:- include('fishing.pl').
 
 /* startGame: Menu awal game */
 started(0).
