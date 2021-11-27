@@ -103,6 +103,11 @@ addExpTotal(X) :-
 	asserta(expTotal(E1, C)),
 	lvlUpTotal.
 
+/* writeAddExpTotal: Menambah EXP Total ke player sebanyak X dan menuliskan di layar */
+writeAddExpTotal(X) :-
+	write('You gained '), write(X), write(' total exp!'), nl,
+	addExpTotal(X).
+
 /* addExpFisher: Menambah EXP Fisher ke player sebanyak X */
 addExpFisher(X) :- 
 	expFisher(E, C), 
