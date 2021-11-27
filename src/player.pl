@@ -141,7 +141,7 @@ addExpRancher(X) :-
 /* writeAddExpFarmer: Menambah EXP Fisher ke player sebanyak X dan menuliskan di layar */
 writeAddExpRancher(X) :-
 	write('You gained '), write(X), write(' ranching exp!'), nl,
-	addExpRanching(X).
+	addExpRancher(X).
 
 /* lvlUp: cek untuk level up, jika melebihi capacity naik level, sesuai job */
 lvlUpTotal :- 
@@ -185,7 +185,10 @@ lvlUpFarmer :-
 
 lvlUpRancher :- 
 	expRancher(X, C), 
-	X >= C, !,
+	X < C, !.
+lvlUpRancher :- 
+	expRancher(X, C), 
+	X >= C,
 	lvlRancher(L),
 	L1 is L + 1,
 	X1 is X - C,
