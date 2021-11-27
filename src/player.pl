@@ -78,7 +78,8 @@ addGold(A) :-
 	gold(G), 
 	G1 is G + A, 
 	retract(gold(G)), 
-	asserta(gold(G1)).
+	asserta(gold(G1)),
+	goalState.
 
 /* writeAddGold: Menambah Gold player sebanyak A dan menuliskan di layar */
 writeAddGold(A) :- 
@@ -252,3 +253,13 @@ exitHouse :-
 	isInsideHouse(1),
 	retractall(isInsideHouse(_)),
 	asserta(isInsideHouse(0)).
+
+goalState :- 
+	gold(X),
+	X < 20000,
+	!.
+goalState :- 
+	gold(X),
+	X >= 20000,
+	nl, write('Congratulations! You have finally collected 20000 golds!'), nl,
+	halt.

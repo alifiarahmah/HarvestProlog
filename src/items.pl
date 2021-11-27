@@ -164,7 +164,6 @@ sell :-
     ;   Flag =:= 1 ->
         invenItem(Name, Amount, Level),
         items(Name, Price),
-        gold(CurMoney),
         write('How many do you want to sell ?'), nl,
         write('> '),
         read_integer(SellAmnt),
@@ -172,13 +171,10 @@ sell :-
             write('You don\'t have enough item'), nl,
             fail
         ;   Amount >= SellAmnt ->
-            retractall(gold(_)),
             AddedGold is SellAmnt * Price,
-            CurMoney1 is CurMoney + AddedGold,
-            asserta(gold(CurMoney1)),
-            delItem(Name, SellAmnt, Level),
             write('You sold '), write(SellAmnt), write(' '), write(Name), write('.'), nl,
-            write('You received '), write(AddedGold), write(' golds.'), nl
+            writeAddGold(AddedGold),
+            delItem(Name, SellAmnt, Level)
         )
     ), !.
 
