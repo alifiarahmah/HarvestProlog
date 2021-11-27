@@ -145,7 +145,6 @@ fishing :-
 	random(1,26,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addItem(Fish,1,-1),
 	addTimeFishing(Fish).
 /*For fishing level 3-4*/
 fishing :-
@@ -154,7 +153,6 @@ fishing :-
 	random(1,40,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addItem(Fish,1,-1),
 	addTimeFishing(Fish).
 /*For fishing level 5-6*/
 fishing :-
@@ -163,7 +161,6 @@ fishing :-
 	random(1,54,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addItem(Fish,1,-1),
 	addTimeFishing(Fish).
 /*For fishing level 7-8*/
 fishing :-
@@ -172,7 +169,6 @@ fishing :-
 	random(1,68,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addItem(Fish,1,-1),
 	addTimeFishing(Fish).
 /*For fishing level >= 9*/
 fishing :-
@@ -181,7 +177,6 @@ fishing :-
 	random(1,82,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addItem(Fish,1,-1),
 	addTimeFishing(Fish).
 
 /*write what he get and update the quest*/
@@ -194,6 +189,7 @@ gotFish(Item,Exp) :-
 gotFish(Item,Exp) :-
 	write('You got '), write(Item), write('!'), nl,
 	write('You gained '), write(Exp), write(' fishing exp.'),
+	addItem(Item,1,-1),
 	ongoingQ(X,Y,Z),
 	X1 is X,
 	Y1 is Y-1,
