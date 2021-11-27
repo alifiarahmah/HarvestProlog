@@ -45,7 +45,8 @@ initPlayer :-
 	asserta(lvlFisher(1)), 
 	asserta(lvlFarmer(1)), 
 	asserta(lvlRancher(1)),
-	prepareJob.
+	prepareJob,
+	initTimeRanch. % Inisialisasi waktu ambil hasil ternak
 
 /* status: Menulis stats player: job, level & exp total dan masing2 job */
 status :-
@@ -155,7 +156,7 @@ lvlUpTotal :-
 	retract(expTotal(X, C)),
 	asserta(expTotal(X1, C1)),
 	retract(lvlTotal(L)),
-	asserta(lvlTotal(L1)).
+	asserta(lvlTotal(L1)),
 	lvlUpTotal.
 
 lvlUpFisher :- 
@@ -168,7 +169,7 @@ lvlUpFisher :-
 	retract(expFisher(X, C)),
 	asserta(expFisher(X1, C1)),
 	retract(lvlFisher(L)),
-	asserta(lvlFisher(L1)).
+	asserta(lvlFisher(L1)),
 	lvlUpFisher.
 
 lvlUpFarmer :- 
@@ -181,7 +182,7 @@ lvlUpFarmer :-
 	retract(expFarmer(X, C)),
 	asserta(expFarmer(X1, C1)),
 	retract(lvlFarmer(L)),
-	asserta(lvlFarmer(L1)).
+	asserta(lvlFarmer(L1)),
 	lvlUpFarmer.
 
 lvlUpRancher :- 
@@ -197,7 +198,8 @@ lvlUpRancher :-
 	retract(expRancher(X, C)),
 	asserta(expRancher(X1, C1)),
 	retract(lvlRancher(L)),
-	asserta(lvlRancher(L1)).
+	asserta(lvlRancher(L1)),
+	decreaseTimeRanch,
 	lvlUpRancher.
 
 isInsideHouse(0).
