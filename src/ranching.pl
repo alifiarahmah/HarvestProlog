@@ -30,7 +30,7 @@ exp_buffalo(15).
 
 /* initRanch: inisialisasi banyak hewan ternak */
 initRanch :- 
-	job(X), X \= rancher,
+	job(X), X =\= rancher,
 	asserta(chicken(0)),
 	asserta(chicken_egg(0)),
 	asserta(cow(0)),
@@ -158,3 +158,79 @@ sheep :-
 	write('You got '), write(Y), write('sheep wools!'),
 	exp_sheep(X), ExpRanch is Y * X, addExpRancher(ExpRanch),
 	write('You gained '), write(ExpRanch), (' ranching EXP!'), nl.
+
+/* goat: cek kambing */
+
+goat :- 
+	checkInRanch,
+	goat(X), X =:= 0,
+	write('You don\'t have any goat!'), nl.
+
+goat :- 
+	checkInRanch,
+	goat(X), X > 0,
+	goat_milk(Y), Y =:= 0, 
+	write('Your goat hasn\'t produced any milk.'), nl,
+	write('Please check again later.'), nl.
+
+goat :- 
+	checkInRanch,
+	goat(Y), Y > 0, 
+	write('Your goat produced '), write(Y), write(' milks.'), nl,
+	addItem(goat_milk, Y, -1),
+	retract(goat_milk(Y)), asserta(goat_milk(0)),
+	write('You got '), write(Y), write('goat milks!'),
+	exp_goat(X), ExpRanch is Y * X, addExpRancher(ExpRanch),
+	write('You gained '), write(ExpRanch), (' ranching EXP!'), nl.
+
+/* duck */
+
+duck :- 
+	checkInRanch,
+	duck(X), X =:= 0,
+	write('You don\'t have any duck!'), nl.
+
+duck :- 
+	checkInRanch,
+	duck(X), X > 0,
+	duck_egg(Y), Y =:= 0, 
+	write('Your duck hasn\'t lay any eggs.'), nl,
+	write('Please check again later.'), nl.
+
+duck :- 
+	checkInRanch,
+	duck_egg(Y), Y > 0, 
+	write('Your duck lays '), write(Y), write(' eggs.'), nl,
+	addItem(duck_egg, Y, -1),
+	retract(duck_egg(Y)), asserta(duck_egg(0)),
+	write('You got '), write(Y), write('eggs!'),
+	exp_duck(X), ExpRanch is Y * X, addExpRancher(ExpRanch),
+	write('You gained '), write(ExpRanch), (' ranching EXP!'), nl.
+
+/* horse */
+
+horse :- 
+	checkInRanch,
+	sheep(X), X =:= 0,
+	write('You don\'t have any cows!'), nl.
+
+horse :- 
+	checkInRanch,
+	cow(X), X > 0,
+	cow_milk(Y), Y =:= 0, 
+	write('Your cow hasn\'t produced any milk.'), nl,
+	write('Please check again later.'), nl.
+
+horse :- 
+	checkInRanch,
+	cow(Y), Y > 0, 
+	write('Your cow produced '), write(Y), write(' milks.'), nl,
+	addItem(horse_milk, Y, -1),
+	retract(horse_milk(Y)), asserta(cow_milk(0)),
+	write('You got '), write(Y), write('cow milks!'),
+	exp_cow(X), ExpRanch is Y * X, addExpRancher(ExpRanch),
+	write('You gained '), write(ExpRanch), (' ranching EXP!'), nl.
+
+/* angora rabbit */
+
+/* buffaloo */

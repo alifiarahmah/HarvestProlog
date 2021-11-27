@@ -121,7 +121,7 @@ addExpRancher(X) :-
 	addExpTotal(E1),
 	lvlUpRancher.
 
-/* lvlUp: cek untuk level up, jika melebihi capacity naik level */
+/* lvlUp: cek untuk level up, jika melebihi capacity naik level, sesuai job */
 lvlUpTotal :- 
 	expTotal(X, C), 
 	X >= C, !,
@@ -134,3 +134,42 @@ lvlUpTotal :-
 	retract(lvlTotal(L)),
 	asserta(lvlTotal(L1)).
 	lvlUpTotal.
+
+lvlUpFisher :- 
+	expFisher(X, C), 
+	X >= C, !,
+	lvlFisher(L),
+	L1 is L + 1,
+	X1 is X - C,
+	C1 is C + 150, /* Tiap naik level, batas exp naik +150 */
+	retract(expFisher(X, C)),
+	asserta(expFisher(X1, C1)),
+	retract(lvlFisher(L)),
+	asserta(lvlFisher(L1)).
+	lvlUpFisher.
+
+lvlUpFarmer :- 
+	expFarmer(X, C), 
+	X >= C, !,
+	lvlFarmer(L),
+	L1 is L + 1,
+	X1 is X - C,
+	C1 is C + 150, /* Tiap naik level, batas exp naik +150 */
+	retract(expFarmer(X, C)),
+	asserta(expFarmer(X1, C1)),
+	retract(lvlFarmer(L)),
+	asserta(lvlFarmer(L1)).
+	lvlUpFarmer.
+
+lvlUpRancher :- 
+	expRancher(X, C), 
+	X >= C, !,
+	lvlRancher(L),
+	L1 is L + 1,
+	X1 is X - C,
+	C1 is C + 150, /* Tiap naik level, batas exp naik +150 */
+	retract(expRancher(X, C)),
+	asserta(expRancher(X1, C1)),
+	retract(lvlRancher(L)),
+	asserta(lvlRancher(L1)).
+	lvlUpRancher.

@@ -1,0 +1,1 @@
+gprolog --consult-file src/main.pl
