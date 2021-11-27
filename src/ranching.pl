@@ -117,7 +117,15 @@ resetLivestockTimer(Livestock) :-
 	retractall(livestock(Livestock, _, CTime)),
 	asserta(livestock(Livestock, CTime, RanchTime)).
 
-/* fulfillQuest */
+/* fulfillQuest: Mengurang jumlah ranching di quest */
+fulfillRanchQuest(_) :-
+	\+ongoingQ(_, _, _),
+	fail.
+fulfillRanchQuest(Amount) :-
+	ongoingQ(X, Y, QuestAmount),
+	QuestAmount < Amount,
+	retract(ongoingQ(X, Y, QuestAmount)),
+	asserta(ongoingQ(X, Y, 0)).
 fulfillRanchQuest(Amount) :-
 	ongoingQ(X, Y, QuestAmount),
 	QuestAmount >= Amount,
@@ -142,8 +150,8 @@ checkLivestock(Livestock, _) :- % kasus tidak ada Livestock
 	invenItem(Livestock, Amount, -1),
 	Amount = 0,
 	strLivestock(Livestock, StrLivestock),
-	write('You don\'t have any'), write(StrLivestock), write('!'), nl, 
-	fail.
+	write('You don\'t have any '), write(StrLivestock), write('!'), nl, 
+	!.
 checkLivestock(Livestock, Product) :- % kasus ada livestock, tapi belum bisa ambil hasil
 	invenItem(Livestock, Amount, -1),
 	Amount > 0,
@@ -151,8 +159,9 @@ checkLivestock(Livestock, Product) :- % kasus ada livestock, tapi belum bisa amb
 	strProduct(Product, StrProduct),
 	isRanchTime(Livestock, Flag),
 	Flag = 0,
-	write('Your '), write(StrLivestock), write(' hasn\'t produced any '), write(StrProduct), nl,
-	write('Please check again later.'), nl.
+	write('Your '), write(StrLivestock), write(' hasn\'t produced any '), write(StrProduct), write('s'), nl,
+	write('Please check again later.'), nl, 
+	!.
 checkLivestock(Livestock, Product) :- % kasus ada livestock dan bisa ambil hasil
 	invenItem(Livestock, Amount, -1),
 	Amount > 0,
@@ -160,7 +169,8 @@ checkLivestock(Livestock, Product) :- % kasus ada livestock dan bisa ambil hasil
 	strProduct(Product, StrProduct),
 	isRanchTime(Livestock, Flag),
 	Flag = 1,
-	write('Your '), write(StrLivestock), write(' produced '), write(Amount), write(' '), write(StrProduct), nl,
+	write('Your '), write(StrLivestock), write(' produced '), 
+	write(Amount), write(' '), write(StrProduct), nl,
 	write('You got '), write(Amount), write(' '), write(StrProduct), write('!'), nl,
 	addItem(Product, Amount, -1),
 	fulfillRanchQuest(Amount),
