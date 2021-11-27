@@ -22,6 +22,17 @@ chooseJob(3, 'Rancher').
 
 initiated(0).
 
+/* prepareJob: Menyiapkan inventory sesuai job (WIP) */
+prepareJob :- 
+	job(X), X = 'Fisherman',
+	addItem(fishing_rod, 1, 1).
+prepareJob :- 
+	job(X), X = 'Farmer',
+	addItem(shovel, 1, 1).
+prepareJob :- 
+	job(X), X = 'Rancher',
+	addItem(handcarts, 1, 1).
+
 /* initPlayer: Menyiapkan status awal player sebelum mulai bermain */
 initPlayer :- 
 	asserta(gold(1000)),
@@ -32,12 +43,8 @@ initPlayer :-
 	asserta(lvlTotal(1)), 
 	asserta(lvlFisher(1)), 
 	asserta(lvlFarmer(1)), 
-	asserta(lvlRancher(1)).
-	/*initRanch.*/
-
-/* prepareJob: Menyiapkan inventory sesuai job (WIP) */
-prepareJob(X) :- 
-	write('Anda mendapat alat-alat untuk '), write(X), nl.
+	asserta(lvlRancher(1)),
+	prepareJob.
 
 /* status: Menulis stats player: job, level & exp total dan masing2 job */
 status :-
