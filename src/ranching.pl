@@ -61,16 +61,16 @@ strProduct(horse_milk, 'horse milk').
 strProduct(angora_wool, 'angora wool').
 strProduct(buffalo_milk, 'buffalo milk').
 
-/* checkInRanch: cek apakah posisi pemain di tile ranch */
-checkInRanch :- position(X, Y), isAtRanch(X,Y).
+/* isInRanch: cek apakah posisi pemain di tile ranch */
+isInRanch :- position(X, Y), isAtRanch(X,Y).
 
 /* ranch: antarmuka jumlah hewan ternak */
 ranch :-
-	\+checkInRanch,
+	\+isInRanch,
 	write('You are not in ranch!'), nl,
 	!.
 ranch :-
-	checkInRanch,
+	isInRanch,
 	invenItem(chicken, ChickenAmount, -1),
 	invenItem(cow, CowAmount, -1),
 	invenItem(sheep, SheepAmount, -1),
@@ -152,18 +152,18 @@ buffalo :- checkLivestock(buffalo, buffalo_milk).
 /* checkLivestock */
 
 checkLivestock(_, _) :-
-	\+checkInRanch,
+	\+isInRanch,
 	write('You\'re not in ranch!'), nl,
 	!, fail.
 checkLivestock(Livestock, _) :- % kasus tidak ada Livestock
-	checkInRanch,
+	isInRanch,
 	invenItem(Livestock, Amount, -1),
 	Amount = 0,
 	strLivestock(Livestock, StrLivestock),
 	write('You don\'t have any '), write(StrLivestock), write('!'), nl, 
 	!.
 checkLivestock(Livestock, Product) :- % kasus ada livestock, tapi belum bisa ambil hasil
-	checkInRanch,
+	isInRanch,
 	invenItem(Livestock, Amount, -1),
 	Amount > 0,
 	strLivestock(Livestock, StrLivestock),
@@ -174,7 +174,7 @@ checkLivestock(Livestock, Product) :- % kasus ada livestock, tapi belum bisa amb
 	write('Please check again later.'), nl, 
 	!.
 checkLivestock(Livestock, Product) :- % kasus ada livestock dan bisa ambil hasil
-	checkInRanch,
+	isInRanch,
 	invenItem(Livestock, Amount, -1),
 	Amount > 0,
 	strLivestock(Livestock, StrLivestock),
