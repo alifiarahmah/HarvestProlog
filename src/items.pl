@@ -17,6 +17,18 @@ equipmentUpgrade(handcarts, 2, 3, 1000).
 
 /* seeds */
 
+items(tomato_seed, 150).
+items(corn_seed, 250).
+items(eggplant_seed, 70).
+items(chilli_seed, 100).
+items(apple_seed, 70).
+items(pineapple_seed, 250).
+items(grape_seed, 70).
+items(turnip_seed, 70).
+items(pomegranate_seed, 100).
+items(strawberry_seed, 100).
+
+/*Fruit*/
 items(tomato, 200).
 items(corn, 300).
 items(eggplant, 120).
@@ -66,7 +78,7 @@ items(buffalo_milk, 200).
 
 isShopping(0).
 
-shopItemsList([tomato, corn, eggplant, chilli, apple, pineapple, grape, turnip, pomegranate, strawberry, chicken, cow, sheep, goat, duck, horse, angora_rabbit, buffalo]).
+shopItemsList([tomato_seed, corn_seed, eggplant_seed, chilli_seed, apple_seed, pineapple_seed, grape_seed, turnip_seed, pomegranate_seed, strawberry_seed, chicken, cow, sheep, goat, duck, horse, angora_rabbit, buffalo]).
 
 market :-
     position(X,Y),

@@ -1,6 +1,5 @@
 :- dynamic(invenItem/3).
 :- dynamic(equipment/3).
-:- dynamic(nameItem/1).
 :- dynamic(sumItem/1).
 
 /*invenItem(A,B,C) -> A nama, B quantity, C level (-1 if nontools) */
@@ -11,6 +10,18 @@ equipment(fishing_rod, 0, 1).
 equipment(handcarts, 0, 1).
 
 /* seeds */
+invenItem(tomato_seed, 0, -1).
+invenItem(corn_seed, 0, -1).
+invenItem(eggplant_seed, 0, -1).
+invenItem(chilli_seed, 0, -1).
+invenItem(apple_seed, 0, -1).
+invenItem(pineapple_seed, 0, -1).
+invenItem(grape_seed, 0, -1).
+invenItem(turnip_seed, 0, -1).
+invenItem(pomegranate_seed, 0, -1).
+invenItem(strawberry_seed, 0, -1).
+
+/*Fruit*/
 invenItem(tomato, 0, -1).
 invenItem(corn, 0, -1).
 invenItem(eggplant, 0, -1).
@@ -55,47 +66,72 @@ invenItem(angora_wool, 0, -1).
 invenItem(buffalo_milk, 0, -1).
 
 /*Initial Nama Item*/
-nameItem([]).
+nameItem([tomato_seed, corn_seed, eggplant_seed, chilli_seed, apple_seed, pineapple_seed, grape_seed, turnip_seed, pomegranate_seed, strawberry_seed, tomato, corn, eggplant, chilli, apple, pineapple, grape, turnip, pomegranate, strawberry, tuna, salmon, catfish, musky, bass, bluegill, trout, carp, cod, pufferfish,chicken_egg,cow_milk, sheep_wool, goat_milk,duck_egg,horse_milk,angora_wool,buffalo_milk]).
+
+nameEquipment([shovel, fishing_rod, handcarts]).
 
 /*Initial Jumlah Item*/
 sumItem(0).
 
-srcItem([], _Name, Flag) :- Flag is 0, !.
-srcItem([A|_], Name, Flag) :- A == Name, Flag is 1, !.
-srcItem([Head|Tail], Name, Flag) :- 
+/*Search Item in Inventroy*/
+srcItem([Head|_Tail], Name, Flag):-
+    Head == Name,
+    invenItem(Name, Amount, _),
+    Amount =:= 0,
+    Flag is 0.
+srcItem([Head|_Tail], Name, Flag):-
+    Head == Name,
+    invenItem(Name, Amount, _),
+    Amount > 0,
+    Flag is 1.
+srcItem([Head|Tail], Name, Flag):-
     Head \== Name,
     srcItem(Tail, Name, Flag).
 
-insertFirst(List, Elmt, [Elmt|List]) :- !.
+srcEquipment([Head|_Tail], Name, Flag):-
+    Head == Name,
+    equipment(Name, Amount, _),
+    Amount =:= 0,
+    Flag is 0.
+srcEquipment([Head|_Tail], Name, Flag):-
+    Head == Name,
+    equipment(Name, Amount, _),
+    Amount > 0,
+    Flag is 1.
+srcEquipment([Head|Tail], Name, Flag):-
+    Head \== Name,
+    srcEquipment(Tail, Name, Flag).
 
-addItem(Name, Amount, Level) :-
-    nameItem(List),
-    srcItem(List, Name, Flag),
-    Flag =:= 1,
-    invenItem(Name, PrevAmount, Level),
-    sumItem(Sum),
-    CurrenAmount is PrevAmount + Amount,
-    CurrenSum is Sum + Amount,
-    retract(sumItem(Sum)),
+
+
+/*AddItem to Inventory*/
+addItemHelper(SumItem, Name, Amount, Level):-
+    SumItem < 101,
+    invenItem(Name, PrevAmount,Level),
+    CAmount is PrevAmount + Amount,
+    CSum is SumItem + Amount,
+    retractall(sumItem(_)),
     retract(invenItem(Name, PrevAmount, Level)),
-    asserta(sumItem(CurrenSum)),
-    asserta(invenItem(Name, CurrenAmount, Level)).
+    asserta(sumItem(CSum)),
+    asserta(invenItem(Name, CAmount, Level)).
+addItemHelper(SumItem, _Nama, _Amount, _Level):- SumItem > 100,!.
 
-addItem(Name, Amount, Level) :-
-    nameItem(List),
-    srcItem(List, Name, Flag),
-    Flag =:= 0,
-    retract(nameItem(List)),
-    insertFirst(List, Name, Result),
-    asserta(nameItem(Result)),
-    invenItem(Name, PrevAmount, Level),
-    sumItem(Sum),
-    CurrenSum is Sum + Amount,
-    retract(sumItem(Sum)),
-    retract(invenItem(Name, PrevAmount, Level)),
-    asserta(sumItem(CurrenSum)),
-    asserta(invenItem(Name, Amount, Level)).
+addEquipmentHelper(SumItem, Name, Amount, Level):-
+    SumItem < 101,
+    equipment(Name, PrevAmount,Level),
+    CAmount is PrevAmount + Amount,
+    CSum is SumItem + Amount,
+    retractall(sumItem(_)),
+    retract(equipment(Name, PrevAmount, Level)),
+    asserta(sumItem(CSum)),
+    asserta(equipment(Name, CAmount, Level)).
+addEquipmentHelper(SumItem, _Nama, _Amount, _Level):- SumItem > 100,!.
 
+addItem(Name, Amount, Level) :- sumItem(Sum), addItemHelper(Sum, Name, Amount, Level).
+
+addEquipment(Name, Amount, Level) :- sumItem(Sum), addEquipmentHelper(Sum, Name, Amount, Level).
+
+/*delete Item in Inventory*/
 delItem(Name, Amount, Level) :-
     nameItem(List),
     srcItem(List, Name, Flag),
@@ -109,71 +145,92 @@ delItem(Name, Amount, Level) :-
     asserta(sumItem(CurrenSum)),
     asserta(invenItem(Name, CurrenAmount, Level)).
 
-delItem(Name, Amount, Level) :-
+delItem(Name, _Amount, _Level) :-
     nameItem(List),
     srcItem(List, Name, Flag),
-    Flag =:= 0,
-    retract(nameItem(List)),
-    insertFirst(List, Name, Result),
-    asserta(nameItem(Result)),
-    invenItem(Name, PrevAmount, Level),
+    Flag =:= 0,!.
+
+delEquipment(Name, Amount, Level):-
+    nameEquipment(List),
+    srcEquipment(List, Name, Flag),
+    Flag =:= 1,
+    equipment(Name, PrevAmount, Level),
     sumItem(Sum),
+    CurrenAmount is PrevAmount - Amount,
     CurrenSum is Sum - Amount,
     retract(sumItem(Sum)),
-    retract(invenItem(Name, PrevAmount, Level)),
+    retract(equipment(Name, PrevAmount, Level)),
     asserta(sumItem(CurrenSum)),
-    asserta(invenItem(Name, Amount, Level)).
+    asserta(equipment(Name, CurrenAmount, Level)).
+
+delEquipment(Name, _Amount, _Level):-
+    nameEquipment(List),
+    srcEquipment(List, Name, Flag),
+    Flag =:= 0,!.
 
 
-/*Kalau menggunakan shovel1, bermasalah nanti saat print ke layar*/
-inventory([]):- !.
-inventory([Head|Tail]):-
+/*Show The Inventory*/
+inventoryItem([]):- !.
+inventoryItem([Head|Tail]):-
     invenItem(Head, Amount, _),
     Amount =:= 0,
-    inventory(Tail).
-inventory([Head|Tail]):-
-    invenItem(Head, Amount, Level),
-    Amount > 0,
-    Level > 0,
-    write(Amount), write(' Level '), write(Level),write(' '), write(Head), nl,
-    inventory(Tail).
-inventory([Head|Tail]):-
+    inventoryItem(Tail).
+inventoryItem([Head|Tail]):-
     invenItem(Head, Amount, Level),
     Amount > 0,
     Level =:= -1,
     write(Amount), write(' '), write(Head), nl,
-    inventory(Tail).
+    inventoryItem(Tail).
+inventoryEquipment([]):- !.
+inventoryEquipment([Head|Tail]):-
+    equipment(Head, Amount, _),
+    Amount =:= 0,
+    inventoryEquipment(Tail).
+inventoryEquipment([Head|Tail]):-
+    equipment(Head, Amount, Level),
+    Amount > 0,
+    Level > 0,
+    write(Amount), write(' Level '), write(Level),write(' '), write(Head), nl,
+    inventoryEquipment(Tail).
 inventory:-
     nl,
     sumItem(Sum),
     write('Your inventory ('), write(Sum), write('/100)'), nl,
-    nameItem(List),
-    inventory(List).
+    nameEquipment(ListEquipment),
+    inventoryEquipment(ListEquipment),
+    nameItem(ListItem),
+    inventoryItem(ListItem).
 
-
-throwItem(Throw, Amount, Item):-
+/*Throw Item from Inventory*/
+throwItemHelper2(Throw, Amount, Item, _Level):-
     Throw > Amount,
     write('You dont have enough '), write(Item), write('. Cancelling...'), nl.
 
-throwItem(Throw, Amount, Item):-
+throwItemHelper2(Throw, Amount, Item, _Level):-
     Throw <  Amount+1,
-    retract(invenItem(Item, Amount, _)),
-    Camount is Amount - Throw,
-    asserta(invenItem(Item,Camount, _)),
-    sumItem(Sum),
-    Csum is Sum - Throw,
-    retract(sumItem(Sum)),
-    asserta(sumItem(Csum)),
+    delItem(Item, Throw,_),
     write('You throw away '), write(Throw), write(' '), write(Item), nl.
+throwItemHelper2(Throw, Amount, Item, Level):-
+    Throw <  Amount+1,
+    delEquipment(Item, Throw,Level),
+    write('You throw away '), write(Throw), write(' level '), write(Level), write(' '), write(Item), nl.
+
+throwItemHelper(Item):-
+    invenItem(Item, Amount, _Level),
+    write('You have '), write(Amount), write(' '), write(Item), write('. How many do you want to throw?'),nl,
+    write('> '), read(Throw),
+    throwItemHelper2(Throw, Amount, Item,_Level).
+throwItemHelper(Item):-
+    equipment(Item, Amount, Level),
+    write('You have '), write(Amount), write(' level '), write(Level), write(' '), write(Item), write('. How many do you want to throw?'),nl,
+    write('> '), read(Throw),
+    throwItemHelper2(Throw, Amount, Item, Level).
 
 throwItem :-
     inventory,
     write('What do you want to throw ?'), nl,
     write('> '), read(Item), nl,
-    invenItem(Item, Amount, _),
-    write('You have '), write(Amount), write(' '), write(Item), write('. How many do you want to throw?'),nl,
-    write('> '), read(Throw),
-    throwItem(Throw, Amount, Item).
+    throwItemHelper(Item).
 
 
 

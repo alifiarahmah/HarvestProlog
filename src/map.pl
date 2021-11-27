@@ -5,7 +5,7 @@
 :- dynamic(quest/2).
 :- dynamic(air/2).
 :- dynamic(atDig/2).
-:- dynamic(atPlant/2).
+:- dynamic(atPlant/3).
 /* MAP */
 
 panjang(16).
@@ -97,7 +97,7 @@ isPlayer(X,Y):-
 	position(X,Y).
 
 isBlank(X,Y) :-
-	\+isAtMarketplace(X,Y), \+isAtRanch(X,Y), \+isAtHouse(X,Y), \+isAtQuest(X,Y), \+isAtAir(X,Y), \+isSide(X,Y), \+isPlayer(X,Y), \+atDig(X,Y), \+atPlant(X,Y).
+	\+isAtMarketplace(X,Y), \+isAtRanch(X,Y), \+isAtHouse(X,Y), \+isAtQuest(X,Y), \+isAtAir(X,Y), \+isSide(X,Y), \+isPlayer(X,Y), \+atDig(X,Y), \+atPlant(X,Y, _Sim).
 
 writeS(X,Y) :- \+isPlayer(X,Y), isAtMarketplace(X,Y), write('M'), !.
 writeS(X,Y) :- \+isPlayer(X,Y), isAtRanch(X,Y), write('R'), !.
@@ -109,7 +109,7 @@ writeS(X,Y) :- \+isPlayer(X,Y), isSide(X,Y), panjang(P), X =:= P + 1, write('#')
 writeS(X,Y) :- isPlayer(X,Y), write('P'), !.
 writeS(X,Y) :- isBlank(X,Y), write('-'), !.
 writeS(X,Y) :- atDig(X, Y), write('='),!.
-writeS(X,Y) :- atPlant(X,Y), write('f'),!.
+writeS(X,Y) :- atPlant(X,Y, Sim), write(Sim),!.
 
 displayMap(K) :- panjang(P), lebar(L), P2 is (P + 2), L2 is (L + 2), K =:= (P2*L2), nl, !.
 
