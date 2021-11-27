@@ -110,6 +110,11 @@ addExpFisher(X) :-
 	addExpTotal(E1),
 	lvlUpFisher.
 
+/* writeAddExpFisher: Menambah EXP Fisher ke player sebanyak X dan menuliskan di layar */
+writeAddExpFisher(X) :-
+	write('You gained '), write(X), write(' fishing exp!'), nl,
+	addExpFisher(X).
+
 /* addExpFarmer: Menambah EXP Farmer ke player sebanyak X */
 addExpFarmer(X) :- 
 	expFarmer(E, C), 
@@ -119,6 +124,11 @@ addExpFarmer(X) :-
 	addExpTotal(E1),
 	lvlUpFarmer.
 
+/* writeAddExpFarmer: Menambah EXP Fisher ke player sebanyak X dan menuliskan di layar */
+writeAddExpFarmer(X) :-
+	write('You gained '), write(X), write(' farming exp!'), nl,
+	addExpFarmer(X).
+
 /* addExpRancher: Menambah EXP Rancher ke player sebanyak X */
 addExpRancher(X) :- 
 	expRancher(E, C), 
@@ -127,6 +137,11 @@ addExpRancher(X) :-
 	asserta(expRancher(E1, C)),
 	addExpTotal(E1),
 	lvlUpRancher.
+
+/* writeAddExpFarmer: Menambah EXP Fisher ke player sebanyak X dan menuliskan di layar */
+writeAddExpRanching(X) :-
+	write('You gained '), write(X), write(' ranching exp!'), nl,
+	addExpRanching(X).
 
 /* lvlUp: cek untuk level up, jika melebihi capacity naik level, sesuai job */
 lvlUpTotal :- 
