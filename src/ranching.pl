@@ -2,8 +2,10 @@
 
 /* Deklarasi fakta livestock */
 /* Format: livestock(<nama>, <waktu awal beli/setelah ambil sebelumnya>, <waktu ambil hasil ternak>) */
-/* TO DO: di marketplace tambah buat asserta livestock */
 :- dynamic(livestock/3).
+
+/* Deklarasi durasi dapat mengambil hasil ternak, dalam jam */
+:- dynamic(timeRanch/2).
 
 /* Deklarasi fakta EXP yang didapat per hasil ternak */
 ranchExp(chicken, 3).
@@ -15,15 +17,32 @@ ranchExp(horse, 10).
 ranchExp(angora_rabbit, 15).
 ranchExp(buffalo, 15).
 
-/* Deklarasi durasi dapat mengambil hasil ternak, dalam jam */
-timeRanch(chicken, 6).
-timeRanch(cow, 6).
-timeRanch(sheep, 6).
-timeRanch(goat, 6).
-timeRanch(duck, 6).
-timeRanch(horse, 6).
-timeRanch(angora_rabbit, 6).
-timeRanch(buffalo, 6).
+/* initRanch: inisialisasi durasi dapat hasil ternak saat pertama main */
+initTimeRanch :-
+	asserta(timeRanch(chicken, 6)),
+	asserta(timeRanch(cow, 6)),
+	asserta(timeRanch(sheep, 6)),
+	asserta(timeRanch(goat, 6)),
+	asserta(timeRanch(duck, 6)),
+	asserta(timeRanch(horse, 6)),
+	asserta(timeRanch(angora_rabbit, 6)),
+	asserta(timeRanch(buffalo, 6)).
+
+/* decreaseTimeRanch: Mengecek dan mengurangi timeRanch */
+/* Setiap naik ke level 5, 10, 15... (kelipatan 5), timeRanch berkurang 1 */
+decreaseTimeRanch :-
+	lvlRancher(Lvl, _),
+	ModLvl is Lvl mod 5,
+	ModLvl =\= 0,
+	fail.
+decreaseTimeRanch :-
+	lvlRancher(Lvl, _),
+	ModLvl is Lvl mod 5,
+	ModLvl =:= 0,
+	timeRanch(_, Time),
+	Time1 is Time - 1,
+	retractall(timeRanch(_, _)),
+	asserta(timeRanch(_, Time1)).
 
 /* Deklarasi string untuk write */
 strLivestock(chicken, 'chicken').
