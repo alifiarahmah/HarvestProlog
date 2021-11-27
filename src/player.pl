@@ -6,14 +6,10 @@
 /* Dynamic facts */
 :- dynamic(job/1).
 :- dynamic(gold/1).
-:- dynamic(expTotal/1).
-:- dynamic(expTotalCapacity/1).
-:- dynamic(expFisher/1).
-:- dynamic(expFisherCapacity/1).
-:- dynamic(expFarmer/1).
-:- dynamic(expFarmerCapacity/1).
-:- dynamic(expRancher/1).
-:- dynamic(expRancherCapacity/1).
+:- dynamic(expTotal/2).
+:- dynamic(expFisher/2).
+:- dynamic(expFarmer/2).
+:- dynamic(expRancher/2).
 :- dynamic(lvlTotal/1).
 :- dynamic(lvlFisher/1).
 :- dynamic(lvlFarmer/1).
@@ -29,9 +25,14 @@ initiated(0).
 /* initPlayer: Menyiapkan status awal player sebelum mulai bermain */
 initPlayer :- 
 	asserta(gold(1000)),
-	asserta(totalexp(0)), asserta(expCapacity(300)),
-	asserta(lvlTotal(1)), asserta(lvlFisher(1)), asserta(lvlFarmer(1)), asserta(lvlRancher(1)),
-	asserta(expTotal(0)), asserta(expFisher(0)), asserta(expFarmer(0)), asserta(expRancher(0)).
+	asserta(expTotal(0, 300)),
+	asserta(expFisher(0, 300)),
+	asserta(expFarmer(0, 300)),
+	asserta(expRancher(0, 300)),
+	asserta(lvlTotal(1)), 
+	asserta(lvlFisher(1)), 
+	asserta(lvlFarmer(1)), 
+	asserta(lvlRancher(1)).
 	/*initRanch.*/
 
 /* prepareJob: Menyiapkan inventory sesuai job (WIP) */
@@ -53,18 +54,22 @@ status :-
 	write('  O   Job  : '), job(Job), write(Job), nl,
 	write(' /|\\  Gold : '), gold(G), write(G), write(' G'), nl,
 	write('  |   Level: '), lvlTotal(Lvl), write(Lvl), nl,
-	write(' / \\  Exp  : '), expTotal(ExpTotal), expCapacity(ExpCap), write(ExpTotal), write('/'), write(ExpCap), nl, nl,
+	write(' / \\  Exp  : '), expTotal(ExpTotal, ExpCap), write(ExpTotal), write('/'), write(ExpCap), nl, nl,
 	write('FARMING    Level: '), lvlFarmer(LvlFarm), write(LvlFarm), nl,
-	write('           EXP  : '), expFarmer(ExpFarm), write(ExpFarm), nl,
+	write('           EXP  : '), expFarmer(ExpFarm, _), write(ExpFarm), nl,
 	write('FISHING    Level: '), lvlFisher(LvlFish), write(LvlFish), nl,
-	write('           EXP  : '), expFisher(ExpFish), write(ExpFish), nl,
+	write('           EXP  : '), expFisher(ExpFish, _), write(ExpFish), nl,
 	write('RANCHING   Level: '), lvlRancher(LvlRanch), write(LvlRanch), nl,
-	write('           EXP  : '), expRancher(ExpRanch), write(ExpRanch), nl,
+	write('           EXP  : '), expRancher(ExpRanch, _), write(ExpRanch), nl,
 	!.
 
 
 /* addGold: Menambah Gold player sebanyak A */
-addGold(A) :- gold(G), G1 is G + A, retract(gold(G)), asserta(gold(G1)).
+addGold(A) :- 
+	gold(G), 
+	G1 is G + A, 
+	retract(gold(G)), 
+	asserta(gold(G1)).
 
 /* writeAddGold: Menambah Gold player sebanyak A dan menuliskan di layar */
 writeAddGold(A) :- 
@@ -83,96 +88,49 @@ writeSubstractGold(A) :-
 
 /* addExpTotal: Menambah EXP Total ke player sebanyak X */
 addExpTotal(X) :- 
-	expTotal(E), 
-	E1 is E + X, 
-	retract(expTotal(E)), 
-	asserta(expTotal(E1)),
+	expTotal(E, C), 
+	E1 is (E + X), 
+	retract(expTotal(E, C)), 
+	asserta(expTotal(E1, C)),
 	lvlUpTotal.
 
 /* addExpFisher: Menambah EXP Fisher ke player sebanyak X */
 addExpFisher(X) :- 
-	expFisher(E), 
+	expFisher(E, C), 
 	E1 is E + X, 
-	retract(expFisher(E)), 
-	asserta(expFisher(E1)),
+	retract(expFisher(E, C)), 
+	asserta(expFisher(E1, C)),
 	addExpTotal(E1),
 	lvlUpFisher.
 
 /* addExpFarmer: Menambah EXP Farmer ke player sebanyak X */
 addExpFarmer(X) :- 
-	expFarmer(E), 
+	expFarmer(E, C), 
 	E1 is E + X, 
-	retract(expFarmer(E)), 
-	asserta(expFarmer(E1)),
+	retract(expFarmer(E, C)), 
+	asserta(expFarmer(E1, C)),
 	addExpTotal(E1),
 	lvlUpFarmer.
 
 /* addExpRancher: Menambah EXP Rancher ke player sebanyak X */
 addExpRancher(X) :- 
-	expRancher(E), 
+	expRancher(E, C), 
 	E1 is E + X, 
-	retract(expRancher(E)), 
-	asserta(expRancher(E1)),
+	retract(expRancher(E, C)), 
+	asserta(expRancher(E1, C)),
 	addExpTotal(E1),
 	lvlUpRancher.
 
 /* lvlUp: cek untuk level up, jika melebihi capacity naik level */
 lvlUpTotal :- 
-	expTotal(X), 
-	expTotalCapacity(Y),
-	X >= Y,
-	X1 is X mod Y,
-	Y1 is Y * 2,
-	lvlTotal(Z),
-	Z1 is Z + 1,
-	retract(expTotal(X)),
-	asserta(expTotal(X1)),
-	retract(expTotalCapacity(Y)),
-	asserta(expTotalCapacity(Y1)),
-	retract(lvlTotal(Z)),
-	asserta(lvlTotal(Z1)).
-
-lvlUpFisher :- 
-	expFisher(X), 
-	expFisherCapacity(Y),
-	X >= Y,
-	X1 is X mod Y,
-	Y1 is Y * 2, /* Tiap naik level, batas exp naik 2x */
-	lvlFisher(Z),
-	Z1 is Z + 1,
-	retract(expFisher(X)),
-	asserta(expFisher(X1)),
-	retract(expFisherCapacity(Y)),
-	asserta(expFisherCapacity(Y1)),
-	retract(lvlFisher(Z)),
-	asserta(lvlFisher(Z1)).
-
-lvlUpFarmer :- 
-	expFarmer(X), 
-	expFarmerCapacity(Y),
-	X >= Y,
-	X1 is X mod Y,
-	Y1 is Y * 2, /* Tiap naik level, batas exp naik 2x */
-	lvlFarmer(Z),
-	Z1 is Z + 1,
-	retract(expFarmer(X)),
-	asserta(expFarmer(X1)),
-	retract(expFarmerCapacity(Y)),
-	asserta(expFarmerCapacity(Y1)),
-	retract(lvlFarmer(Z)),
-	asserta(lvlFarmer(Z1)).
-
-lvlUpRancher :- 
-	expRancher(X), 
-	expRancherCapacity(Y),
-	X >= Y,
-	X1 is X mod Y,
-	Y1 is Y * 2, /* Tiap naik level, batas exp naik 2x */
-	lvlRancher(Z),
-	Z1 is Z + 1,
-	retract(expRancher(X)),
-	asserta(expRancher(X1)),
-	retract(expRancherCapacity(Y)),
-	asserta(expRancherCapacity(Y1)),
-	retract(lvlRancher(Z)),
-	asserta(lvlRancher(Z1)).
+	expTotal(X, C), 
+	X >= C, !,
+	lvlTotal(L),
+	L1 is L + 1,
+	X1 is X - C,
+	C1 is C + 150, /* Tiap naik level, batas exp naik +150 */
+	retract(expTotal(X, C)),
+	asserta(expTotal(X1, C1)),
+	retract(lvlTotal(L)),
+	asserta(lvlTotal(L1)).
+	lvlUpTotal.
