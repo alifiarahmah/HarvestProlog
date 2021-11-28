@@ -36,7 +36,7 @@ writeCommandList :-
 	write('% 9. quit    : keluar dari permainan                                           %'), nl,
 	write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'), nl.
 
-writeHelpList :-
+writeHelpListV1 :-
 	write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'), nl,
 	write('%                                ~HarvestProlog~                                  %'), nl,
 	write('% 1. status     : menampilkan kondisimu terkini                                   %'), nl,
@@ -48,6 +48,28 @@ writeHelpList :-
 	write('% 7. a          : gerak ke barat 1 langkah                                        %'), nl,
 	write('% 8. help       : menampilkan segala bantuan                                      %'), nl,
 	write('% 9. quit       : keluar dari permainan                                           %'), nl,
+	write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'), nl.
+
+writeHelpListV2 :-
+	write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'), nl,
+	write('%                                ~HarvestProlog~                                  %'), nl,
+	write('% 1. status     : menampilkan kondisimu terkini                                   %'), nl,
+	write('% 2. map        : menampilkan peta                                                %'), nl,
+	write('% 3. inventory  : menampilkan isi barang yang disimpan                            %'), nl,
+	write('% 4. w          : gerak ke utara 1 langkah                                        %'), nl,
+	write('% 5. s          : gerak ke selatan 1 langkah                                      %'), nl,
+	write('% 6. d          : gerak ke ke timur 1 langkah                                     %'), nl,
+	write('% 7. a          : gerak ke barat 1 langkah                                        %'), nl,
+	write('% 8. help       : menampilkan segala bantuan                                      %'), nl,
+	write('% 9. market     : masuk ke dalam marketplace                                      %'), nl,
+	write('% 10. house     : masuk ke dalam house                                            %'), nl,
+	write('% 11. quest     : mengambil quest                                                 %'), nl,
+	write('% 12. submit    : menyelesaikan quest                                             %'), nl,
+	write('% 13. dig       : menggali tanah			                                         %'), nl,
+	write('% 14. plant     : menanam seed   		                                         %'), nl,
+	write('% 15. fishing   : memancing ikan			                                         %'), nl,
+	write('% 16. ranch     : beternak   			                                         %'), nl,
+	write('% 17. quit      : keluar dari permainan                                           %'), nl,
 	write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'), nl.
 
 quit :-

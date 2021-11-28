@@ -66,7 +66,8 @@ map :-
 	displayMap(0).
 
 /* help: Menampilkan command yang bisa dilakukan */
-help :- writeHelpList.
+help :- started(0), writeHelpListV1, !.
+help :- started(1), writeHelpListV2, !.
 
 /* goal and final State */
 
