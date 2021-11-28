@@ -41,9 +41,10 @@ farmExp(strawberry_seed, 6).
 
 nameSeed([tomato_seed, corn_seed, eggplant_seed, chilli_seed, apple_seed, pineapple_seed, grape_seed, turnip_seed, pomegranate_seed, strawberry_seed]).
 /*Melakukan Commad dig*/
-dig :-
+dig :- /* kebawah */
     position(X,Y),
     Y =:= 1,
+    \+isAtMarketplace(X,Y), \+isAtRanch(X,Y), \+isAtHouse(X,Y), \+isAtQuest(X,Y), \+isAtAir(X,Y), \+atDig(X,Y), \+atPlant(X,Y, _Sim),
     asserta(atDig(X,Y)),
     s,
     write('You digged the tile.'),nl.
@@ -51,8 +52,21 @@ dig :-
 dig :-
     position(X,Y),
     Y > 1,
+    \+isAtMarketplace(X,Y), \+isAtRanch(X,Y), \+isAtHouse(X,Y), \+isAtQuest(X,Y), \+isAtAir(X,Y), \+atDig(X,Y), \+atPlant(X,Y, _Sim),
     asserta(atDig(X,Y)),
-    w,
+    X1 is X - 1,
+    X2 is X + 1,
+    Y1 is Y - 1,
+    Y2 is Y + 1,
+    (   \+isAtAir(X, Y1) ->
+        w
+    ;   \+isAtAir(X1, Y) ->
+        a
+    ;   \+isAtAir(X2, Y) ->
+        d
+    ;   \+isAtAir(X, Y2) ->
+        s
+    ),
     write('You digged the tile.'),nl.
 
 /*Menampilkan seed yang ada di Inventory*/
@@ -84,7 +98,7 @@ plant :-
     nameSeed(ListSeed),
     seedInInventory(ListSeed, SumSeed),
     SumSeed =:= 0,
-    write('You Have\'t  any seed.').
+    write('You Have\'t  any seed.'), !.
 /*Jika sudah punya seed*/
 plant :-
     nameSeed(ListSeed),
@@ -99,11 +113,11 @@ plant :-
     read(NameSeed),
     delItem(NameSeed, 1, -1),
     retract(atDig(X1, Y)),
-    seedHelper(nameSeed,_, Sim),
+    seedHelper(NameSeed,_, Sim),
     asserta(atPlant(X1,Y, Sim)),
     time(T),
     timeSeed(NameSeed, Time),
-    asserta(seed(NameSeed, T, Time, X1, Y)).
+    asserta(seed(NameSeed, T, Time, X1, Y)), !.
 
 plant :-
     nameSeed(ListSeed),
@@ -122,7 +136,7 @@ plant :-
     asserta(atPlant(X2,Y,Sim)),
     time(T),
     timeSeed(NameSeed, Time),
-    asserta(seed(NameSeed, T, Time, X2, Y)).
+    asserta(seed(NameSeed, T, Time, X2, Y)), !.
 
 plant :-
     nameSeed(ListSeed),
@@ -141,7 +155,7 @@ plant :-
     asserta(atPlant(X,Y1,Sim)),
     time(T),
     timeSeed(NameSeed, Time),
-    asserta(seed(NameSeed, T, Time, X, Y1)).
+    asserta(seed(NameSeed, T, Time, X, Y1)), !.
 
 plant :-
     nameSeed(ListSeed),
@@ -160,7 +174,7 @@ plant :-
     asserta(atPlant(X,Y2, Sim)),
     time(T),
     timeSeed(NameSeed, Time),
-    asserta(seed(NameSeed, T, Time, X, Y2)).
+    asserta(seed(NameSeed, T, Time, X, Y2)), !.
 
 /*Sistem Exp Farm, jika Farmer 0*/
 farmExpSistem(Exp):-
@@ -201,7 +215,7 @@ harvest:-
     Ttotal is T1 + T,
     CTime < Ttotal,
     X1 =:= Xseed,
-    write('You Can\'t Harvest yet.').
+    write('You Can\'t Harvest yet.'), !.
 harvest:-
     position(X, _Y),
     X1 is X-1,
@@ -210,7 +224,7 @@ harvest:-
     Ttotal is T1 + T,
     CTime < Ttotal,
     X1 =:= Xseed,
-    write('You Can\'t Harvest yet.').
+    write('You Can\'t Harvest yet.'), !.
 harvest:-
     position(_X, Y),
     Y1 is Y+1,
@@ -219,7 +233,7 @@ harvest:-
     Ttotal is T1 + T,
     CTime < Ttotal,
     Y1 =:= Yseed,
-    write('You Can\'t Harvest yet.').
+    write('You Can\'t Harvest yet.'), !.
 harvest:-
     position(_X, Y),
     Y1 is Y-1,
@@ -228,7 +242,7 @@ harvest:-
     Ttotal is T1 + T,
     CTime < Ttotal,
     Y1 =:= Yseed,
-    write('You Can\'t Harvest yet.').
+    write('You Can\'t Harvest yet.'), !.
 
 /*Sudah Dapat dipanen*/
 harvest:-
@@ -247,7 +261,7 @@ harvest:-
     write('You Haversted '), write(NameFruit), nl,
     farmExp(NameSeed, FEXP),
     SumEXP is FEXP * AmountItem,
-    farmExpSistem(SumEXP).
+    farmExpSistem(SumEXP), !.
 harvest:-
     position(X, _Y),
     X1 is X-1,
@@ -264,7 +278,7 @@ harvest:-
     write('You Haversted '), write(NameFruit), nl,
     farmExp(NameSeed, FEXP),
     SumEXP is FEXP * AmountItem,
-    farmExpSistem(SumEXP).
+    farmExpSistem(SumEXP), !.
 harvest:-
     position(_X, Y),
     Y1 is Y+1,
@@ -281,7 +295,7 @@ harvest:-
     write('You Haversted '), write(NameFruit), nl,
     farmExp(NameSeed, FEXP),
     SumEXP is FEXP * AmountItem,
-    farmExpSistem(SumEXP).
+    farmExpSistem(SumEXP), !.
 harvest:-
     position(_X, Y),
     Y1 is Y-1,
@@ -298,7 +312,7 @@ harvest:-
     write('You Haversted '), write(NameFruit), nl,
     farmExp(NameSeed, FEXP),
     SumEXP is FEXP * AmountItem,
-    farmExpSistem(SumEXP).
+    farmExpSistem(SumEXP), !.
 
 
 

@@ -28,28 +28,28 @@ items(pomegranate_seed, 100).
 items(strawberry_seed, 100).
 
 /*Fruit*/
-items(tomato, 200).
-items(corn, 300).
-items(eggplant, 120).
-items(chilli, 150).
-items(apple, 120).
-items(pineapple, 300).
-items(grape, 120).
-items(turnip, 120).
-items(pomegranate, 150).
-items(strawberry, 150).
+items(tomato, 600).
+items(corn, 900).
+items(eggplant, 360).
+items(chilli, 450).
+items(apple, 360).
+items(pineapple, 900).
+items(grape, 360).
+items(turnip, 360).
+items(pomegranate, 450).
+items(strawberry, 450).
 
 /* fish */
-items(catfish, 25).
-items(tuna, 55).
-items(salmon, 55).
-items(musky, 55).
-items(bluegill, 55).
-items(carp, 55).
-items(bass, 90).
-items(trout, 90).
-items(cod, 90).
-items(pufferfish, 90).
+items(catfish, 75).
+items(tuna, 165).
+items(salmon, 165).
+items(musky, 165).
+items(bluegill, 165).
+items(carp, 165).
+items(bass, 270).
+items(trout, 270).
+items(cod, 270).
+items(pufferfish, 270).
 
 /* lifestock */
 
@@ -64,14 +64,14 @@ items(buffalo, 5000).
 
 /* product */
 
-items(chicken_egg, 80).
-items(cow_milk, 100).
-items(sheep_wool, 100).
-items(goat_milk, 150).
-items(duck_egg, 100).
-items(horse_milk, 180).
-items(angora_wool, 180).
-items(buffalo_milk, 200).
+items(chicken_egg, 240).
+items(cow_milk, 300).
+items(sheep_wool, 300).
+items(goat_milk, 450).
+items(duck_egg, 300).
+items(horse_milk, 540).
+items(angora_wool, 540).
+items(buffalo_milk, 600).
 
 
 
