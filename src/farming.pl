@@ -101,6 +101,24 @@ seedInInventory([Head|Tail], SumSeed):-
 
 /*plant the seed*/
 /*Jika belum punya seed*/
+plantHelper(NameSeed, _X, _Y):-
+    nameSeed(ListSeed),
+    srcItem(ListSeed, NameSeed, Flag),
+    Flag =:= 0,
+    write('You don\'t have that seed.'), nl.
+
+plantHelper(NameSeed, X, Y):-
+    nameSeed(ListSeed),
+    srcItem(ListSeed, NameSeed, Flag),
+    Flag =:= 1,
+    delItem(NameSeed, 1, -1),
+    retract(atDig(X, Y)),
+    seedHelper(NameSeed,_, Sim),
+    asserta(atPlant(X,Y, Sim)),
+    time(T),
+    timeSeed(NameSeed, Time),
+    asserta(seed(NameSeed, T, Time, X, Y)), !.
+
 plant :-
     started(1),
     nameSeed(ListSeed),
@@ -120,14 +138,7 @@ plant :-
     displaySeed(ListSeed),
     write('What do you want to plant?'), nl,
     read(NameSeed),
-    delItem(NameSeed, 1, -1),
-    retract(atDig(X1, Y)),
-    seedHelper(NameSeed,_, Sim),
-    asserta(atPlant(X1,Y, Sim)),
-    time(T),
-    timeSeed(NameSeed, Time),
-    asserta(seed(NameSeed, T, Time, X1, Y)), !.
-
+    plantHelper(NameSeed, X1, Y),!.
 plant :-
     started(1),
     nameSeed(ListSeed),
@@ -140,13 +151,7 @@ plant :-
     displaySeed(ListSeed),
     write('What do you want to plant?'), nl,
     read(NameSeed),
-    delItem(NameSeed, 1, -1),
-    retract(atDig(X2, Y)),
-    seedHelper(NameSeed,_,Sim),
-    asserta(atPlant(X2,Y,Sim)),
-    time(T),
-    timeSeed(NameSeed, Time),
-    asserta(seed(NameSeed, T, Time, X2, Y)), !.
+    plantHelper(NameSeed, X2, Y), !.
 
 plant :-
     started(1),
@@ -160,13 +165,7 @@ plant :-
     displaySeed(ListSeed),
     write('What do you want to plant?'), nl,
     read(NameSeed),
-    delItem(NameSeed, 1, -1),
-    retract(atDig(X, Y1)),
-    seedHelper(NameSeed,_,Sim),
-    asserta(atPlant(X,Y1,Sim)),
-    time(T),
-    timeSeed(NameSeed, Time),
-    asserta(seed(NameSeed, T, Time, X, Y1)), !.
+    plantHelper(NameSeed, X, Y1), !.
 
 plant :-
     started(1),
@@ -180,13 +179,7 @@ plant :-
     displaySeed(ListSeed),
     write('What do you want to plant?'), nl,
     read(NameSeed),
-    delItem(NameSeed, 1, -1),
-    retract(atDig(X, Y2)),
-    seedHelper(NameSeed,_,Sim),
-    asserta(atPlant(X,Y2, Sim)),
-    time(T),
-    timeSeed(NameSeed, Time),
-    asserta(seed(NameSeed, T, Time, X, Y2)), !.
+    plantHelper(NameSeed, X, Y2), !.
 
 /*Sistem Exp Farm sesuai spesiality (Farmer atau tidak)*/
 farmExpSistem(Exp):-
