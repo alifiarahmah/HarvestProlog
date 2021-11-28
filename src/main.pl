@@ -10,7 +10,7 @@
 :- include('misc.pl').
 :- include('map.pl').
 :- include('items.pl').
-:- include('move.pl').
+:- include('command.pl').
 :- include('quest.pl').
 :- include('inventory.pl').
 :- include('farming.pl').
