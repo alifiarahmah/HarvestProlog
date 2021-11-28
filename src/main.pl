@@ -96,6 +96,7 @@ failState :-
 
 done :- 
 	retractall(started(_)),
+	quit,
 	asserta(started(0)).
 
 	
