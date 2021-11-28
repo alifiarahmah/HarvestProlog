@@ -47,6 +47,7 @@ writeHelpList :-
 	write('% 6. d          : gerak ke ke timur 1 langkah                                     %'), nl,
 	write('% 7. a          : gerak ke barat 1 langkah                                        %'), nl,
 	write('% 8. help       : menampilkan segala bantuan                                      %'), nl,
+	write('% 9. quit       : keluar dari permainan                                           %'), nl,
 	write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'), nl.
 
 quit :-
