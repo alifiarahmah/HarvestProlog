@@ -25,13 +25,19 @@ initiated(0).
 /* prepareJob: Menyiapkan inventory sesuai job (WIP) */
 prepareJob :- 
 	job(X), X = 'Fisherman',
-	addEquipment(fishing_rod, 1, 0).
+	addEquipment(fishing_rod, 1, 0),
+	retract(equipment(fishing_rod,_,_)),
+	asserta(equipment(fishing_rod,1,1)).
 prepareJob :- 
 	job(X), X = 'Farmer',
-	addEquipment(shovel, 1, 0).
+	addEquipment(shovel, 1, 0),
+	retract(equipment(shovel,_,_)),
+	asserta(equipment(shovel,1,1)).
 prepareJob :- 
 	job(X), X = 'Rancher',
-	addEquipment(handcarts, 1, 0).
+	addEquipment(handcarts, 1, 0),
+	retract(equipment(handcarts,_,_)),
+	asserta(equipment(handcarts,1,1)).
 
 /* initPlayer: Menyiapkan status awal player sebelum mulai bermain */
 initPlayer :- 

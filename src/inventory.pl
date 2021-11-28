@@ -6,9 +6,9 @@
 /*invenItem(A,B,C) -> A nama, B quantity, C level (-1 if nontools) */
 /* tools */
 /*Dibuat angka dibelakang nama agar memudahkan pencatatan nama item di Inventory*/
-equipment(shovel, 0, 1).    
-equipment(fishing_rod, 0, 1).
-equipment(handcarts, 0, 1).
+equipment(shovel, 0, 0).    
+equipment(fishing_rod, 0, 0).
+equipment(handcarts, 0, 0).
 
 /* seeds */
 invenItem(tomato_seed, 0, -1).

@@ -273,7 +273,8 @@ harvest:-
     write('You Haversted '), write(NameFruit), nl,
     farmExp(NameSeed, FEXP),
     SumEXP is FEXP * AmountItem,
-    farmExpSistem(SumEXP), !.
+    farmExpSistem(SumEXP),
+    updateQuest(AmountItem), !.
 harvest:-
     started(1),
     position(X, _Y),
@@ -291,7 +292,8 @@ harvest:-
     write('You Haversted '), write(NameFruit), nl,
     farmExp(NameSeed, FEXP),
     SumEXP is FEXP * AmountItem,
-    farmExpSistem(SumEXP), !.
+    farmExpSistem(SumEXP),
+    updateQuest(AmountItem), !.
 harvest:-
     started(1),
     position(_X, Y),
@@ -309,7 +311,8 @@ harvest:-
     write('You Haversted '), write(NameFruit), nl,
     farmExp(NameSeed, FEXP),
     SumEXP is FEXP * AmountItem,
-    farmExpSistem(SumEXP), !.
+    farmExpSistem(SumEXP),
+    updateQuest(AmountItem), !.
 harvest:-
     started(1),
     position(_X, Y),
@@ -327,11 +330,26 @@ harvest:-
     write('You Haversted '), write(NameFruit), nl,
     farmExp(NameSeed, FEXP),
     SumEXP is FEXP * AmountItem,
-    farmExpSistem(SumEXP), !.
+    farmExpSistem(SumEXP),
+    updateQuest(AmountItem), !.
 
+updateQuest(AmountItem) :-
+    ongoingQ(X,Y,Z), X > 0,
+    X-AmountItem > 0,
+    X1 is X-AmountItem,
+    Y1 is Y,
+    Z1 is Z,
+    retract(ongoingQ(_,_,_)),
+    asserta(ongoingQ(X1,Y1,Z1)), !.
 
-
-
+updateQuest(AmountItem) :-
+    ongoingQ(X,Y,Z), X > 0,
+    X-AmountItem =< 0,
+    X1 is 0,
+    Y1 is Y,
+    Z1 is Z,
+    retract(ongoingQ(_,_,_)),
+    asserta(ongoingQ(X1,Y1,Z1)), !.
 
 
 
