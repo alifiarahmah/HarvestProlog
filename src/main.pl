@@ -28,7 +28,7 @@ startGame :-
 	createRandomMap,
 	initPosition,
 	writeTitleV2, nl,
-	write('Harvest Star!!!'), nl, nl,
+	write('HarvestProlog!!!'), nl, nl,
 	write('Let\'s play and pay our debts together!'), nl, nl,
 	writeCommandList, nl.
 

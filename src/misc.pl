@@ -24,7 +24,7 @@ writeTitleV2 :-
 
 writeCommandList :-
 	write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'), nl,
-	write('%                                ~Harvest Star~                                %'), nl,
+	write('%                               ~HarvestProlog~                                %'), nl,
 	write('% 1. start   : untuk memulai petualanganmu                                     %'), nl,
 	write('% 2. map     : menampilkan peta                                                %'), nl,
 	write('% 3. status  : menampilkan kondisimu terkini                                   %'), nl,
@@ -38,7 +38,7 @@ writeCommandList :-
 
 writeHelpList :-
 	write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'), nl,
-	write('%                                ~Harvest Star~                                   %'), nl,
+	write('%                                ~HarvestProlog~                                  %'), nl,
 	write('% 1. status     : menampilkan kondisimu terkini                                   %'), nl,
 	write('% 2. map        : menampilkan peta                                                %'), nl,
 	write('% 3. inventory  : menampilkan isi barang yang disimpan                            %'), nl,
