@@ -1,5 +1,6 @@
 :- dynamic(invenItem/3).
 :- dynamic(equipment/3).
+:- dynamic(ranchItem/3).
 :- dynamic(sumItem/1).
 
 /*invenItem(A,B,C) -> A nama, B quantity, C level (-1 if nontools) */
@@ -45,16 +46,6 @@ invenItem(carp, 0, -1).
 invenItem(cod, 0, -1).
 invenItem(pufferfish, 0, -1).
 
-/* lifestock */
-invenItem(chicken, 0, -1).
-invenItem(cow, 0, -1).
-invenItem(sheep, 0, -1).
-invenItem(goat, 0, -1).
-invenItem(duck, 0, -1).
-invenItem(horse, 0, -1).
-invenItem(angora_rabbit, 0, -1).
-invenItem(buffalo, 0, -1).
-
 /* product */
 invenItem(chicken_egg, 0, -1).
 invenItem(cow_milk, 0, -1).
@@ -65,9 +56,19 @@ invenItem(horse_milk, 0, -1).
 invenItem(angora_wool, 0, -1).
 invenItem(buffalo_milk, 0, -1).
 
+/* lifestock */
+ranchItem(chicken, 0, -1).
+ranchItem(cow, 0, -1).
+ranchItem(sheep, 0, -1).
+ranchItem(goat, 0, -1).
+ranchItem(duck, 0, -1).
+ranchItem(horse, 0, -1).
+ranchItem(angora_rabbit, 0, -1).
+ranchItem(buffalo, 0, -1).
+
 /*Initial Nama Item*/
 nameItem([tomato_seed, corn_seed, eggplant_seed, chilli_seed, apple_seed, pineapple_seed, grape_seed, turnip_seed, pomegranate_seed, strawberry_seed, tomato, corn, eggplant, chilli, apple, pineapple, grape, turnip, pomegranate, strawberry, tuna, salmon, catfish, musky, bass, bluegill, trout, carp, cod, pufferfish,chicken_egg,cow_milk, sheep_wool, goat_milk,duck_egg,horse_milk,angora_wool,buffalo_milk]).
-
+nameRanch([chicken, cow, sheep, goat, duck, horse, angora_rabbit, buffalo]).
 nameEquipment([shovel, fishing_rod, handcarts]).
 
 /*Initial Jumlah Item*/
@@ -106,7 +107,7 @@ srcEquipment([Head|Tail], Name, Flag):-
 
 /*AddItem to Inventory*/
 addItemHelper(SumItem, Name, Amount, Level):-
-    SumItem < 101,
+    SumItem + Amount =< 100,
     invenItem(Name, PrevAmount,Level),
     CAmount is PrevAmount + Amount,
     CSum is SumItem + Amount,
@@ -114,10 +115,10 @@ addItemHelper(SumItem, Name, Amount, Level):-
     retract(invenItem(Name, PrevAmount, Level)),
     asserta(sumItem(CSum)),
     asserta(invenItem(Name, CAmount, Level)).
-addItemHelper(SumItem, _Nama, _Amount, _Level):- SumItem > 100,!.
+addItemHelper(SumItem, _Nama, Amount, _Level):- SumItem + Amount > 100, write('Your inventory can\'t hold all items. Inventory max capacity is 100.'),!.
 
 addEquipmentHelper(SumItem, Name, Amount, Level):-
-    SumItem < 101,
+    SumItem + Amount =< 100,
     equipment(Name, PrevAmount,Level),
     CAmount is PrevAmount + Amount,
     CSum is SumItem + Amount,
@@ -125,11 +126,17 @@ addEquipmentHelper(SumItem, Name, Amount, Level):-
     retract(equipment(Name, PrevAmount, Level)),
     asserta(sumItem(CSum)),
     asserta(equipment(Name, CAmount, Level)).
-addEquipmentHelper(SumItem, _Nama, _Amount, _Level):- SumItem > 100,!.
+addEquipmentHelper(SumItem, _Nama, Amount, _Level):- SumItem + Amount > 100,write('Your inventory can\'t hold all items. Inventory max capacity is 100.'),!.
 
 addItem(Name, Amount, Level) :- sumItem(Sum), addItemHelper(Sum, Name, Amount, Level).
 
 addEquipment(Name, Amount, Level) :- sumItem(Sum), addEquipmentHelper(Sum, Name, Amount, Level).
+
+addRanchItem(Name, Amount, Level):-
+    ranchItem(Name, PrevAmount, Level),
+    CAmount is PrevAmount + Amount,
+    retract(ranchItem(Name, PrevAmount, Level)),
+    asserta(ranchItem(Name, CAmount, Level)).
 
 /*delete Item in Inventory*/
 delItem(Name, Amount, Level) :-
@@ -216,15 +223,29 @@ throwItemHelper2(Throw, Amount, Item, Level):-
     write('You throw away '), write(Throw), write(' level '), write(Level), write(' '), write(Item), nl.
 
 throwItemHelper(Item):-
+    nameItem(List),
+    srcItem(List, Item, Flag),
+    Flag =:= 1,
     invenItem(Item, Amount, _Level),
     write('You have '), write(Amount), write(' '), write(Item), write('. How many do you want to throw?'),nl,
     write('> '), read(Throw),
     throwItemHelper2(Throw, Amount, Item,_Level).
 throwItemHelper(Item):-
+    nameEquipment(List),
+    srcEquipment(List, Item, Flag),
+    Flag =:= 1,
     equipment(Item, Amount, Level),
     write('You have '), write(Amount), write(' level '), write(Level), write(' '), write(Item), write('. How many do you want to throw?'),nl,
     write('> '), read(Throw),
     throwItemHelper2(Throw, Amount, Item, Level).
+throwItemHelper(Item):-
+    nameItem(List),
+    srcItem(List, Item, Flag),
+    Flag =:= 0, write('You don\'t have that item.'),!.
+throwItemHelper(Item):-
+    nameEquipment(List),
+    srcEquipment(List, Item, Flag),
+    Flag =:= 0, write('You don\'t have that item.'),!.
 
 throwItem :-
     inventory,
