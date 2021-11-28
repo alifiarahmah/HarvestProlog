@@ -67,10 +67,12 @@ isInRanch :- position(X, Y), isAtRanch(X,Y).
 
 /* ranch: antarmuka jumlah hewan ternak */
 ranch :-
+    started(1),
 	\+isInRanch,
 	write('You are not in ranch!'), nl,
 	!.
 ranch :-
+    started(1),
 	isInRanch,
 	invenItem(chicken, ChickenAmount, -1),
 	invenItem(cow, CowAmount, -1),
@@ -141,14 +143,14 @@ fulfillRanchQuest(Amount) :-
 
 /* command tiap livestock */
 
-chicken :- checkLivestock(chicken, chicken_egg).
-cow :- checkLivestock(cow, cow_milk).
-sheep :- checkLivestock(sheep, sheep_wool).
-goat :- checkLivestock(goat, goat_milk).
-duck :- checkLivestock(duck, duck_egg).
-horse :- checkLivestock(horse, horse_milk).
-angora_rabbit :- checkLivestock(angora_rabbit, angora_wool).
-buffalo :- checkLivestock(buffalo, buffalo_milk).
+chicken :- started(1),checkLivestock(chicken, chicken_egg).
+cow :- started(1),checkLivestock(cow, cow_milk).
+sheep :- started(1),checkLivestock(sheep, sheep_wool).
+goat :- started(1),checkLivestock(goat, goat_milk).
+duck :- started(1),checkLivestock(duck, duck_egg).
+horse :- started(1),checkLivestock(horse, horse_milk).
+angora_rabbit :- started(1),checkLivestock(angora_rabbit, angora_wool).
+buffalo :- started(1),checkLivestock(buffalo, buffalo_milk).
 
 /* checkLivestock */
 

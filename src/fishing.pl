@@ -136,10 +136,12 @@ exp(pufferfish,8).
 /*If not in tail air area*/
 
 fishing :-
+    started(1),
 	position(X,Y), \+ isNearAir(X,Y),
 	write('You\'re not in tail air area. So, you can\'t start fishing.'), !.
 /*For fishing level 1-2*/
 fishing :-
+    started(1),
 	position(X,Y), isNearAir(X,Y),
 	lvlFisher(Level), Level =< 2,
 	random(1,26,R), ikan(R,Fish),
@@ -150,10 +152,11 @@ fishing :-
 	Date is (T1//24) + 1,
 	Hour is T1 mod 24, nl,
 	write('Day '), write(Date), nl,
-	write('Current Time: '), write(Hour), nl,
+	write('Current Time: '), write(Hour), nl, failState,
 	!.
 /*For fishing level 3-4*/
 fishing :-
+    started(1),
 	position(X,Y), isNearAir(X,Y),
 	lvlFisher(Level), Level >= 3, Level =< 4,
 	random(1,40,R), ikan(R,Fish),
@@ -164,10 +167,11 @@ fishing :-
 	Date is (T1//24) + 1,
 	Hour is T1 mod 24, nl,
 	write('Day '), write(Date), nl,
-	write('Current Time: '), write(Hour), nl,
+	write('Current Time: '), write(Hour), nl, failState,
 	!.
 /*For fishing level 5-6*/
 fishing :-
+    started(1),
 	position(X,Y), isNearAir(X,Y),
 	lvlFisher(Level), Level >= 5, Level =< 6,
 	random(1,54,R), ikan(R,Fish),
@@ -178,10 +182,11 @@ fishing :-
 	Date is (T1//24) + 1,
 	Hour is T1 mod 24, nl,
 	write('Day '), write(Date), nl,
-	write('Current Time: '), write(Hour), nl,
+	write('Current Time: '), write(Hour), nl, failState,
 	!.
 /*For fishing level 7-8*/
 fishing :-
+    started(1),
 	position(X,Y), isNearAir(X,Y),
 	lvlFisher(Level), Level >= 7, Level =< 8,
 	random(1,68,R), ikan(R,Fish),
@@ -192,10 +197,11 @@ fishing :-
 	Date is (T1//24) + 1,
 	Hour is T1 mod 24, nl,
 	write('Day '), write(Date), nl,
-	write('Current Time: '), write(Hour), nl,
+	write('Current Time: '), write(Hour), nl, failState,
 	!.
 /*For fishing level >= 9*/
 fishing :-
+    started(1),
 	position(X,Y), isNearAir(X,Y),
 	lvlFisher(Level), Level >= 9,
 	random(1,82,R), ikan(R,Fish),
@@ -206,7 +212,7 @@ fishing :-
 	Date is (T1//24) + 1,
 	Hour is T1 mod 24, nl,
 	write('Day '), write(Date), nl,
-	write('Current Time: '), write(Hour), nl,
+	write('Current Time: '), write(Hour), nl, failState,
 	!.
 
 /*write what he get and update the quest*/
@@ -220,12 +226,16 @@ gotFish(Item,Exp) :-
 	write('You got '), write(Item), write('!'), nl,
 	write('You gained '), write(Exp), write(' fishing exp.'),
 	addItem(Item,1,-1),
-	ongoingQ(X,Y,Z), Y > 0,
-	X1 is X,
-	Y1 is Y-1,
-	Z1 is Z,
-	retract(ongoingQ(_,_,_)),
-	asserta(ongoingQ(X1,Y1,Z1)), !.
+	ongoingQ(X,Y,Z), 
+	( 	Y > 0 ->
+		X1 is X,
+		Y1 is Y-1,
+		Z1 is Z,
+		retract(ongoingQ(_,_,_)),
+		asserta(ongoingQ(X1,Y1,Z1))
+	;	Y =< 0 ->
+		!
+	), !.
 
 /*Checking exp mechanism for fisher and non-fisher*/
 /*For fisher, got 20% exp addition*/
