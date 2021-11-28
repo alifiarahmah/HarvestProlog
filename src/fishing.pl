@@ -137,7 +137,7 @@ exp(pufferfish,8).
 
 fishing :-
 	position(X,Y), \+ isNearAir(X,Y),
-	write('You\'re not in tail air area. So, you can\'t start fishing.').
+	write('You\'re not in tail air area. So, you can\'t start fishing.'), !.
 /*For fishing level 1-2*/
 fishing :-
 	position(X,Y), isNearAir(X,Y),
@@ -145,7 +145,7 @@ fishing :-
 	random(1,26,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addTimeFishing(Fish).
+	addTimeFishing(Fish), !.
 /*For fishing level 3-4*/
 fishing :-
 	position(X,Y), isNearAir(X,Y),
@@ -153,7 +153,7 @@ fishing :-
 	random(1,40,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addTimeFishing(Fish).
+	addTimeFishing(Fish), !.
 /*For fishing level 5-6*/
 fishing :-
 	position(X,Y), isNearAir(X,Y),
@@ -161,7 +161,7 @@ fishing :-
 	random(1,54,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addTimeFishing(Fish).
+	addTimeFishing(Fish), !.
 /*For fishing level 7-8*/
 fishing :-
 	position(X,Y), isNearAir(X,Y),
@@ -169,7 +169,7 @@ fishing :-
 	random(1,68,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addTimeFishing(Fish).
+	addTimeFishing(Fish), !.
 /*For fishing level >= 9*/
 fishing :-
 	position(X,Y), isNearAir(X,Y),
@@ -177,7 +177,7 @@ fishing :-
 	random(1,82,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addTimeFishing(Fish).
+	addTimeFishing(Fish), !.
 
 /*write what he get and update the quest*/
 /*he get nothing, no need to update the quest*/

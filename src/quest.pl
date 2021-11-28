@@ -47,7 +47,7 @@ quest :-
     retractall(reward(_, _)),
     RE is (H+F+E)*5,
     RG is (H+F+E)*50,
-    asserta(RE, RG).
+    asserta(reward(RE, RG)).
 
 /* submit: untuk memperoleh reward setelah menyelesaikan quest */
 submit :-
