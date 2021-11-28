@@ -106,7 +106,7 @@ plant :-
     nameSeed(ListSeed),
     seedInInventory(ListSeed, SumSeed),
     SumSeed =:= 0,
-    write('You Have\'t  any seed.'), !.
+    write('You Have  no seed.'), !.
 /*Jika sudah punya seed*/
 plant :-
     started(1),
@@ -194,7 +194,7 @@ farmExpSistem(Exp):-
     X == 'Farmer',
     Exp1 is 0.3*Exp,
     SumEXP is Exp + round(Exp1),
-    addExpTotal(Exp1),
+    addExpTotal(SumEXP),
     writeAddExpFarmer(SumEXP).
 farmExpSistem(Exp):-
     job(X),
