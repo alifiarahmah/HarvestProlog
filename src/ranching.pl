@@ -157,17 +157,11 @@ checkLivestock(_, _) :-
 	write('You\'re not in ranch!'), nl,
 	!, fail.
 checkLivestock(Livestock, _) :- % kasus tidak ada Livestock
-	write('a'),
 	isInRanch,
-	write('a'),
 	invenItem(Livestock, Amount, -1),
-	write('a'),
 	Amount =:= 0,
-	write('a'),
 	strLivestock(Livestock, StrLivestock),
-	write('a'),
 	write('You don\'t have any '), write(StrLivestock), write('!'), nl, 
-	write('a'),
 	!.
 checkLivestock(Livestock, Product) :- % kasus ada livestock, tapi belum bisa ambil hasil
 	isInRanch,
