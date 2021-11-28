@@ -74,6 +74,9 @@ nameEquipment([shovel, fishing_rod, handcarts]).
 /*Initial Jumlah Item*/
 sumItem(0).
 
+/*Insert First Elmn*/
+insertFirst(List, Elmt, [Elmt|List]) :- !.
+
 /*Search Item in Inventroy*/
 srcItem([Head|_Tail], Name, Flag):-
     Head == Name,
