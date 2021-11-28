@@ -288,7 +288,12 @@ buyThis([_|Tail], Number, _, _, _) :- Tail = [], Number > 1, write('Please choos
 buyThis([Head|_], 1, Name, Price, Level) :-
     items(Head, Price),
     Name = Head, 
-    invenItem(Head, _, Level), !.
+    (   invenItem(Head, _, Level) ->
+        !
+    ;   ranchItem(Head, _, Level) ->
+        !
+    ),
+    !.
 buyThis([_|Tail], Number, Name, Price, Level) :-
     Number > 1,
     Number1 is Number - 1,
