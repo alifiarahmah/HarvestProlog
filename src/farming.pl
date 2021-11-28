@@ -253,7 +253,7 @@ harvest:-
     write('You Can\'t Harvest yet.'), !.
 harvest:-
     started(1),
-    position(X, _Y),
+    position(X, Y),
     X1 is X-1,
     seed(_NameSeed, T1, T, Xseed, Yseed),
     time(CTime),
