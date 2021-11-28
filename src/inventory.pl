@@ -212,7 +212,6 @@ inventory:-
 throwItemHelper2(Throw, Amount, Item, _Level):-
     Throw > Amount,
     write('You dont have enough '), write(Item), write('. Cancelling...'), nl.
-
 throwItemHelper2(Throw, Amount, Item, _Level):-
     Throw <  Amount+1,
     delItem(Item, Throw,_),
