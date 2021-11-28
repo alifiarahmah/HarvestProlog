@@ -251,22 +251,27 @@ buy :-
     write('How many do you want to buy?'), nl,
     write('> '),
     read_integer(Amount),
-    gold(CurMoney),
-    NeededMoney is Price * Amount,
-    (   CurMoney < NeededMoney ->
-        write('You don\'t have enough gold'), nl,
-        fail
-    ;   CurMoney >= NeededMoney ->
-        retractall(gold(_)),
-        CurMoney1 is CurMoney - NeededMoney,
-        asserta(gold(CurMoney1)),
-        (   invenItem(Name, _, _) ->
-            addItem(Name, Amount, Level)
-        ;   ranchItem(Name, _, _) ->
-            addRanchItem(Name, Amount, Level)
-        ),
-        write('You have bought '), write(Amount), write(' '), write(Name), write('.'), nl,
-        write('You are charged '), write(NeededMoney), write(' golds.')
+    (   Amount =< 0 ->
+        write('You don\'t buy anything'), nl,
+        !
+    ;   Amount > 0 ->
+        gold(CurMoney),
+        NeededMoney is Price * Amount,
+        (   CurMoney < NeededMoney ->
+            write('You don\'t have enough gold'), nl,
+            fail
+        ;   CurMoney >= NeededMoney ->
+            retractall(gold(_)),
+            CurMoney1 is CurMoney - NeededMoney,
+            asserta(gold(CurMoney1)),
+            (   invenItem(Name, _, _) ->
+                addItem(Name, Amount, Level)
+            ;   ranchItem(Name, _, _) ->
+                addRanchItem(Name, Amount, Level)
+            ),
+            write('You have bought '), write(Amount), write(' '), write(Name), write('.'), nl,
+            write('You are charged '), write(NeededMoney), write(' golds.')
+        ), !
     ), !.
 
 /* buyList : list barang yang bisa dibeli */
@@ -319,7 +324,10 @@ sell :-
         write('How many do you want to sell ?'), nl,
         write('> '),
         read_integer(SellAmnt),
-        (   Amount < SellAmnt ->
+        (   SellAmnt =< 0 ->
+            write('You don\'t sell anything'), nl,
+            !
+        ;   Amount < SellAmnt ->
             write('You don\'t have enough item'), nl,
             fail
         ;   Amount >= SellAmnt ->
