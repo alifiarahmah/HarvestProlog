@@ -343,7 +343,7 @@ upgrade :-
         read_integer(Number),
         upgradeThis(List, Number, Name),
         (   Name \== invalidname ->
-            equipment(Name, _, Lvl),
+            equipment(Name, Am, Lvl),
             Lvl1 is Lvl + 1,
             equipmentUpgrade(Name, Lvl, Lvl1, Price),
             gold(CurMoney),
@@ -355,8 +355,19 @@ upgrade :-
                 retractall(gold(_)),
                 CurMoney1 is CurMoney - Price,
                 asserta(gold(CurMoney1)),
-                retractall(equipment(Name, _, _)),
-                asserta(equipment(Name, 1, Lvl1))
+                (
+                    Am =:= 0 ->
+                    sumItem(Sum),
+                    Sum1 is Sum + 1,
+                    retract(sumItem(Sum)),
+                    asserta(sumItem(Sum1)),
+                    retractall(equipment(Name, _, _)),
+                    asserta(equipment(Name, 1, Lvl1))
+                ;
+                    Am =:= 1 ->
+                    retractall(equipment(Name, _, _)),
+                    asserta(equipment(Name, 1, Lvl1))
+                )
             )
         )
     ), !.
