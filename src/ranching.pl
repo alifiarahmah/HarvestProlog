@@ -31,12 +31,12 @@ initTimeRanch :-
 /* decreaseTimeRanch: Mengecek dan mengurangi timeRanch */
 /* Setiap naik ke level 5, 10, 15... (kelipatan 5), timeRanch berkurang 1 */
 decreaseTimeRanch :-
-	lvlRancher(Lvl, _),
+	lvlRancher(Lvl),
 	ModLvl is Lvl mod 5,
 	ModLvl =\= 0,
 	fail.
 decreaseTimeRanch :-
-	lvlRancher(Lvl, _),
+	lvlRancher(Lvl),
 	ModLvl is Lvl mod 5,
 	ModLvl =:= 0,
 	timeRanch(_, Time),
@@ -183,14 +183,37 @@ checkLivestock(Livestock, Product) :- % kasus ada livestock dan bisa ambil hasil
 	strLivestock(Livestock, StrLivestock),
 	strProduct(Product, StrProduct),
 	isRanchTime(Livestock, Flag),
-	Flag = 1,
+	Flag =:= 1,
+
+	% multiplier hasil karena ada handcart
+	% setiap naik level, hasil bertambah sebesar <level> kali lipat
+	equipment(handcarts, HandcartAmount, HandcartLevel),
+	(
+		HandcartAmount =:= 0,
+		ExtraAmount is 1
+	;
+		HandcartAmount > 0,
+		ExtraAmount is HandcartLevel
+	),
+	ProductAmount is Amount * ExtraAmount,
+
 	write('Your '), write(StrLivestock), write(' produced '), 
-	write(Amount), write(' '), write(StrProduct), nl,
-	write('You got '), write(Amount), write(' '), write(StrProduct), write('!'), nl,
-	addItem(Product, Amount, -1),
-	fulfillRanchQuest(Amount),
+	write(ProductAmount), write(' '), write(StrProduct), nl,
+	write('You got '), write(ProductAmount), write(' '), write(StrProduct), write('!'), nl,
+	addItem(Product, ProductAmount, -1),
+	fulfillRanchQuest(ProductAmount),
+
+	% multiplier exp karena job
+	% kalau job rancher, dapat tambahan exp 2x lipat 
+	job(Job),
+	(	
+		Job = 'Rancher' ->
+		ExtraXP is 2
+	;
+		ExtraXP is 1 
+	),
 	ranchExp(Livestock, XP),
-	TotalXP is XP * Amount,
+	TotalXP is XP * ProductAmount * ExtraXP,
 	writeAddExpRancher(TotalXP),
 	resetLivestockTimer(Livestock), 
 	!.
