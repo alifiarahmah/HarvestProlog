@@ -102,6 +102,55 @@ a :-
 
 outputPos :- position(X,Y), write(X), write(','), write(Y), nl.
 
+/* ***************** BONUS ***************** */
+
+/* teleportBySleepFairy: teleport berdasar lokasi X yang dipilih player */
+teleportBySleepFairy(X) :-
+    X =:= 0,
+    write('You declined the sleep fairy\'s offer'),
+    write('You will still be in house when you wake up.'), nl.
+teleportBySleepFairy(X) :-
+    X =:= 1,
+    ranch(XR, YR),
+    retract(position(_, _)),
+    asserta(position(XR, YR)),
+    write('You will be teleported to Ranch after you wake up'), nl.
+teleportBySleepFairy(X) :-
+    X =:= 2,
+    marketplace(XM, YM),
+    retract(position(_, _)),
+    asserta(position(XM, YM)),
+    write('You will be teleported to Marketplace after you wake up'), nl.
+teleportBySleepFairy(X) :-
+    X =:= 3,
+    quest(XQ, YQ),
+    retract(position(_, _)),
+    asserta(position(XQ, YQ)),
+    write('You will be teleported to Quest Pickup place after you wake up'), nl.
+
+/* sleepFairy : bertemu sleep fairy, dapat teleportasi setelah bangun (BONUS) */
+sleepFairy(X) :- 
+    X < 6,
+    !.
+sleepFairy(X) :-
+    X >= 6,
+    write('~~~ RANDOM EVENT ~~~'), nl,
+    write('You met a sleep fairy in your dream.'), nl,
+    write('Sleep fairy: \"I can teleport you when you wake up. Just choose one place.\"'), nl, nl,
+    write('Where do you want to go after you wake up?'), nl,
+    write('0. House (Cancel offer)'), nl,
+    write('1. Ranch'), nl,
+    write('2. Marketplace'), nl,
+    write('3. Quest'), nl,
+    write('> '),
+    read_integer(Z),
+    teleportBySleepFairy(Z),
+    write('Have a nice sleep!'), nl, 
+    write('~~~ RANDOM EVENT END ~~~'), nl,
+    !.
+
+/* ***************** END BONUS ***************** */
+
 /* house : masuk ke dalam house */
 
 isInsideHouse(0).
@@ -137,6 +186,7 @@ sleep :-
 		retractall(time(_)),
 		asserta(time(Time2))
 	),
+    random(1,11,X), sleepFairy(X),  % sleep fairy trigger
 	retractall(isInsideHouse(_)),
 	asserta(isInsideHouse(0)),
 	time(CurTime),
