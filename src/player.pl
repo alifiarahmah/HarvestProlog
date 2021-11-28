@@ -115,7 +115,6 @@ addExpFisher(X) :-
 	E1 is E + X, 
 	retract(expFisher(E, C)), 
 	asserta(expFisher(E1, C)),
-	addExpTotal(E1),
 	lvlUpFisher.
 
 /* writeAddExpFisher: Menambah EXP Fisher ke player sebanyak X dan menuliskan di layar */
@@ -129,7 +128,6 @@ addExpFarmer(X) :-
 	E1 is E + X, 
 	retract(expFarmer(E, C)), 
 	asserta(expFarmer(E1, C)),
-	addExpTotal(E1),
 	lvlUpFarmer.
 
 /* writeAddExpFarmer: Menambah EXP Fisher ke player sebanyak X dan menuliskan di layar */
@@ -143,7 +141,6 @@ addExpRancher(X) :-
 	E1 is E + X, 
 	retract(expRancher(E, C)), 
 	asserta(expRancher(E1, C)),
-	addExpTotal(E1),
 	lvlUpRancher.
 
 /* writeAddExpFarmer: Menambah EXP Fisher ke player sebanyak X dan menuliskan di layar */
