@@ -224,9 +224,10 @@ market :-
     position(X,Y),
     isAtMarketplace(X,Y),
     write('What do you want to do?'), nl,
-    write('1. Buy'), nl,
-    write('2. Sell'), nl,
-    write('3. Upgrade'),
+    write('- buy'), nl,
+    write('- sell'), nl,
+    write('- upgrade'), nl,
+    write('- exitShop'), nl,
     retractall(isShopping(_)),
     asserta(isShopping(1)),
     !.
