@@ -57,4 +57,13 @@ quit :-
 	write(' __/  /___| |___\\  \\__    See you later in the next adventure.'), nl,
 	write('|     __       __     |'), nl,
 	write('|____/  \\_____/  \\____|'), nl,
+	write('     \\__/     \\__/'), nl, nl, halt.
+
+quit1 :-
+	write('      ___________'), nl,
+	write('     /  __   __  \\'), nl,
+	write('    /  /  | |  \\  \\       You decided to go back to the city.'), nl,
+	write(' __/  /___| |___\\  \\__    See you later in the next adventure.'), nl,
+	write('|     __       __     |'), nl,
+	write('|____/  \\_____/  \\____|'), nl,
 	write('     \\__/     \\__/'), nl, nl.
