@@ -207,7 +207,7 @@ buy :-
         addItem(Name, Amount, Level),
         write('You have bought '), write(Amount), write(' '), write(Name), write('.'), nl,
         write('You are charged '), write(NeededMoney), write(' golds.')
-    ).
+    ), !.
 
 /* buyList : list barang yang bisa dibeli */
 buyList([], _) :- !.

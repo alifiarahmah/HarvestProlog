@@ -52,6 +52,7 @@ strLivestock(goat, 'goat').
 strLivestock(duck, 'duck').
 strLivestock(horse, 'horse').
 strLivestock(angora_rabbit, 'angora rabbit').
+strLivestock(buffalo, 'buffalo').
 strProduct(chicken_egg, 'chicken egg').
 strProduct(cow_milk, 'cow milk').
 strProduct(sheep_wool, 'sheep wool').
@@ -156,11 +157,17 @@ checkLivestock(_, _) :-
 	write('You\'re not in ranch!'), nl,
 	!, fail.
 checkLivestock(Livestock, _) :- % kasus tidak ada Livestock
+	write('a'),
 	isInRanch,
+	write('a'),
 	invenItem(Livestock, Amount, -1),
-	Amount = 0,
+	write('a'),
+	Amount =:= 0,
+	write('a'),
 	strLivestock(Livestock, StrLivestock),
+	write('a'),
 	write('You don\'t have any '), write(StrLivestock), write('!'), nl, 
+	write('a'),
 	!.
 checkLivestock(Livestock, Product) :- % kasus ada livestock, tapi belum bisa ambil hasil
 	isInRanch,

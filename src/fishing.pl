@@ -145,7 +145,13 @@ fishing :-
 	random(1,26,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addTimeFishing(Fish), !.
+	addTimeFishing(Fish), 
+	time(T1),
+	Date is (T1//24) + 1,
+	Hour is T1 mod 24, nl,
+	write('Day '), write(Date), nl,
+	write('Current Time: '), write(Hour), nl,
+	!.
 /*For fishing level 3-4*/
 fishing :-
 	position(X,Y), isNearAir(X,Y),
@@ -153,7 +159,13 @@ fishing :-
 	random(1,40,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addTimeFishing(Fish), !.
+	addTimeFishing(Fish),  
+	time(T1),
+	Date is (T1//24) + 1,
+	Hour is T1 mod 24, nl,
+	write('Day '), write(Date), nl,
+	write('Current Time: '), write(Hour), nl,
+	!.
 /*For fishing level 5-6*/
 fishing :-
 	position(X,Y), isNearAir(X,Y),
@@ -161,7 +173,13 @@ fishing :-
 	random(1,54,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addTimeFishing(Fish), !.
+	addTimeFishing(Fish),  
+	time(T1),
+	Date is (T1//24) + 1,
+	Hour is T1 mod 24, nl,
+	write('Day '), write(Date), nl,
+	write('Current Time: '), write(Hour), nl,
+	!.
 /*For fishing level 7-8*/
 fishing :-
 	position(X,Y), isNearAir(X,Y),
@@ -169,7 +187,13 @@ fishing :-
 	random(1,68,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addTimeFishing(Fish), !.
+	addTimeFishing(Fish),  
+	time(T1),
+	Date is (T1//24) + 1,
+	Hour is T1 mod 24, nl,
+	write('Day '), write(Date), nl,
+	write('Current Time: '), write(Hour), nl,
+	!.
 /*For fishing level >= 9*/
 fishing :-
 	position(X,Y), isNearAir(X,Y),
@@ -177,7 +201,13 @@ fishing :-
 	random(1,82,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addTimeFishing(Fish), !.
+	addTimeFishing(Fish),  
+	time(T1),
+	Date is (T1//24) + 1,
+	Hour is T1 mod 24, nl,
+	write('Day '), write(Date), nl,
+	write('Current Time: '), write(Hour), nl,
+	!.
 
 /*write what he get and update the quest*/
 /*he get nothing, no need to update the quest*/
