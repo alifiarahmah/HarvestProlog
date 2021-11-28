@@ -190,7 +190,7 @@ gotFish(Item,Exp) :-
 	write('You got '), write(Item), write('!'), nl,
 	write('You gained '), write(Exp), write(' fishing exp.'),
 	addItem(Item,1,-1),
-	ongoingQ(X,Y,Z),
+	ongoingQ(X,Y,Z), Y > 0,
 	X1 is X,
 	Y1 is Y-1,
 	Z1 is Z,
