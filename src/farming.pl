@@ -38,6 +38,11 @@ farmExp(turnip_seed, 5).
 farmExp(pomegranate_seed, 6).
 farmExp(strawberry_seed, 6).
 
+/*advShovel(A, B) => A level Shovel dan B keuntungan (float) % penambahan hasil panen*/
+advShovel(1, 0.3).
+advShovel(2, 0.4).
+advShovel(3, 0.5).
+
 
 nameSeed([tomato_seed, corn_seed, eggplant_seed, chilli_seed, apple_seed, pineapple_seed, grape_seed, turnip_seed, pomegranate_seed, strawberry_seed]).
 /*Melakukan Commad dig*/
@@ -183,34 +188,55 @@ plant :-
     timeSeed(NameSeed, Time),
     asserta(seed(NameSeed, T, Time, X, Y2)), !.
 
-/*Sistem Exp Farm, jika Farmer 0*/
+/*Sistem Exp Farm sesuai spesiality (Farmer atau tidak)*/
 farmExpSistem(Exp):-
     job(X),
     X == 'Farmer',
-    Exp1 is 0.25*Exp,
+    Exp1 is 0.3*Exp,
     SumEXP is Exp + round(Exp1),
+    addExpTotal(Exp1),
     writeAddExpFarmer(SumEXP).
 farmExpSistem(Exp):-
     job(X),
     X \== 'Farmer',
+    addExpTotal(Exp),
     writeAddExpFarmer(Exp).
 
-/*Jumlah panen berdasarkan level*/
+/*Jumlah panen berdasarkan ada tidaknya shovel*/
+harvestHelper2(RandomAmount, Result):-
+    nameEquipment(List),
+    srcEquipment(List, shovel, Flag),
+    Flag =:= 0,
+    Result is RandomAmount.
+
+harvestHelper2(RandomAmount, Result):-
+    nameEquipment(List),
+    srcEquipment(List, shovel, Flag),
+    Flag =:= 1,
+    equipment(shovel, _, Level),
+    advShovel(Level, Adv),
+    Adv1 is RandomAmount*Adv,
+    Result is RandomAmount + round(Adv1).
+
+/*Jumlah panen berdasarkan level farmer dan ada-tidaknya shovel*/
 harvestHelper(AmountItem):-
     lvlFarmer(Level),
     Level < 4,
     random(1, 3, Am),
-    AmountItem is Am.
+    harvestHelper2(Am, Result),
+    AmountItem is Result.
 harvestHelper(AmountItem):-
     lvlFarmer(Level),
     Level > 3, Level < 8,
     random(3, 5, Am),
-    AmountItem is Am.
+    harvestHelper2(Am, Result),
+    AmountItem is Result.
 harvestHelper(AmountItem):-
     lvlFarmer(Level),
-    Level >7,
+    Level > 7,
     random(5, 7, Am),
-    AmountItem is Am.
+    harvestHelper2(Am, Result),
+    AmountItem is Result.
 
 /*Panen*/
 /*Belum dapat dipanen*/
