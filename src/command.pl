@@ -4,6 +4,7 @@
 
 /* w: Bergerak ke utara 1 langkah */
 w :-
+    started(1),
 	isShopping(0),
 	isInsideHouse(0),
 	position(X,Y),
@@ -24,10 +25,11 @@ w :-
 		Hour is T1 mod 24,
 		write('Day '), write(Date), nl,
 		write('Current Time: '), write(Hour), nl
-	).
+	), failState.
 
 /* s: Bergerak ke selatan 1 langkah */
 s :-
+    started(1),
 	isShopping(0),
 	isInsideHouse(0),
 	position(X,Y),
@@ -49,10 +51,11 @@ s :-
 		Hour is T1 mod 24,
 		write('Day '), write(Date), nl,
 		write('Current Time: '), write(Hour), nl
-	).
+	), failState.
 
 /* d: Bergerak ke timur 1 langkah */
 d :-
+    started(1),
 	isShopping(0),
 	isInsideHouse(0),
 	position(X,Y),
@@ -74,10 +77,11 @@ d :-
 		Hour is T1 mod 24,
 		write('Day '), write(Date), nl,
 		write('Current Time: '), write(Hour), nl
-	).
+	), failState.
 
 /* a: Bergerak ke barat 1 langkah */
 a :-
+    started(1),
 	isShopping(0),
 	isInsideHouse(0),
 	position(X,Y),
@@ -98,7 +102,7 @@ a :-
 		Hour is T1 mod 24,
 		write('Day '), write(Date), nl,
 		write('Current Time: '), write(Hour), nl
-	).
+	), failState.
 
 outputPos :- position(X,Y), write(X), write(','), write(Y), nl.
 
@@ -106,22 +110,26 @@ outputPos :- position(X,Y), write(X), write(','), write(Y), nl.
 
 /* teleportBySleepFairy: teleport berdasar lokasi X yang dipilih player */
 teleportBySleepFairy(X) :-
+    started(1),
     X =:= 0,
     write('You declined the sleep fairy\'s offer'),
     write('You will still be in house when you wake up.'), nl.
 teleportBySleepFairy(X) :-
+    started(1),
     X =:= 1,
     ranch(XR, YR),
     retract(position(_, _)),
     asserta(position(XR, YR)),
     write('You will be teleported to Ranch after you wake up'), nl.
 teleportBySleepFairy(X) :-
+    started(1),
     X =:= 2,
     marketplace(XM, YM),
     retract(position(_, _)),
     asserta(position(XM, YM)),
     write('You will be teleported to Marketplace after you wake up'), nl.
 teleportBySleepFairy(X) :-
+    started(1),
     X =:= 3,
     quest(XQ, YQ),
     retract(position(_, _)),
@@ -155,10 +163,12 @@ sleepFairy(X) :-
 
 isInsideHouse(0).
 house :-
+    started(1),
 	position(X,Y),
 	\+isAtHouse(X,Y),
 	write('You are not at house right now'), nl, !.
 house :- 
+    started(1),
 	position(X,Y),
 	isAtHouse(X,Y),
 	isInsideHouse(0),
@@ -169,6 +179,7 @@ house :-
 	write('- exitHouse'), nl, !.
 
 sleep :-
+    started(1),
 	isInsideHouse(1),
 	time(Time),
 	Date is (Time//24) + 1,
@@ -193,22 +204,14 @@ sleep :-
 	CurDate is (CurTime//24) + 1,
 	CurHour is CurTime mod 24,
 	write('Day '), write(CurDate), nl,
-	write('Current Time: '), write(CurHour), nl.
+	write('Current Time: '), write(CurHour), nl,
+    failState.
 
 exitHouse :-
+    started(1),
 	isInsideHouse(1),
 	retractall(isInsideHouse(_)),
 	asserta(isInsideHouse(0)).
-
-goalState :- 
-	gold(X),
-	X < 20000,
-	!.
-goalState :- 
-	gold(X),
-	X >= 20000,
-	nl, write('Congratulations! You have finally collected 20000 golds!'), nl,
-	halt.
 
 /* market : masuk ke dalam marketplace*/
 
@@ -217,6 +220,7 @@ isShopping(0).
 shopItemsList([tomato_seed, corn_seed, eggplant_seed, chilli_seed, apple_seed, pineapple_seed, grape_seed, turnip_seed, pomegranate_seed, strawberry_seed, chicken, cow, sheep, goat, duck, horse, angora_rabbit, buffalo]).
 
 market :-
+    started(1),
     position(X,Y),
     isAtMarketplace(X,Y),
     write('What do you want to do?'), nl,
@@ -227,6 +231,7 @@ market :-
     asserta(isShopping(1)),
     !.
 market :-
+    started(1),
     position(X,Y),
     \+isAtMarketplace(X,Y),
     write('You\'re not at the marketplace right now.'),
@@ -235,6 +240,7 @@ market :-
 /* buy : membeli dari shop*/
 
 buy :-
+    started(1),
     isShopping(1),
     write('What do you want to buy?'), nl,
     shopItemsList(List),
@@ -254,7 +260,11 @@ buy :-
         retractall(gold(_)),
         CurMoney1 is CurMoney - NeededMoney,
         asserta(gold(CurMoney1)),
-        addItem(Name, Amount, Level),
+        (   invenItem(Name, _, _) ->
+            addItem(Name, Amount, Level)
+        ;   ranchItem(Name, _, _) ->
+            addRanchItem(Name, Amount, Level)
+        ),
         write('You have bought '), write(Amount), write(' '), write(Name), write('.'), nl,
         write('You are charged '), write(NeededMoney), write(' golds.')
     ), !.
@@ -287,6 +297,7 @@ buyThis([_|Tail], Number, Name, Price, Level) :-
 /* sell : menjual barang di inventory */
 
 sell :-
+    started(1),
     isShopping(1),
     inventory,
     write('What do you want to sell ?'), nl,
@@ -317,6 +328,7 @@ sell :-
 /* upgrade : melakukan upgrade equipment */
 
 upgrade :-
+    started(1),
     upgradeAvailable,
     upgradeList(List),
     writeUpgrade(List, 1, Flag),
@@ -414,6 +426,7 @@ writeUpgrade([Head|Tail], I, Flag) :-
 /* exitShop : keluar dari marketplace */
 
 exitShop :- 
+    started(1),
     retractall(isShopping(_)),
     asserta(isShopping(0)),
     write('You exited the shop').

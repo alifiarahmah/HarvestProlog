@@ -11,11 +11,13 @@ ongoingQ(0,0,0).
 reward(0, 0).  
 
 quest :-
+    started(1),
     position(X,Y),
     \+isAtQuest(X,Y),
     write('You have to be at quest pick up place (Q) to take a quest!'), nl, !.
 
 quest :-
+    started(1),
     position(X,Y),
     isAtQuest(X,Y),
     activeQ(K),
@@ -28,6 +30,7 @@ quest :-
     write('- '), write(E), write(' ranch item'), nl, !.
 
 quest :-
+    started(1),
     position(X,Y),
     isAtQuest(X,Y),
     activeQ(K),
@@ -51,6 +54,7 @@ quest :-
 
 /* submit: untuk memperoleh reward setelah menyelesaikan quest */
 submit :-
+    started(1),
     position(X,Y),
     isAtQuest(X,Y),
     activeQ(K),
@@ -59,6 +63,7 @@ submit :-
     !.
 
 submit :-
+    started(1),
     position(X,Y),
     isAtQuest(X,Y),
     activeQ(K),
@@ -75,6 +80,7 @@ submit :-
     asserta(reward(0,0)), !.
 
 submit :-
+    started(1),
     position(X,Y),
     isAtQuest(X,Y),
     activeQ(K),

@@ -200,6 +200,7 @@ inventoryEquipment([Head|Tail]):-
     write(Amount), write(' Level '), write(Level),write(' '), write(Head), nl,
     inventoryEquipment(Tail).
 inventory:-
+    started(1),
     nl,
     sumItem(Sum),
     write('Your inventory ('), write(Sum), write('/100)'), nl,
@@ -247,10 +248,13 @@ throwItemHelper(Item):-
     Flag =:= 0, write('You don\'t have that item.'),!.
 
 throwItem :-
+    started(1),
     inventory,
     write('What do you want to throw ?'), nl,
     write('> '), read(Item), nl,
     throwItemHelper(Item).
+
+    
 
 
 

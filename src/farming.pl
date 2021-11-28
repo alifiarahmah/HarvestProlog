@@ -41,7 +41,8 @@ farmExp(strawberry_seed, 6).
 
 nameSeed([tomato_seed, corn_seed, eggplant_seed, chilli_seed, apple_seed, pineapple_seed, grape_seed, turnip_seed, pomegranate_seed, strawberry_seed]).
 /*Melakukan Commad dig*/
-dig :- /* kebawah */
+dig :-
+    started(1),
     position(X,Y),
     Y =:= 1,
     \+isAtMarketplace(X,Y), \+isAtRanch(X,Y), \+isAtHouse(X,Y), \+isAtQuest(X,Y), \+isAtAir(X,Y), \+atDig(X,Y), \+atPlant(X,Y, _Sim),
@@ -50,6 +51,7 @@ dig :- /* kebawah */
     write('You digged the tile.'),nl.
 
 dig :-
+    started(1),
     position(X,Y),
     Y > 1,
     \+isAtMarketplace(X,Y), \+isAtRanch(X,Y), \+isAtHouse(X,Y), \+isAtQuest(X,Y), \+isAtAir(X,Y), \+atDig(X,Y), \+atPlant(X,Y, _Sim),
@@ -95,12 +97,14 @@ seedInInventory([Head|Tail], SumSeed):-
 /*plant the seed*/
 /*Jika belum punya seed*/
 plant :-
+    started(1),
     nameSeed(ListSeed),
     seedInInventory(ListSeed, SumSeed),
     SumSeed =:= 0,
     write('You Have\'t  any seed.'), !.
 /*Jika sudah punya seed*/
 plant :-
+    started(1),
     nameSeed(ListSeed),
     seedInInventory(ListSeed, SumSeed),
     SumSeed > 0,
@@ -120,6 +124,7 @@ plant :-
     asserta(seed(NameSeed, T, Time, X1, Y)), !.
 
 plant :-
+    started(1),
     nameSeed(ListSeed),
     seedInInventory(ListSeed, SumSeed),
     SumSeed > 0,
@@ -139,6 +144,7 @@ plant :-
     asserta(seed(NameSeed, T, Time, X2, Y)), !.
 
 plant :-
+    started(1),
     nameSeed(ListSeed),
     seedInInventory(ListSeed, SumSeed),
     SumSeed > 0,
@@ -158,6 +164,7 @@ plant :-
     asserta(seed(NameSeed, T, Time, X, Y1)), !.
 
 plant :-
+    started(1),
     nameSeed(ListSeed),
     seedInInventory(ListSeed, SumSeed),
     SumSeed > 0,
@@ -208,6 +215,7 @@ harvestHelper(AmountItem):-
 /*Panen*/
 /*Belum dapat dipanen*/
 harvest:-
+    started(1),
     position(X, _Y),
     X1 is X+1,
     seed(_NameSeed, T1, T, Xseed, _Yseed),
@@ -217,6 +225,7 @@ harvest:-
     X1 =:= Xseed,
     write('You Can\'t Harvest yet.'), !.
 harvest:-
+    started(1),
     position(X, _Y),
     X1 is X-1,
     seed(_NameSeed, T1, T, Xseed, _Yseed),
@@ -226,6 +235,7 @@ harvest:-
     X1 =:= Xseed,
     write('You Can\'t Harvest yet.'), !.
 harvest:-
+    started(1),
     position(_X, Y),
     Y1 is Y+1,
     seed(_NameSeed, T1, T, _Xseed, Yseed),
@@ -235,6 +245,7 @@ harvest:-
     Y1 =:= Yseed,
     write('You Can\'t Harvest yet.'), !.
 harvest:-
+    started(1),
     position(_X, Y),
     Y1 is Y-1,
     seed(_NameSeed, T1, T, _Xseed, Yseed),
@@ -246,6 +257,7 @@ harvest:-
 
 /*Sudah Dapat dipanen*/
 harvest:-
+    started(1),
     position(X, _Y),
     X1 is X+1,
     seed(NameSeed, T1, T, Xseed, Yseed),
@@ -263,6 +275,7 @@ harvest:-
     SumEXP is FEXP * AmountItem,
     farmExpSistem(SumEXP), !.
 harvest:-
+    started(1),
     position(X, _Y),
     X1 is X-1,
     seed(NameSeed, T1, T, Xseed, Yseed),
@@ -280,6 +293,7 @@ harvest:-
     SumEXP is FEXP * AmountItem,
     farmExpSistem(SumEXP), !.
 harvest:-
+    started(1),
     position(_X, Y),
     Y1 is Y+1,
     seed(NameSeed, T1, T, Xseed, Yseed),
@@ -297,6 +311,7 @@ harvest:-
     SumEXP is FEXP * AmountItem,
     farmExpSistem(SumEXP), !.
 harvest:-
+    started(1),
     position(_X, Y),
     Y1 is Y-1,
     seed(NameSeed, T1, T, Xseed, Yseed),

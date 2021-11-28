@@ -35,7 +35,7 @@ startGame :-
 /* initTime */
 initTime :- 
 	retractall(time(_)),
-	asserta(time(6)).
+	asserta(time(1430)).
 
 /* initPosition */
 initPosition :- 
@@ -67,6 +67,36 @@ map :-
 
 /* help: Menampilkan command yang bisa dilakukan */
 help :- writeHelpList.
+
+/* goal and final State */
+
+goalState :- 
+	gold(X),
+	X < 20000,
+	!.
+goalState :- 
+	gold(X),
+	X >= 20000,
+	nl, write('Congratulations! You have finally collected 20000 golds!'), nl,
+	done.
+
+failState :-
+    time(T),
+    T < 1440,
+    !.
+
+failState :-
+    time(T),
+    gold(G),
+    T >= 1440, 
+    G < 20000,
+    nl, write('You have worked hard, but in the end result is all that matters.'), nl,
+    write('May God bless you in the future with kind people!'), nl,
+    done.
+
+done :- 
+	retractall(started(_)),
+	asserta(started(0)).
 
 	
 	
