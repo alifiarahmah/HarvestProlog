@@ -68,5 +68,35 @@ rule
 * laporan : cover, penjelasan setiap comment, dll, bisa dibagi sesuai bagian masing-masing.
 * deadline : sabtu malam, sekaligus dengan laporan bagian masing-masing.
 
+================================================================
 
+28 Nov 2021
+recap
+
+fishing
+- ada fishing rod + sesuai speciality: nambah exp buat fisher sebesar X, X sesuai level fishing rod
+- ada fishing rod, tidak sesuai speciality: setengah X
+- nggak punya fishing rod + nggak sesuai speciality: nggak ada tambahan exp
+- sesuai speciality: nambah exp 20% (beda sama yang poin 1)
+- nggak sesuai: nggak dapet tambahan exp
+- semakin tinggi level fishing rod, semakin besar nilai X
+- semakin tinggi level fisher, semakin besar peluang dapet ikan mahal
+
+farming
+- ada shovel + sesuai speciality: hasil panen yang didapet lebih banyak sebesar X, exp lebih tinggi sebesar Y
+- ada shovel, nggak sesuai speciality: hasil panen lebih banyak, exp normal
+- nggak ada shovel + nggak sesuai speciality: hasil panen normal, exp normal
+- sesuai speciality: exp bertambah
+- nggak sesuai speciality: exp biasa
+- semakin tinggi level shovel, X lebih besar
+- semakin tinggi level farmer, Y lebih besar
+
+rancher
+- ada handcart + sesuai speciality: dapat hasil ternak X kali lipat, exp lebih tinggi
+- ada handcart, nggak sesuai speciality: hasil ternak lebih banyak X kali lipat, exp normal
+- nggak ada handcart + nggak sesuai speciality: hasil ternak 1 kali lipat (biasa)
+- sesuai speciality: kenaikan exp lebih tinggi
+- nggak sesuai speciality: exp biasa
+- semakin tinggi level handcart, semakin besar X
+- semakin tinggi level rancher, semakin cepat dapet hasil ternak
 
