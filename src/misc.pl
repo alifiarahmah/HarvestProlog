@@ -65,10 +65,10 @@ writeHelpListV2 :-
 	write('% 10. house     : masuk ke dalam house                                            %'), nl,
 	write('% 11. quest     : mengambil quest                                                 %'), nl,
 	write('% 12. submit    : menyelesaikan quest                                             %'), nl,
-	write('% 13. dig       : menggali tanah			                                         %'), nl,
-	write('% 14. plant     : menanam seed   		                                         %'), nl,
-	write('% 15. fishing   : memancing ikan			                                         %'), nl,
-	write('% 16. ranch     : beternak   			                                         %'), nl,
+	write('% 13. dig       : menggali tanah                                                  %'), nl,
+	write('% 14. plant     : menanam seed                                                    %'), nl,
+	write('% 15. fishing   : memancing ikan                                                  %'), nl,
+	write('% 16. ranch     : beternak                                                        %'), nl,
 	write('% 17. quit      : keluar dari permainan                                           %'), nl,
 	write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'), nl.
 
