@@ -74,14 +74,14 @@ ranch :-
 ranch :-
     started(1),
 	isInRanch,
-	invenItem(chicken, ChickenAmount, -1),
-	invenItem(cow, CowAmount, -1),
-	invenItem(sheep, SheepAmount, -1),
-	invenItem(goat, GoatAmount, -1),
-	invenItem(duck, DuckAmount, -1),
-	invenItem(horse, HorseAmount, -1),
-	invenItem(angora_rabbit, AngoraAmount, -1),
-	invenItem(buffalo, BuffaloAmount, -1),
+	ranchItem(chicken, ChickenAmount, -1),
+	ranchItem(cow, CowAmount, -1),
+	ranchItem(sheep, SheepAmount, -1),
+	ranchItem(goat, GoatAmount, -1),
+	ranchItem(duck, DuckAmount, -1),
+	ranchItem(horse, HorseAmount, -1),
+	ranchItem(angora_rabbit, AngoraAmount, -1),
+	ranchItem(buffalo, BuffaloAmount, -1),
 	write('Welcome to the ranch! You have:'), nl,
 	write(ChickenAmount), write(' chicken'), nl,
 	write(CowAmount), write(' cow'), nl,
@@ -160,14 +160,14 @@ checkLivestock(_, _) :-
 	!, fail.
 checkLivestock(Livestock, _) :- % kasus tidak ada Livestock
 	isInRanch,
-	invenItem(Livestock, Amount, -1),
+	ranchItem(Livestock, Amount, -1),
 	Amount =:= 0,
 	strLivestock(Livestock, StrLivestock),
 	write('You don\'t have any '), write(StrLivestock), write('!'), nl, 
 	!.
 checkLivestock(Livestock, Product) :- % kasus ada livestock, tapi belum bisa ambil hasil
 	isInRanch,
-	invenItem(Livestock, Amount, -1),
+	ranchItem(Livestock, Amount, -1),
 	Amount > 0,
 	strLivestock(Livestock, StrLivestock),
 	strProduct(Product, StrProduct),
@@ -178,7 +178,7 @@ checkLivestock(Livestock, Product) :- % kasus ada livestock, tapi belum bisa amb
 	!.
 checkLivestock(Livestock, Product) :- % kasus ada livestock dan bisa ambil hasil
 	isInRanch,
-	invenItem(Livestock, Amount, -1),
+	ranchItem(Livestock, Amount, -1),
 	Amount > 0,
 	strLivestock(Livestock, StrLivestock),
 	strProduct(Product, StrProduct),
@@ -192,4 +192,4 @@ checkLivestock(Livestock, Product) :- % kasus ada livestock dan bisa ambil hasil
 	ranchExp(Livestock, XP),
 	TotalXP is XP * Amount,
 	writeAddExpRancher(TotalXP),
-	resetLivestockTimer(Livestock).
+	resetLivestockTimer(Livestock), !.
