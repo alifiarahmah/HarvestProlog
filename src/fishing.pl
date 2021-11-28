@@ -147,7 +147,8 @@ fishing :-
 	random(1,26,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addTimeFishing(Fish), 
+	addTimeFishing(Fish),
+	advEquipment,
 	time(T1),
 	Date is (T1//24) + 1,
 	Hour is T1 mod 24, nl,
@@ -162,7 +163,8 @@ fishing :-
 	random(1,40,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addTimeFishing(Fish),  
+	addTimeFishing(Fish),
+	advEquipment,
 	time(T1),
 	Date is (T1//24) + 1,
 	Hour is T1 mod 24, nl,
@@ -177,7 +179,8 @@ fishing :-
 	random(1,54,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addTimeFishing(Fish),  
+	addTimeFishing(Fish),
+	advEquipment,
 	time(T1),
 	Date is (T1//24) + 1,
 	Hour is T1 mod 24, nl,
@@ -192,7 +195,8 @@ fishing :-
 	random(1,68,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addTimeFishing(Fish),  
+	addTimeFishing(Fish),
+	advEquipment, 
 	time(T1),
 	Date is (T1//24) + 1,
 	Hour is T1 mod 24, nl,
@@ -207,7 +211,8 @@ fishing :-
 	random(1,82,R), ikan(R,Fish),
 	exp(Fish,Exp), newExp(Exp,NewExp) ,addExpTotal(NewExp), addExpFisher(NewExp),
 	gotFish(Fish,NewExp),
-	addTimeFishing(Fish),  
+	addTimeFishing(Fish),
+	advEquipment,
 	time(T1),
 	Date is (T1//24) + 1,
 	Hour is T1 mod 24, nl,
@@ -255,3 +260,17 @@ addTimeFishing(Fish) :-
 	time(X), Tnew is X+T,
 	retract(time(_)),
 	asserta(time(Tnew)), !.
+/*Equipment Advantage, get 6*lvl exp addition for fisher*/
+/*Same with speciality*/
+advEquipment :-
+	job(X), X == 'Fisherman',
+	equipment(fishing_rod,_,Lvl),
+	Exp is 6*Lvl,
+	addExpFisher(Exp), !.
+
+advEquipment :-
+	job(X), X \== 'Fisherman',
+	equipment(fishing_rod,_,Lvl),
+	Exp is 3*Lvl,
+	addExpFisher(Exp), !.
+	
