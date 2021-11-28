@@ -192,4 +192,5 @@ checkLivestock(Livestock, Product) :- % kasus ada livestock dan bisa ambil hasil
 	ranchExp(Livestock, XP),
 	TotalXP is XP * Amount,
 	writeAddExpRancher(TotalXP),
-	resetLivestockTimer(Livestock), !.
+	resetLivestockTimer(Livestock), 
+	!.
