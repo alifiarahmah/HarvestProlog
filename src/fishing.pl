@@ -184,7 +184,7 @@ fishing :-
 gotFish(Item,Exp) :-
 	Item == none,
 	write('You didn\'t get anything!'), nl,
-	write('You gained '), write(Exp), write(' fishing exp.').
+	write('You gained '), write(Exp), write(' fishing exp.'), !.
 /*he get a fish, and update the quest*/
 gotFish(Item,Exp) :-
 	write('You got '), write(Item), write('!'), nl,
@@ -195,7 +195,7 @@ gotFish(Item,Exp) :-
 	Y1 is Y-1,
 	Z1 is Z,
 	retract(ongoingQ(_,_,_)),
-	asserta(ongoingQ(X1,Y1,Z1)).
+	asserta(ongoingQ(X1,Y1,Z1)), !.
 
 /*Checking exp mechanism for fisher and non-fisher*/
 /*For fisher, got 20% exp addition*/
@@ -203,15 +203,15 @@ newExp(Exp,NewExp) :-
 	job(Job), Job == 'Fisherman',
 	AddExp is Exp*0.2,
 	NewExp1 is Exp+AddExp,
-	NewExp is round(NewExp1).
+	NewExp is round(NewExp1), !.
 /*For non-fisher, didn't get any addition*/
 newExp(Exp,NewExp) :-
 	job(Job), Job \== 'Fisherman',
-	NewExp is Exp.
+	NewExp is Exp, !.
 
 /*Add time every get a fish*/
 addTimeFishing(Fish) :-
 	timeFish(Fish,T),
 	time(X), Tnew is X+T,
 	retract(time(_)),
-	asserta(time(Tnew)).
+	asserta(time(Tnew)), !.
