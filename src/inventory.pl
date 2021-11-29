@@ -171,7 +171,7 @@ delEquipment(Name, Amount, Level):-
     retract(sumItem(Sum)),
     retract(equipment(Name, PrevAmount, Level)),
     asserta(sumItem(CurrenSum)),
-    asserta(equipment(Name, CurrenAmount, Level)).
+    asserta(equipment(Name, CurrenAmount, 0)).
 
 delEquipment(Name, _Amount, _Level):-
     nameEquipment(List),
@@ -239,7 +239,7 @@ throwItemHelper(Item):-
     Flag =:= 1,
     invenItem(Item, Amount, _Level),
     write('You have '), write(Amount), write(' '), write(Item), write('. How many do you want to throw?'),nl,
-    write('> '), read(Throw),
+    write('> '), read_integer(Throw),
     throwItemHelper2(Throw, Amount, Item,_Level).
 throwItemHelper(Item):-
     nameEquipment(List),
@@ -247,7 +247,7 @@ throwItemHelper(Item):-
     Flag =:= 1,
     equipment(Item, Amount, Level),
     write('You have '), write(Amount), write(' level '), write(Level), write(' '), write(Item), write('. How many do you want to throw?'),nl,
-    write('> '), read(Throw),
+    write('> '), read_integer(Throw),
     throwItemHelper2(Throw, Amount, Item, Level).
 throwItemHelper(Item):-
     nameItem(List),
@@ -263,7 +263,7 @@ throwItem :-
     inventory,
     write('What do you want to throw ?'), nl,
     write('> '), read(Item), nl,
-    throwItemHelper(Item).
+    throwItemHelper(Item),!.
 
     
 

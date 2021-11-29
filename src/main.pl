@@ -35,7 +35,7 @@ startGame :-
 /* initTime */
 initTime :- 
 	retractall(time(_)),
-	asserta(time(6)).
+	asserta(time(1420)).
 
 /* initPosition */
 initPosition :- 
