@@ -294,7 +294,7 @@ harvest:-
     seedHelper(NameSeed, NameFruit,_),
     addItem(NameFruit, AmountItem, -1),
     retract(seed(NameSeed, T1, T, Xseed, Yseed)),
-    write('You Haversted '), write(NameFruit), nl,
+    write('You harvested '), write(NameFruit), nl,
     farmExp(NameSeed, FEXP),
     SumEXP is FEXP * AmountItem,
     farmExpSistem(SumEXP),

@@ -77,7 +77,7 @@ submit :-
     K =:= 1,
     ongoingQ(H,F,E),
     H =:= 0, F =:= 0, E =:= 0,
-    write('Congratulations, you have completed your quest!'),
+    write('Congratulations, you have completed your quest!'), nl,
     reward(RE, RG),
     writeAddExpTotal(RE), nl,
     writeAddGold(RG),
