@@ -12,10 +12,22 @@ Anggota kelompok:
 
 ## Setup
 
-Requirements: GNU Prolog 1.5.0
+Requirements: [GNU Prolog](http://www.gprolog.org/#download)
 
 ```sh
 git clone https://github.com/alifiarahmah/HarvestProlog.git
 cd HarvestProlog
+```
+
+## How to Play
+1. Eksekusi program dengan mengetik
+```sh
 gprolog --consult-file src/main.pl
 ```
+2. Ketik command `startGame.` untuk memulai permainan
+
+## Folder Structure
+
+- docs: Laporan Tugas Besar
+- Misc: Catatan diskusi dan deliverables 2
+- src: Source code
