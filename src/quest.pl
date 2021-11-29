@@ -53,6 +53,13 @@ quest :-
     asserta(reward(RE, RG)).
 
 /* submit: untuk memperoleh reward setelah menyelesaikan quest */
+
+submit :-
+    started(1),
+    position(X,Y),
+    \+isAtQuest(X,Y),
+    write('You have to be at quest pick up place (Q) to submit a quest!'), nl, !.
+
 submit :-
     started(1),
     position(X,Y),
@@ -72,7 +79,7 @@ submit :-
     H =:= 0, F =:= 0, E =:= 0,
     write('Congratulations, you have completed your quest!'),
     reward(RE, RG),
-    writeAddExpTotal(RE),
+    writeAddExpTotal(RE), nl,
     writeAddGold(RG),
     retractall(activeQ(_)),
     asserta(activeQ(0)),

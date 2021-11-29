@@ -310,7 +310,7 @@ buyThis([_|Tail], Number, Name, Price, Level) :-
 sell :-
     started(1),
     isShopping(1),
-    inventory,
+    inventoryWithoutEquipment,
     write('What do you want to sell ?'), nl,
     write('> '),
     read(Name),

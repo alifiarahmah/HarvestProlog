@@ -211,6 +211,14 @@ inventory:-
     inventoryEquipment(ListEquipment),
     nameItem(ListItem),
     inventoryItem(ListItem),!.
+inventoryWithoutEquipment :- 
+    started(1),
+    nl,
+    sumItem(Sum),
+    write('Your inventory ('), write(Sum), write('/100)'), nl,
+    nameItem(ListItem),
+    inventoryItem(ListItem),!.
+
 
 /*Throw Item from Inventory*/
 throwItemHelper2(Throw, Amount, Item, _Level):-
